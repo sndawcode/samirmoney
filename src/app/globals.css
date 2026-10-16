@@ -289,3 +289,9 @@
     animation: none;
   }
 }
+
+/* Save-Data: no ambient effects (§6). */
+[data-save-data] .ambient-glow,
+[data-save-data] .grain::after {
+  display: none;
+}

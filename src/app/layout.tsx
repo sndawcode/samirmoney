@@ -14,6 +14,7 @@ import { MobileMenu } from "@/components/layout/mobile-menu";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { SaveDataFlag } from "@/components/motion/save-data-flag";
 import { WhatsAppButton } from "@/components/ui/contact-links";
 import { Photo } from "@/components/ui/photo";
 import { StoreBadges } from "@/components/ui/store-badges";
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           {ui.skipLink}
         </a>
+        <SaveDataFlag />
         <MotionProvider>
           <SiteHeader
             logo={<Logo />}

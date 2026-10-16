@@ -61,3 +61,15 @@ export const seo = {
 } satisfies Record<string, SeoEntry>;
 
 export type SeoRoute = keyof typeof seo;
+
+/** Mono eyebrow on each route's Open Graph image. */
+export const ogEyebrows: Partial<Record<SeoRoute, string>> = {
+  "/": "Samir Money",
+  "/particuliers": "Samir Money · Particuliers",
+  "/professionnels": "SamirPay · Professionnels",
+  "/raps": "RAPS · Paiement NFC",
+  "/services": "Nos services",
+  "/developpeurs": "Développeurs · API SamirPay",
+  "/a-propos": "À propos",
+  "/contact": "Contact",
+};
