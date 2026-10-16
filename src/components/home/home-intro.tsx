@@ -1,4 +1,5 @@
 import { homeHero } from "@/content/fr/home";
+import { trust } from "@/content/fr/trust";
 import { productsSection } from "@/content/fr/products";
 import { EcosystemCanvas } from "@/components/home/ecosystem/ecosystem-canvas";
 import { KineticHeadline } from "@/components/motion/kinetic-headline";
@@ -14,6 +15,16 @@ export function HomeIntro() {
   return (
     <Section theme="ink" texture spacing="none" aria-labelledby="home-intro-title">
       <div data-hero className="relative isolate flex min-h-[100svh] flex-col pt-(--header-h)">
+        {/* Depth: a flat ink base, the engineering grid fading out towards the edges, a soft top light. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-30 bg-ink-950" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-30 hairlines [mask-image:radial-gradient(70%_60%_at_60%_45%,black,transparent)]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 -z-30 h-[60%] bg-[radial-gradient(60%_100%_at_50%_0%,rgb(255_255_255/0.06),transparent)]"
+        />
         {/* Static background first; the WebGL scene fades in over it once the page is idle. */}
         <div
           aria-hidden="true"
@@ -41,15 +52,16 @@ export function HomeIntro() {
           data-gsap="hero-out"
           className="flex flex-1 flex-col justify-end pt-10 pb-24 sm:pb-28 lg:justify-center lg:pt-0 lg:pb-20"
         >
-          <div className="flex max-w-[42rem] flex-col items-start gap-6 lg:gap-8">
+          <div className="flex max-w-[44rem] flex-col items-start gap-6 lg:gap-8">
+            <CredentialPill />
             <KineticHeadline
               as="h1"
               id="home-intro-title"
               lines={homeHero.titleLines}
               highlight={homeHero.highlight}
-              className="hero-legible text-[clamp(2.5rem,1rem+4vw,5.25rem)] leading-[0.92] font-extrabold tracking-[-0.035em] lg:[&_.kinetic-line]:whitespace-nowrap"
+              className="hero-legible text-[clamp(2.6rem,0.9rem+4.3vw,5.5rem)] leading-[0.9] font-extrabold tracking-[-0.04em] lg:[&_.kinetic-line]:whitespace-nowrap"
             />
-            <Lead className="hero-enter hero-legible max-w-[34rem] text-base text-smoke [--d:280ms] sm:text-lg xl:text-xl">
+            <Lead className="hero-enter hero-legible max-w-[35rem] text-base leading-relaxed text-white/70 [--d:280ms] sm:text-lg xl:text-xl ink:text-white/70">
               {homeHero.lead}
             </Lead>
             <div className="hero-enter flex flex-wrap gap-2.5 pt-1 [--d:400ms] sm:gap-3">
@@ -96,5 +108,26 @@ export function HomeIntro() {
         <ProductBento heading={<Eyebrow as="h2">{productsSection.eyebrow}</Eyebrow>} />
       </Container>
     </Section>
+  );
+}
+
+/**
+ * The licence, stated before anything else — built from trust.ts (§1.3), never retyped. Static and sober:
+ * trust is never decorated (§5.2).
+ */
+function CredentialPill() {
+  return (
+    // From 640 px: the regulatory wording cannot be shortened (§15.3) and would wrap awkwardly on phones,
+    // which still meet the licence in the trust section (S4).
+    <p className="hero-enter hidden items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-2 text-[0.8125rem] leading-snug font-medium text-white/80 backdrop-blur-md [--d:120ms] sm:inline-flex">
+      <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-accent" />
+      <span>
+        {trust.bceao.label}
+        <span aria-hidden="true" className="mx-2 text-white/30">
+          ·
+        </span>
+        <span className="whitespace-nowrap text-white">{trust.bceao.reference}</span>
+      </span>
+    </p>
   );
 }

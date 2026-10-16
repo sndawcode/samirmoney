@@ -12,6 +12,7 @@ import {
   Mesh,
   MeshBasicMaterial,
   PerspectiveCamera,
+  PlaneGeometry,
   Points,
   PointsMaterial,
   QuadraticBezierCurve3,
@@ -45,6 +46,11 @@ const ACCENT_LIGHT = new Color("#9be3c6");
 const WHITE = new Color("#ffffff");
 
 const CAMERA_Z = 8;
+const ROOT_SPIN = 0.025; // rad/s — slow, fluid rotation of the whole system
+// Intro: the system scales up from 86 % over 1.8 s once the scene starts (skipped with reduced motion).
+const INTRO = { from: 0.86, seconds: 1.8 };
+// Reflection ring under the globe: anchors it in space.
+const REFLECTION = { y: -1.45, scale: 3.4, opacity: 0.22 };
 const SCROLL_PULLBACK = 3.5;
 const POINTER_TILT = 0.28;
 const LINK_OPACITY = { idle: 0.32, focused: 0.95, dimmed: 0.1 };
@@ -60,12 +66,12 @@ type Orbit = {
 
 // One orbit per solution, tuned by hand so the nodes never cross in front of the core at the same time.
 const ORBITS: readonly Orbit[] = [
-  { radius: 2.2, tiltX: 0.35, tiltZ: 0.1, speed: 0.16, phase: 0.0, lift: 0.9 },
-  { radius: 2.7, tiltX: -0.25, tiltZ: 0.3, speed: 0.12, phase: 1.1, lift: -0.7 },
-  { radius: 2.0, tiltX: 0.6, tiltZ: -0.25, speed: 0.2, phase: 2.2, lift: 0.6 },
-  { radius: 3.0, tiltX: 0.15, tiltZ: -0.4, speed: 0.1, phase: 3.3, lift: -0.9 },
-  { radius: 2.45, tiltX: -0.55, tiltZ: -0.1, speed: 0.14, phase: 4.3, lift: 0.8 },
-  { radius: 2.85, tiltX: 0.45, tiltZ: 0.35, speed: 0.11, phase: 5.3, lift: -0.6 },
+  { radius: 2.2, tiltX: 0.35, tiltZ: 0.1, speed: 0.12, phase: 0.0, lift: 0.9 },
+  { radius: 2.7, tiltX: -0.25, tiltZ: 0.3, speed: 0.09, phase: 1.1, lift: -0.7 },
+  { radius: 2.0, tiltX: 0.6, tiltZ: -0.25, speed: 0.15, phase: 2.2, lift: 0.6 },
+  { radius: 3.0, tiltX: 0.15, tiltZ: -0.4, speed: 0.075, phase: 3.3, lift: -0.9 },
+  { radius: 2.45, tiltX: -0.55, tiltZ: -0.1, speed: 0.105, phase: 4.3, lift: 0.8 },
+  { radius: 2.85, tiltX: 0.45, tiltZ: 0.35, speed: 0.08, phase: 5.3, lift: -0.6 },
 ];
 
 export type Layout = {
@@ -208,6 +214,7 @@ export class EcosystemScene {
   private scroll = 0;
   private focused: number | null = null;
   private elapsed = 7; // a pleasing still frame for reduced motion
+  private intro = 0; // 0 → 1 over INTRO.seconds; stays 1 with reduced motion
   private frame = 0;
   private running = false;
   // Scratch vectors reused every frame (no per-frame allocations on phones).
@@ -267,7 +274,7 @@ export class EcosystemScene {
     );
 
     // Orbit rings and nodes.
-    const nodeGeometry = new SphereGeometry(0.055, 16, 16);
+    const nodeGeometry = new SphereGeometry(0.042, 16, 16);
     const nodeMaterial = new MeshBasicMaterial({ color: ACCENT_LIGHT });
     this.disposables.push(nodeGeometry, nodeMaterial);
     ORBITS.slice(0, nodeIds.length).forEach((orbit) => {
@@ -281,12 +288,12 @@ export class EcosystemScene {
           map: glow,
           color: ACCENT,
           transparent: true,
-          opacity: 0.7,
+          opacity: 0.45,
           blending: AdditiveBlending,
           depthWrite: false,
         }),
       );
-      nodeGlow.scale.setScalar(0.5);
+      nodeGlow.scale.setScalar(0.42);
       this.disposables.push(nodeGlow.material);
       node.add(nodeGlow, dot);
       this.nodes.push(node);
@@ -377,6 +384,23 @@ export class EcosystemScene {
 
     if (coreLogo) this.addCoreLogo(coreLogo);
     this.addBadges(badges);
+
+    const reflection = new Mesh(
+      new PlaneGeometry(1, 1),
+      new MeshBasicMaterial({
+        map: glow,
+        color: ACCENT,
+        transparent: true,
+        opacity: REFLECTION.opacity,
+        blending: AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+    reflection.rotation.x = -Math.PI / 2;
+    reflection.position.y = REFLECTION.y;
+    reflection.scale.set(REFLECTION.scale, REFLECTION.scale * 0.55, 1);
+    this.world.add(reflection);
+    this.disposables.push(reflection.geometry, reflection.material as MeshBasicMaterial);
 
     this.root.add(this.world, this.dust);
     this.scene.add(this.root);
@@ -558,13 +582,16 @@ export class EcosystemScene {
   private renderFrame(delta: number): void {
     this.elapsed += delta;
     const t = this.elapsed;
+    this.intro = this.animate ? Math.min(1, this.intro + delta / INTRO.seconds) : 1;
+    const eased = 1 - Math.pow(1 - this.intro, 3);
+    this.root.scale.setScalar(INTRO.from + (1 - INTRO.from) * eased);
     const focus = this.focused;
 
     // Pointer tilt, eased.
     this.tilt.x += (this.pointer.y * POINTER_TILT - this.tilt.x) * Math.min(1, delta * 3 || 1);
     this.tilt.y += (this.pointer.x * POINTER_TILT - this.tilt.y) * Math.min(1, delta * 3 || 1);
-    this.root.rotation.set(0.18 + this.tilt.x, t * 0.04 + this.tilt.y, 0);
-    this.dust.rotation.y = -t * 0.015;
+    this.root.rotation.set(0.18 + this.tilt.x, t * ROOT_SPIN + this.tilt.y, 0);
+    this.dust.rotation.y = -t * 0.01;
 
     // Scroll: the camera pulls back as the hero leaves the viewport.
     this.camera.position.z = this.layout.distance + this.scroll * SCROLL_PULLBACK;

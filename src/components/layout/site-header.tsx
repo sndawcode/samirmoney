@@ -9,13 +9,17 @@ const HEADER_PROBE_Y = 32; // middle of the 64 px header
 const HIDE_AFTER_PX = 120;
 const LG_QUERY = "(min-width: 1024px)";
 
-/** Theme of the page section currently under the header. */
-function themeUnderHeader(): SectionTheme {
+const TRANSPARENT_UNTIL_PX = 24;
+
+/** What sits under the header: the section theme, and whether it is a full-screen hero (home). */
+function underHeader(): { theme: SectionTheme; overHero: boolean } {
   const stack = document.elementsFromPoint(window.innerWidth / 2, HEADER_PROBE_Y);
-  const section = stack
-    .find((el) => !el.closest("[data-site-header]"))
-    ?.closest<HTMLElement>("[data-theme]");
-  return (section?.dataset.theme as SectionTheme | undefined) ?? "paper";
+  const element = stack.find((el) => !el.closest("[data-site-header]"));
+  const section = element?.closest<HTMLElement>("[data-theme]");
+  return {
+    theme: (section?.dataset.theme as SectionTheme | undefined) ?? "paper",
+    overHero: Boolean(element?.closest("[data-hero]")),
+  };
 }
 
 type SiteHeaderProps = {
@@ -30,6 +34,8 @@ export function SiteHeader({ logo, navigation, mobileMenu, cta }: SiteHeaderProp
   const pathname = usePathname();
   const [theme, setTheme] = useState<SectionTheme>("paper");
   const [hidden, setHidden] = useState(false);
+  // At the very top of the home hero the header is clear glass-free, so the full screen reads as one image.
+  const [transparent, setTransparent] = useState(false);
 
   useEffect(() => {
     const desktop = window.matchMedia(LG_QUERY);
@@ -38,7 +44,9 @@ export function SiteHeader({ logo, navigation, mobileMenu, cta }: SiteHeaderProp
     const update = () => {
       frame = 0;
       const y = window.scrollY;
-      setTheme(themeUnderHeader());
+      const under = underHeader();
+      setTheme(under.theme);
+      setTransparent(under.overHero && y < TRANSPARENT_UNTIL_PX);
       // Hide on scroll down, return on scroll up — below lg only (§7).
       setHidden(!desktop.matches && y > HIDE_AFTER_PX && y > lastY);
       lastY = y;
@@ -64,11 +72,13 @@ export function SiteHeader({ logo, navigation, mobileMenu, cta }: SiteHeaderProp
       data-theme={dark ? "ink" : "paper"}
       onFocusCapture={() => setHidden(false)}
       className={cx(
-        "fixed inset-x-0 top-0 z-50 h-(--header-h) border-b backdrop-blur-xl backdrop-saturate-150",
-        "transition-[transform,background-color,border-color] duration-(--dur-ui) ease-(--ease-out-expo)",
-        dark
-          ? "border-white/10 bg-ink-950/70 text-white"
-          : "border-ink-950/10 bg-paper/75 text-ink-950",
+        "fixed inset-x-0 top-0 z-50 h-(--header-h) border-b",
+        "transition-[transform,background-color,border-color,backdrop-filter] duration-(--dur-ui) ease-(--ease-out-expo)",
+        transparent
+          ? "border-transparent bg-transparent text-white"
+          : dark
+            ? "border-white/10 bg-ink-950/70 text-white backdrop-blur-xl backdrop-saturate-150"
+            : "border-ink-950/10 bg-paper/75 text-ink-950 backdrop-blur-xl backdrop-saturate-150",
         hidden && "-translate-y-full",
       )}
     >
