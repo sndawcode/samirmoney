@@ -523,7 +523,7 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 | 05 | RAPS | Payez sans contact grâce à la technologie NFC. | `/raps` | Keychain from **Shoot RAPS / TPE 2026** | particulier, commercant, entreprise, institution |
 | 06 | API SamirPay | Intégrez nos solutions de paiement à vos applications et plateformes. | `/developpeurs` | Code-card composition (generic, no real endpoints) | developpeur, entreprise |
 
-- Layout ≥ lg: headline (left 7 cols) + lead (right 5 cols), bento 3 × 2 below; the top row is fully visible at 1440 × 900 and its top edge visible at 1280 × 720. md: 2 × 3. Mobile: H1, lead and chips, then **2-column compact tiles** (visual, name, one line, 3 rows) — the first row visible on a 360 × 740 screen.
+- **Layout (client decision, 16 Oct 2026): full-screen hero.** The hero fills the viewport (`100svh`): headline, lead and CTAs (`Nous contacter` · `Voir nos solutions`, the latter hidden on phones) beside the 3D globe, and a **solutions rail** at the bottom listing the six solutions (index, pictogram, name, one link each; sideways scroll on phones) — this keeps the brief's "solutions visible immediately" on the first screen. The bento with real visuals and the audience filter follow directly below, in the same dark chapter. *(Replaces: headline 7 cols + lead 5 cols with the bento top row visible at 1440 × 900.)*
 - Interactions: load-in stagger (tiles from `scale .96`, `blur 6px`); spotlight on hover; visual parallax ±8 px on pointer move; click → product page with a shared-element transition (progressive).
 - Background: ink-950 + hairline grid + grain + one slow radial glow (samir-500 at 12 %, 20 s drift; static with reduced motion).
 

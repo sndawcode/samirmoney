@@ -1,6 +1,10 @@
 import type { Cta } from "@/content/types";
 
 export const homeHero = {
+  // Hero calls to action: "Nous contacter" [Brief]; "Voir nos solutions" [Proposition] scrolls to the bento.
+  primary: { label: "Nous contacter", href: "/contact" } satisfies Cta,
+  secondary: { label: "Voir nos solutions", href: "#solutions" } satisfies Cta,
+  scrollCue: "Défiler", // [Proposition]
   // [Brief] — rendered on two lines; `highlight` gets the accent underline.
   titleLines: ["Tous vos paiements.", "Un seul écosystème."],
   highlight: "écosystème",

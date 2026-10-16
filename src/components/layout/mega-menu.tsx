@@ -15,7 +15,7 @@ import { frTypo } from "@/lib/fr-typography";
 const PRO_PRODUCTS: readonly ProductId[] = ["tpe", "business", "web-admin"];
 
 const itemClasses =
-  "inline-flex min-h-11 items-center gap-1 rounded-full px-3 text-sm font-medium transition-colors duration-(--dur-micro) hover:bg-ink-950/5 ink:hover:bg-white/10 aria-[current=page]:underline aria-[current=page]:underline-offset-8";
+  "inline-flex min-h-11 items-center gap-1 rounded-full px-2.5 text-sm font-medium whitespace-nowrap transition-colors xl:px-3 duration-(--dur-micro) hover:bg-ink-950/5 ink:hover:bg-white/10 aria-[current=page]:underline aria-[current=page]:underline-offset-8";
 
 const panelClasses =
   "absolute top-full left-1/2 mt-3 w-[min(92vw,760px)] -translate-x-1/2 rounded-lg border border-ink-950/10 bg-paper p-4 text-ink-950 shadow-xl shadow-ink-950/10 data-[state=closed]:hidden";

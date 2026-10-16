@@ -10,11 +10,14 @@ import type { EcosystemScene, Layout, Quality } from "@/components/home/ecosyste
 export const ECOSYSTEM_FOCUS_EVENT = "ecosystem:focus";
 
 const DESKTOP_QUERY = "(min-width: 1024px)";
+const WIDE_QUERY = "(min-width: 1280px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 // Core position on screen (fractions) and camera distance, per layout.
-const LAYOUT_DESKTOP: Layout = { coreX: 0.76, coreY: 0.3, distance: 8.5, badgeScale: 1 };
-const LAYOUT_MOBILE: Layout = { coreX: 0.86, coreY: 0.155, distance: 11, badgeScale: 0.8 };
+const LAYOUT_DESKTOP: Layout = { coreX: 0.76, coreY: 0.46, distance: 7.4, badgeScale: 1.05 };
+// 1024–1279 px: the headline takes more of the width, so the globe sits further right and a little smaller.
+const LAYOUT_DESKTOP_COMPACT: Layout = { coreX: 0.8, coreY: 0.5, distance: 8.8, badgeScale: 0.95 };
+const LAYOUT_MOBILE: Layout = { coreX: 0.5, coreY: 0.21, distance: 11, badgeScale: 0.8 };
 
 type NetworkInformation = { saveData?: boolean };
 
@@ -61,7 +64,8 @@ export function EcosystemCanvas() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const section = canvas?.closest("section");
+    // The full-screen hero block (falls back to the section) drives visibility and scroll progress.
+    const section = canvas?.closest<HTMLElement>("[data-hero]") ?? canvas?.closest("section");
     if (!canvas || !section) return;
 
     let scene: EcosystemScene | null = null;
@@ -92,12 +96,10 @@ export function EcosystemCanvas() {
       if (disposed) return;
 
       const desktop = window.matchMedia(DESKTOP_QUERY);
-      const resize = () =>
-        active.resize(
-          canvas.clientWidth,
-          canvas.clientHeight,
-          desktop.matches ? LAYOUT_DESKTOP : LAYOUT_MOBILE,
-        );
+      const wide = window.matchMedia(WIDE_QUERY);
+      const layout = () =>
+        wide.matches ? LAYOUT_DESKTOP : desktop.matches ? LAYOUT_DESKTOP_COMPACT : LAYOUT_MOBILE;
+      const resize = () => active.resize(canvas.clientWidth, canvas.clientHeight, layout());
       const resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(canvas);
       resize();
@@ -177,7 +179,7 @@ export function EcosystemCanvas() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="ecosystem-canvas pointer-events-none absolute inset-x-0 top-0 -z-10 h-[min(100svh,880px)] w-full"
+      className="ecosystem-canvas pointer-events-none absolute inset-0 -z-10 size-full"
     />
   );
 }
