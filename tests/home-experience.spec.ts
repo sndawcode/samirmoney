@@ -130,8 +130,13 @@ test.describe("home experience after browser back", () => {
     const hidden = await page.$$eval(
       "[data-gsap='rise']",
       (els) =>
-        els.filter((el) => el.offsetParent !== null && getComputedStyle(el).visibility === "hidden")
-          .length,
+        // $$eval yields HTMLElement | SVGElement; only HTML elements have offsetParent.
+        els.filter(
+          (el) =>
+            el instanceof HTMLElement &&
+            el.offsetParent !== null &&
+            getComputedStyle(el).visibility === "hidden",
+        ).length,
     );
     expect(hidden).toBe(0);
   });
