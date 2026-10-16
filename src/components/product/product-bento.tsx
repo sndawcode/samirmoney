@@ -7,6 +7,8 @@ import { AudienceFilter } from "@/components/product/audience-filter";
 import { ProductVisual } from "@/components/product/product-visual";
 
 const TILE_SIZES = "(min-width: 1024px) 33vw, 50vw";
+// The TPE cut-out is the largest image in the first row: the home LCP candidate (§13).
+const LCP_PRODUCT = "tpe";
 
 /** Home S1: the six solutions, visible immediately, each one link (§9.1-S1). */
 export function ProductBento() {
@@ -43,6 +45,7 @@ function ProductTile({ product, order }: { product: Product; order: number }) {
             product={product}
             sizes={TILE_SIZES}
             eager={order < 3}
+            preload={product.id === LCP_PRODUCT}
             className="h-full w-full"
           />
         </div>

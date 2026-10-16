@@ -67,7 +67,7 @@ export function Eyebrow({
 }: {
   children: string;
   className?: string;
-  as?: "p" | "span";
+  as?: "p" | "span" | "h2";
 }) {
   return (
     <Tag className={cn("text-eyebrow text-graphite ink:text-smoke", className)}>

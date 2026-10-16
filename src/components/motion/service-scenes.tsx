@@ -1,12 +1,13 @@
 "use client";
 
 import { Check, Link2, Nfc } from "lucide-react";
-import { m, useInView, type Transition } from "motion/react";
-import { useRef, type ReactNode } from "react";
+import { m, type Transition } from "motion/react";
+import type { ReactNode } from "react";
 import { serviceScenes as labels } from "@/content/fr/home";
 import type { ServiceId } from "@/content/fr/services";
 import { cn } from "@/lib/cn";
 import { frTypo } from "@/lib/fr-typography";
+import { MotionScope } from "@/components/motion/motion-scope";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const spring: Transition = { duration: 0.8, ease: EASE };
@@ -31,18 +32,9 @@ export function ServiceScene({
         className,
       )}
     >
-      <Scene play={play} />
-    </div>
-  );
-}
-
-/** Plays its scene once, when half of it is visible. */
-export function ServiceSceneInView({ id, className }: { id: ServiceId; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-  return (
-    <div ref={ref}>
-      <ServiceScene id={id} play={inView} className={className} />
+      <MotionScope>
+        <Scene play={play} />
+      </MotionScope>
     </div>
   );
 }

@@ -1,49 +1,46 @@
 "use client";
 
-import { m, useReducedMotion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
-
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
-  shown: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.8, ease: EASE_OUT_EXPO },
-  },
-};
+import { useInViewOnce } from "@/hooks/use-in-view";
+import { cn } from "@/lib/cn";
 
 type RevealProps = {
   children: ReactNode;
   className?: string;
-  as?: "div" | "li" | "ul" | "ol";
-  /** Stagger direct <Reveal.Item> children by 60 ms. */
+  as?: "div" | "ul" | "ol";
+  /** Stagger direct <RevealItem> children by 60 ms. */
   stagger?: boolean;
 };
 
-/** Entrance reveal (§6 motion spec). Renders its final state with reduced motion. Below-the-fold content only. */
-export function Reveal({ children, className, as = "div", stagger = false }: RevealProps) {
-  const reduce = useReducedMotion();
-  const Tag = m[as];
+/**
+ * Entrance reveal (§6 motion spec) in CSS: opacity, 24 px rise and 6 px blur, 800 ms ease-out-expo.
+ * Content is only hidden when scripting is on and motion is allowed (globals.css), so it never stays invisible.
+ */
+export function Reveal({ children, className, as: Tag = "div", stagger = false }: RevealProps) {
+  const [ref, inView] = useInViewOnce<HTMLDivElement & HTMLUListElement & HTMLOListElement>(0.3);
   return (
     <Tag
+      ref={ref}
+      data-reveal={stagger ? "stagger" : "self"}
+      data-shown={inView ? "" : undefined}
       className={className}
-      initial={reduce ? false : "hidden"}
-      whileInView="shown"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={stagger ? { hidden: {}, shown: { transition: { staggerChildren: 0.06 } } } : item}
     >
       {children}
     </Tag>
   );
 }
 
-export function RevealItem({ children, className, as = "div" }: Omit<RevealProps, "stagger">) {
-  const Tag = m[as];
+export function RevealItem({
+  children,
+  className,
+  as: Tag = "div",
+}: {
+  children: ReactNode;
+  className?: string;
+  as?: "div" | "li";
+}) {
   return (
-    <Tag className={className} variants={item}>
+    <Tag data-reveal-item="" className={cn(className)}>
       {children}
     </Tag>
   );

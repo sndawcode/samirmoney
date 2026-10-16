@@ -42,6 +42,7 @@ export const professionnelsPage = {
       "Gestion simplifiée de vos paiements au quotidien",
       "Lien de paiement personnalisé : envoyez à vos clients un lien direct pour régler leurs achats en quelques clics.",
     ], // [Store]
+    screensLabel: "Écrans de l’application SamirPay Business",
     screens: [
       { slot: "screen-business-connexion", caption: "Connexion par numéro et code PIN" },
       { slot: "screen-business-encaissement", caption: "Monnaie électronique ou espèces" },

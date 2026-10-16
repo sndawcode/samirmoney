@@ -1,6 +1,5 @@
 "use client";
 
-import { useInView } from "motion/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { services, type Service } from "@/content/fr/services";
@@ -8,7 +7,7 @@ import { productsSection } from "@/content/fr/products";
 import { eventClasses } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import { frTypo } from "@/lib/fr-typography";
-import { ServiceScene } from "@/components/motion/service-scenes";
+import { LazyServiceScene } from "@/components/motion/lazy-service-scene";
 
 /**
  * Home S2. ≥ lg: sticky stage (left) driven by the active item (scroll spy, hover or focus).
@@ -36,7 +35,7 @@ export function ServicesExplorer() {
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
       <div className="hidden lg:col-span-6 lg:block">
         <div className="sticky top-[calc(var(--header-h)+3rem)]">
-          <ServiceScene key={active} id={services[active].id} play />
+          <LazyServiceScene key={active} id={services[active].id} />
         </div>
       </div>
       <ol className="flex flex-col gap-4 lg:col-span-6 lg:gap-0">
@@ -66,8 +65,6 @@ type ServiceItemProps = {
 };
 
 function ServiceItem({ service, index, active, onActivate, ref }: ServiceItemProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(cardRef, { once: true, amount: 0.5 });
   return (
     <li
       ref={ref}
@@ -76,15 +73,17 @@ function ServiceItem({ service, index, active, onActivate, ref }: ServiceItemPro
       onFocusCapture={onActivate}
       className={cn(
         "rounded-xl bg-mist p-5 lg:rounded-none lg:border-t lg:border-ink-950/10 lg:bg-transparent lg:px-0 lg:py-8",
-        "lg:transition-opacity lg:duration-(--dur-ui)",
-        !active && "lg:opacity-50",
+        "lg:transition-colors lg:duration-(--dur-ui)",
+        active && "lg:border-ink-950",
       )}
     >
-      <div ref={cardRef} className="mb-5 lg:hidden">
-        <ServiceScene id={service.id} play={inView} className="bg-paper" />
+      <div className="mb-5 lg:hidden">
+        <LazyServiceScene id={service.id} className="bg-paper" />
       </div>
       <p className="text-eyebrow text-graphite">{String(index + 1).padStart(2, "0")}</p>
-      <h3 className="mt-3 text-h3">{frTypo(service.name)}</h3>
+      <h3 className={cn("mt-3 text-h3 lg:transition-colors", !active && "lg:text-graphite")}>
+        {frTypo(service.name)}
+      </h3>
       <p className="mt-3 max-w-[46ch] text-body text-graphite">{frTypo(service.line)}</p>
       <Link
         href={service.href}

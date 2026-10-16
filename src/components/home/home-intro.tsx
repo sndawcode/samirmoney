@@ -32,7 +32,7 @@ export function HomeIntro() {
           </Lead>
         </div>
         <div className="flex flex-col gap-4">
-          <Eyebrow as="span">{productsSection.eyebrow}</Eyebrow>
+          <Eyebrow as="h2">{productsSection.eyebrow}</Eyebrow>
           <ProductBento />
         </div>
       </Container>

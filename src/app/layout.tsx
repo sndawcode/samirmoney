@@ -13,7 +13,6 @@ import { MegaMenu } from "@/components/layout/mega-menu";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { MotionProvider } from "@/components/motion/motion-provider";
 import { SaveDataFlag } from "@/components/motion/save-data-flag";
 import { WhatsAppButton } from "@/components/ui/contact-links";
 import { Photo } from "@/components/ui/photo";
@@ -72,26 +71,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {ui.skipLink}
         </a>
         <SaveDataFlag />
-        <MotionProvider>
-          <SiteHeader
-            logo={<Logo />}
-            navigation={<MegaMenu visuals={megaMenuVisuals} />}
-            mobileMenu={
-              <MobileMenu
-                extras={
-                  <>
-                    <StoreBadges app="samirMoney" />
-                    <WhatsAppButton prefill={contactPage.whatsappPrefill} page="menu" />
-                  </>
-                }
-              />
-            }
-          />
-          <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
-            {children}
-          </main>
-          <SiteFooter />
-        </MotionProvider>
+        <SiteHeader
+          logo={<Logo />}
+          navigation={<MegaMenu visuals={megaMenuVisuals} />}
+          mobileMenu={
+            <MobileMenu
+              extras={
+                <>
+                  <StoreBadges app="samirMoney" />
+                  <WhatsAppButton prefill={contactPage.whatsappPrefill} page="menu" />
+                </>
+              }
+            />
+          }
+        />
+        <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
+          {children}
+        </main>
+        <SiteFooter />
         <JsonLd data={[organizationJsonLd(getMedia("brand-samirmoney").src), websiteJsonLd()]} />
         {plausibleDomain && (
           <Script

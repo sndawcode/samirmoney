@@ -186,9 +186,9 @@
 /* ── Home bento (§9.1-S1) ─────────────────────────────────────────── */
 
 /* Load-in stagger: tiles from scale .96 and blur 6px. CSS-only so the first row paints without JS. */
+/* No opacity in the keyframes: elements that start invisible are not LCP candidates until they finish. */
 @keyframes tile-in {
   from {
-    opacity: 0;
     transform: scale(0.96);
     filter: blur(6px);
   }
@@ -294,4 +294,50 @@
 [data-save-data] .ambient-glow,
 [data-save-data] .grain::after {
   display: none;
+}
+
+/* ── Reveal (§6): hidden only when JS runs and motion is allowed ── */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal="self"],
+  [data-reveal="stagger"] > [data-reveal-item] {
+    transition:
+      opacity var(--dur-reveal) var(--ease-out-expo),
+      transform var(--dur-reveal) var(--ease-out-expo),
+      filter var(--dur-reveal) var(--ease-out-expo);
+  }
+  [data-reveal="self"]:not([data-shown]),
+  [data-reveal="stagger"]:not([data-shown]) > [data-reveal-item] {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(6px);
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(2) {
+    transition-delay: calc(1 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(3) {
+    transition-delay: calc(2 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(4) {
+    transition-delay: calc(3 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(5) {
+    transition-delay: calc(4 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(6) {
+    transition-delay: calc(5 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(n + 7) {
+    transition-delay: calc(6 * var(--stagger));
+  }
+}
+
+/* Seal ring draws on once (600 ms, §9.1-S4); drawn by default without JS or with reduced motion. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .seal-ring {
+    stroke-dasharray: 1;
+    transition: stroke-dashoffset 600ms var(--ease-out-expo);
+  }
+  svg:not([data-shown]) > .seal-ring {
+    stroke-dashoffset: 1;
+  }
 }

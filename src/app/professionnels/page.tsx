@@ -91,7 +91,11 @@ export default function ProfessionnelsPage() {
             </div>
             <Checklist items={page.business.features} className="lg:col-span-6 lg:pt-10" />
           </div>
-          <ul className="-mx-(--gutter) flex snap-x gap-4 overflow-x-auto px-(--gutter) pb-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
+          <ul
+            tabIndex={0}
+            aria-label={page.business.screensLabel}
+            className="-mx-(--gutter) flex snap-x gap-4 overflow-x-auto px-(--gutter) pb-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0"
+          >
             {page.business.screens.map((screen) => (
               <li
                 key={screen.slot}
@@ -215,7 +219,7 @@ function HeroComposition() {
         <ProductVisual
           product={productById("tpe")}
           sizes="(min-width: 1024px) 18vw, 40vw"
-          eager
+          preload
           className="h-full"
         />
       </div>

@@ -1,8 +1,9 @@
 "use client";
 
 import { Check, Cpu, ShoppingCart, Smartphone } from "lucide-react";
-import { useInView, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useInViewOnce } from "@/hooks/use-in-view";
+import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
 import { apiFlow } from "@/content/fr/home";
 import { cn } from "@/lib/cn";
 import { frTypo } from "@/lib/fr-typography";
@@ -38,9 +39,8 @@ const edgePath = (from: NodeId, to: NodeId) => {
  * Illustrative only — no endpoints, keys or payloads. Static with reduced motion.
  */
 export function FlowDiagram() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
-  const reduce = useReducedMotion();
+  const [ref, inView] = useInViewOnce<HTMLDivElement>(0.4);
+  const reduce = usePrefersReducedMotion();
   const [focus, setFocus] = useState<NodeId | null>(null);
   const [confirmed, setConfirmed] = useState(false);
   const animate = inView && !reduce;

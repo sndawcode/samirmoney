@@ -1,13 +1,13 @@
 "use client";
 
-import { m, useReducedMotion } from "motion/react";
+import { useInViewOnce } from "@/hooks/use-in-view";
 import { cn } from "@/lib/cn";
 
 const DIAMETER = { sm: 112, lg: 176 } as const;
 
-/** Circular typographic seal; the ring draws on once when it enters the viewport (600 ms, §9.1-S4). */
+/** Circular typographic seal; the ring draws on once when it enters the viewport (CSS, §9.1-S4). */
 export function SealRing({ text, size }: { text: string; size: keyof typeof DIAMETER }) {
-  const reduce = useReducedMotion();
+  const [ref, inView] = useInViewOnce<SVGSVGElement>(0.6);
   const d = DIAMETER[size];
   const r = d / 2 - 3;
   return (
@@ -16,7 +16,14 @@ export function SealRing({ text, size }: { text: string; size: keyof typeof DIAM
       className="relative grid shrink-0 place-items-center"
       style={{ width: d, height: d }}
     >
-      <svg width={d} height={d} viewBox={`0 0 ${d} ${d}`} className="absolute inset-0 -rotate-90">
+      <svg
+        ref={ref}
+        data-shown={inView ? "" : undefined}
+        width={d}
+        height={d}
+        viewBox={`0 0 ${d} ${d}`}
+        className="absolute inset-0 -rotate-90"
+      >
         <circle
           cx={d / 2}
           cy={d / 2}
@@ -25,17 +32,14 @@ export function SealRing({ text, size }: { text: string; size: keyof typeof DIAM
           strokeWidth="1"
           className="stroke-ink-950/15 ink:stroke-white/15"
         />
-        <m.circle
+        <circle
           cx={d / 2}
           cy={d / 2}
           r={r}
           fill="none"
           strokeWidth="2"
-          className="stroke-samir-700 ink:stroke-samir-500"
-          initial={reduce ? false : { pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          pathLength={1}
+          className="seal-ring stroke-samir-700 ink:stroke-samir-500"
         />
       </svg>
       <span

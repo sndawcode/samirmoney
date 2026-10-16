@@ -11,23 +11,25 @@ type ProductVisualProps = {
   sizes: string;
   className?: string;
   eager?: boolean;
+  /** The route's LCP image: preloaded with high priority (§13). */
+  preload?: boolean;
 };
 
 /**
  * The real visual of a product, framed the same way on the home tile and the product hero,
  * so the browser can morph one into the other (shared-element view transition, progressive).
  */
-export function ProductVisual({ product, sizes, className, eager }: ProductVisualProps) {
+export function ProductVisual({ product, sizes, className, eager, preload }: ProductVisualProps) {
   return (
     <ViewTransition name={`product-${product.id}`} share="morph" default="none">
       <div className={cn("relative flex items-end justify-center", className)}>
-        <VisualFor product={product} sizes={sizes} eager={eager} />
+        <VisualFor product={product} sizes={sizes} eager={eager} preload={preload} />
       </div>
     </ViewTransition>
   );
 }
 
-function VisualFor({ product, sizes, eager }: Omit<ProductVisualProps, "className">) {
+function VisualFor({ product, sizes, eager, preload }: Omit<ProductVisualProps, "className">) {
   switch (product.id) {
     case "api":
       return <ApiCodeCard />;
@@ -53,6 +55,7 @@ function VisualFor({ product, sizes, eager }: Omit<ProductVisualProps, "classNam
           slot={product.media}
           sizes={sizes}
           eager={eager}
+          preload={preload}
           alt=""
           className="max-h-full w-auto object-contain drop-shadow-[0_24px_24px_rgb(0_0_0/0.35)]"
         />

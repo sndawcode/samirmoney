@@ -8,7 +8,7 @@ import { ui } from "@/content/fr/ui";
 import { frTypo } from "@/lib/fr-typography";
 import { breadcrumbJsonLd, JsonLd } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
-import { ServiceSceneInView } from "@/components/motion/service-scenes";
+import { LazyServiceScene } from "@/components/motion/lazy-service-scene";
 import { KineticHeadline } from "@/components/motion/kinetic-headline";
 import { LocalNav } from "@/components/product/local-nav";
 import { ContactBand } from "@/components/ui/contact-band";
@@ -140,10 +140,7 @@ function ServiceSection({ detail, theme }: { detail: ServiceDetail; theme: "pape
           </div>
         </div>
         <div className="flex flex-col gap-4 lg:col-span-6">
-          <ServiceSceneInView
-            id={detail.id}
-            className={theme === "mist" ? "bg-paper" : undefined}
-          />
+          <LazyServiceScene id={detail.id} className={theme === "mist" ? "bg-paper" : undefined} />
           <Placeholder label={detail.photo.placeholder} ratio={detail.photo.ratio} />
         </div>
       </Container>
