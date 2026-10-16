@@ -17,3 +17,10 @@ export const nav = {
   professionnelsOverview: { label: "Découvrir SamirPay", href: "/professionnels" } satisfies Cta,
   servicesOverview: { label: "Tous nos services", href: "/services" } satisfies Cta,
 } as const;
+
+/** Label of a primary navigation entry (breadcrumbs, JSON-LD). */
+export function navLabel(href: string): string {
+  const item = nav.primary.find((entry) => entry.href === href);
+  if (!item) throw new Error(`No navigation entry for "${href}"`);
+  return item.label;
+}

@@ -36,7 +36,7 @@ function VisualFor({ product, sizes, eager }: Omit<ProductVisualProps, "classNam
       // Phones rise from the bottom edge: top of the screen visible, bottom faded (§5.3 "bold crops").
       return product.media ? (
         <div className="h-full w-full overflow-hidden [mask-image:linear-gradient(to_bottom,black_75%,transparent)]">
-          <DeviceFrame kind="phone" className="mx-auto w-[min(78%,210px)]">
+          <DeviceFrame kind="phone" className="mx-auto w-[min(78%,var(--phone-max,210px))]">
             <Photo slot={product.media} sizes={sizes} eager={eager} alt="" className="w-full" />
           </DeviceFrame>
         </div>
