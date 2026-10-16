@@ -58,15 +58,23 @@ function afterLoadAndIdle(callback: () => void): () => void {
  * Home S1 background: the Three.js "ecosystem". Decorative (aria-hidden), loaded on every device after first
  * paint, paused off-screen and in background tabs, a still frame with reduced motion. If WebGL is unavailable
  * the CSS glow underneath stays as the background.
+ *
+ * Each mount creates its own <canvas>: with Cache Components, Next.js hides a page you navigate away from
+ * (React Activity) instead of unmounting it, running this cleanup. Disposing the scene loses the canvas's WebGL
+ * context for good, so a returning page must draw on a fresh canvas, never the old one.
  */
 export function EcosystemCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const hostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const host = hostRef.current;
     // The full-screen hero block (falls back to the section) drives visibility and scroll progress.
-    const section = canvas?.closest<HTMLElement>("[data-hero]") ?? canvas?.closest("section");
-    if (!canvas || !section) return;
+    const section = host?.closest<HTMLElement>("[data-hero]") ?? host?.closest("section");
+    if (!host || !section) return;
+    const canvas = document.createElement("canvas");
+    canvas.className = "ecosystem-canvas size-full";
+    canvas.setAttribute("aria-hidden", "true");
+    host.append(canvas);
 
     let scene: EcosystemScene | null = null;
     let disposed = false;
@@ -172,14 +180,11 @@ export function EcosystemCanvas() {
       cancelIdle();
       for (const cleanup of cleanups) cleanup();
       scene?.dispose();
+      canvas.remove();
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className="ecosystem-canvas pointer-events-none absolute inset-0 -z-10 size-full"
-    />
+    <div ref={hostRef} aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10" />
   );
 }
