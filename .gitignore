@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw assets (never shipped)
+/assets/drive/
+/assets/legacy/
+
+# test output
+/test-results/
+/playwright-report/
+/.lighthouseci/
+/assets/derived/

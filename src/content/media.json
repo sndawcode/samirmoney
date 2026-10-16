@@ -1,0 +1,98 @@
+{
+  "tile-samir-money": {
+    "src": "/media/photos/tile-samir-money-6ba03dfa.png",
+    "width": 262,
+    "height": 520,
+    "alt": "Écran d’accueil de l’application Samir Money",
+    "blurDataURL": "data:image/webp;base64,UklGRggBAABXRUJQVlA4IPwAAABQBwCdASoYADAAPulipE2pJaMiNVgIASAdCWQAt+t1FA7R1tVHgwFmev6XInARYCjAHIDPRR2/F5HcMrZIg3qx8aMAAMsl1dGEAopWblCAfTO9V5wMkr6xj/eYQzdaqX/ofHcBX9COcuOn5hHrlprEBmHuzi3yGZZH6XN+L2tTewBcGTvoAJ14A4YFNB79rl+49743i+XHOeEjlk8cvG3BAhEAkjGaM+q3LZLZHIQX3fj7U9fFsPzO9+8n5unYoRXitMY3pS3WD/ls8NPDJQZVHIzGT/HdSAAT9Tga9JWyUIlS/gaCoQ1tLczdUoGGszxIQcYfmUxBf3LegAA=",
+    "color": "transparent"
+  },
+  "tile-tpe": {
+    "src": "/media/photos/tile-tpe-b0fce63b.png",
+    "width": 645,
+    "height": 985,
+    "alt": "Terminal de paiement SamirPay TPE",
+    "blurDataURL": "data:image/webp;base64,UklGRuICAABXRUJQVlA4WAoAAAAQAAAAFwAAJAAAQUxQSG4BAAABkLNtm2m7+t+ZiW1Xts3KTpvSScdOFTs7KW2bnVPZdipzvvneYtbMiogJgHMGcZV2PasDziK3UrvxCw89+y53ZtSEsaZo0NJzL3+xUPlyUTMUDfJUMngJqiLKHyuLhvO/hMBk8MphcADqvqUy+z/XwQLAHvq8wKsw0XxKmXd1YAAMZUnlr86wABp8oWZROAkOMDhNyfNcFFXAgjLCw7CARce/1BJXImNwjFJibwSLbl+pOYG3YADAYUqZt3VhAMBiByVD+acLbOTQn5pB4Ri4yKDGQ4YMzzlFcNhLyRBuzphd4hJsgUUPpaYCn1SBiQyqPWBIKb+2hI3gsIuSonIwXGJWlnBawqIXqTmrEgY1njLknEzA4hAl5zaSDgtyAt/UzxhK1YTyZ6eEQaP3DEXqPUckYHGZEqlX5bFaKYdlURDl/xNjHHKG04sov2/vCliTMqj6gP/4akkLwDrkGgy5tXVybcA6lDRwFQFnUQxWUDggTgEAABAHAJ0BKhgAJQA+7XKwU6mmpCKlaAEwHYlnAAgQSAEqB7ns0oHu6rbvbhFLJbHY69a6lKysdHKP2P5bJNO9J0S4AP7uEs5OaBaSHrRB6hRz93M5Rts9Y2brW/FS7it7yXQiYu80KJsdoBaQjjCMpxMu6XsCJb5MIKQ4PQNumxfbr7NdaTBy+/u0gIl9yfbNCtKwnniXUYCImXs0XcQ5vmfQnFVTrRH4j7fbpC64365359rr3Va2oApVmvL4hn+topD4E/D9i6NI310oiR6OmtTSs2ioyVv5FtWH9ssJPJBDbF1H+Taef/ptpFzCg8fXP/X131xbH61tveQEFfO8HVp/5MEhiYt9zTTUxM616/QE5oUr1A6DL5VNbFMn3/0fx+0L2wnjLbUpMdf3Xp0HOv0hLjr3549W78gOVtn1Ag4a/h9InuxsOdNMAX44AAA=",
+    "color": "transparent"
+  },
+  "pro-tpe-1": {
+    "src": "/media/photos/pro-tpe-1-14884bf7.png",
+    "width": 700,
+    "height": 1503,
+    "alt": "Terminal SamirPay TPE vu de face, écran de connexion",
+    "blurDataURL": "data:image/webp;base64,UklGRh4CAABXRUJQVlA4WAoAAAAQAAAAFwAAMwAAQUxQSAkBAAABgFvbtmplf3d3d0P7oBBCmiElZpBTAZG7u7t/938y3kYKiIgJUMFotym1mwCgsHd9cfn9i6uTcagxIz1R2pNZqM0n0u0r7cmlHfZ7GYjSgbx44HyllANwf1KqQXjKlGYYgTqlHUGoyokiTAuSIj9R4UQRKFNaEfi/KP0ReN8J0pVp+D85c/C+MnoyD/8nZwHBCmdRzenLmjZY5WzqQhXOgTFa45yYErwq59gUr3COjAnSoTFR5RwYkxXOniFTZeV+Xb7GytV/XYOVIe0a0qQtXZK08QOJ+v+wrmWtaZMNzro2W2OITCDx1BsQmzE4n2UgSgdy6wamnstf5e9/lR8noQackbDSiAMAAFZQOCDuAAAAMAcAnQEqGAA0AD7tYKhOKaUjojAYDAEwHYlnAAgd4fSB7UoeS2drVxGIT2IzG7ubFjiWrUhbQcr1rNX6h1aaVBcAAP7vv4meL8AOn6SzQvW55VsuvRMsl4frkHkGwyYTDUa7YF6z30cJ89ZIWOuoa/4U3V3EnGZXHW5bcR4ngwARnEPmj7Fc0sB2rzmSv5ff9sKqAa/plg+eI125H7YcoBbomivp2jMSuqQSvNkmyrBI8qltxoWFFckGp7tXxUvhzD7E+SbLb+25UAl1SIJ9MeUBRBjns7V+JHT+XLQCUekO5wwtSQmzXybxJ2AAAA==",
+    "color": "transparent"
+  },
+  "tile-web-admin": {
+    "src": "/media/photos/tile-web-admin-f32d5bbe.png",
+    "width": 1468,
+    "height": 910,
+    "alt": "Tableau de bord SamirPay Web Admin : montant total encaissé, soldes par opérateur et liste des transactions",
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAwAwCdASoYAA8APu1iqU2ppaOiMAgBMB2JaQAAetvagYAAAP7wfI6HnQVaZC2sYtKroGCIjzafgLzDBuzbyDwOUbqpCAAA",
+    "color": "transparent"
+  },
+  "screen-business-connexion": {
+    "src": "/media/photos/screen-business-connexion-3cee8e48.jpg",
+    "width": 471,
+    "height": 1023,
+    "alt": "SamirPay Business : connexion par numéro de téléphone et code PIN",
+    "blurDataURL": "data:image/webp;base64,UklGRsIAAABXRUJQVlA4ILYAAACQBgCdASoYADQAPu1sq08ppqOiLBqrMTAdiWcAAC65ZjsV2agqC+D/qB5qTQYbwsGxy5zaOKveLZSasFgAAP7x4WBEWNq3/usMWhxPYaOZ0W0T8pmKN28nKvIDbSyHukBT1LdZcHLRbVkG+qINjT92Yw+/skEQ81/EJZnNhjYVSi5Y/xR4NGJLBrlQ8FbeA1gL1ccgEpO4AcCbytcA8odQiMqAzJCkdGaGRfWKtNurhuBgOwAAAA==",
+    "color": "rgb(248 248 248)"
+  },
+  "screen-business-encaissement": {
+    "src": "/media/photos/screen-business-encaissement-7f31bbfc.jpg",
+    "width": 471,
+    "height": 1023,
+    "alt": "SamirPay Business : choix du moyen de paiement, monnaie électronique ou espèces",
+    "blurDataURL": "data:image/webp;base64,UklGRsYAAABXRUJQVlA4ILoAAABwBgCdASoYADQAPu1mqU6ppaOiLBqsyTAdiWUAzcARB2vY0mv/LnsZyzbdZoF5txPYI+ONUDtesZitqhAA/vHhZWM7Ni/usMOpYN8o3L9XnScfvf654G6dwybDw7y9xwU0i7qa26cQsEhssZyMW6nYi9UIl1G887zzUt5g522/WggAy+WKvUAB+HAOXVVPBjnTWzMJm1CRJfFytQJ5nFeNH7tq4Q/XtcK/B0EdZpY4Im9FsvPKgAgqAAA=",
+    "color": "rgb(248 248 248)"
+  },
+  "screen-business-especes": {
+    "src": "/media/photos/screen-business-especes-4e130a7d.jpg",
+    "width": 471,
+    "height": 1023,
+    "alt": "SamirPay Business : enregistrement d’un encaissement en espèces",
+    "blurDataURL": "data:image/webp;base64,UklGRs4AAABXRUJQVlA4IMIAAABQBgCdASoYADQAPu1srVEppaQirBVZmTAdiWMAy6avEDbNUkn/WAkkHG6LWdPx7jstYXAaF8UMaJdHgAD+8eIu3/1of3WGHUsge/yKHNxwumGqPedEMbuXrvhnsGk8XUt3OVkYkgsuqHWluXhd2CGOHOovPIfj6+oYnhhpbv31NO1vJpFpxroTkyJg5Od5Wv4bRPeQZw+39DKMW94nrDp29E8tk+PXBzsUiSDm6/5Tj467Enc8hFYkQu85FS8rWOAAAA==",
+    "color": "rgb(248 248 248)"
+  },
+  "screen-business-lien": {
+    "src": "/media/photos/screen-business-lien-8eec1110.jpg",
+    "width": 471,
+    "height": 1023,
+    "alt": "SamirPay Business : lien de paiement permanent à partager",
+    "blurDataURL": "data:image/webp;base64,UklGRggBAABXRUJQVlA4IPwAAAAQBwCdASoYADQAPu1oq08ppiOiKA1RMB2JZADQJiAAFQJRxpE2HfAelbtdkVd/3zrmMMBfidnPdtRoItLRbYlgAAD+8ip0mCHfkf0U3/OnznBeHi4f1fUW5HbvfTGPu07kAY3yVybW2d+yvBFvc0vX2TiFl2cXboKgPENNoLBP1wPSlJMgMOboCNZ1SSKtEFtrB2JTu1OXbqbGyC9rAeQDRY41GAPrvqg37hOxvso2imk9S58+CAtQfYvsGMEUf0n3ssLl8FlIcsln0YaYnmavAKuVTxeCSohqpHKbsn1wpfZ+Rxv4otX62sUm4Cf3TaWaWFKuH0M4ANLJYAA=",
+    "color": "rgb(248 248 248)"
+  },
+  "brand-samirmoney": {
+    "src": "/media/photos/brand-samirmoney-269d66fd.png",
+    "width": 561,
+    "height": 100,
+    "alt": "Samir Money",
+    "blurDataURL": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4WAoAAAAQAAAAFwAAAwAAQUxQSGEAAAAACIymERtUDwICBgQiBgMHBQQIAgYBBgIDk5THLVi3Yn2HkIKbiH6QhGx2g3pthmpodHO+Gzikm7Swc3rIe2p3iJmZjWSwmpOXACZLEAUaChQPCwsUCwkLChEXCAkNCGVCAFZQOCBUAAAA0AMAnQEqGAAEAD7tYqlNqaWjojAIATAdiUAXyQTZHfJfvxX61BgAAOEXzlQ0do3QexIqqG8+bsFA80p0tRnOub65P0619XarEQs+4JMyddPoK3QA",
+    "color": "transparent"
+  },
+  "brand-samirmoney-white": {
+    "src": "/media/photos/brand-samirmoney-white-6d47d31b.png",
+    "width": 561,
+    "height": 100,
+    "alt": "Samir Money",
+    "blurDataURL": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4WAoAAAAQAAAAFwAAAwAAQUxQSGEAAAAACIymERtUDwICBgQiBgMHBQQIAgYBBgIDk5THLVi3Yn2HkIKbiH6QhG12g3pthmpodHO+Gzikm7Swc3rIe2p3iJqYjGSwmpOXACZLEAUaChQPCwsUCwkLChEXCAkNCGVCAFZQOCAmAAAAsAIAnQEqGAAEAD7tYqlNqaWjojAIATAdiWkAAHsgAP7w3y4AAAA=",
+    "color": "transparent"
+  },
+  "brand-samirpay": {
+    "src": "/media/photos/brand-samirpay-7cd6765e.png",
+    "width": 1500,
+    "height": 391,
+    "alt": "SamirPay",
+    "blurDataURL": "data:image/webp;base64,UklGRjIBAABXRUJQVlA4WAoAAAAQAAAAFwAABQAAQUxQSIgAAAABgGLb2rLlPu/3u7u7u/v/z8MFh0ZykruTILs1Sw6ZyoRYjCEiEiD8JRABIAYigCH4fCG2DzvB8Tl1AHwh8RnHAMn73K+5/jI0t7i/t36yMD01uDUzlgJym8sPqvLV2f33+uTpT331+OZ5/U0FMNQndLKaNRV1mnwp3XLOEezsgQGE/wUANCIAVlA4IIQAAADQAwCdASoYAAYAPu1orU2ppqSiMAgBMB2JbACdAYtKae5ZAwzgdnAAzcXDb6n64d59LJOFbxkih2q6sAiDBRPsvo2l4sQ/J+sawzvfV+6vs/x9VUjjen75hlA6AGOT3KUhW8CiNEGPWx4mhwki4sd+RDU/+mw6S88NP/4Yf/8D9tAAAAA=",
+    "color": "transparent"
+  },
+  "brand-samirpay-white": {
+    "src": "/media/photos/brand-samirpay-white-937eb88c.png",
+    "width": 476,
+    "height": 97,
+    "alt": "SamirPay",
+    "blurDataURL": "data:image/webp;base64,UklGRt4AAABXRUJQVlA4WAoAAAAQAAAAFwAABAAAQUxQSHkAAAAAABucewQALi0AAAAAAAAXBAAAAAAAAAEAD8Kj8TEevn0tYT9jZFhmX0tfQypdSCw9gaYpoRAVi6WEqr6GkJS3n1eLhYyvkJlnJiy7sS4IfoJsioZNUFqMYTKxYWqUPsIzAAANIAUAAwMABAABAQEBACNHAAQAJ3kCAFZQOCA+AAAAEAMAnQEqGAAFAD7tYqlNqaWjojAIATAdiUAACv6bRyAAANtb1mto6JGRDonkYwmKD/ypsh3g7rlfH7jAAAA=",
+    "color": "transparent"
+  }
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "slot": "tile-samir-money",
+    "file": "assets/derived/samir-money-home.png",
+    "kind": "tile",
+    "alt": "Écran d’accueil de l’application Samir Money",
+    "release": "n/a"
+  },
+  {
+    "slot": "tile-tpe",
+    "file": "assets/legacy/products/tpe-01.png",
+    "kind": "tile",
+    "alt": "Terminal de paiement SamirPay TPE",
+    "release": "n/a"
+  },
+  {
+    "slot": "pro-tpe-1",
+    "file": "assets/legacy/products/tpe-04.webp",
+    "kind": "card",
+    "alt": "Terminal SamirPay TPE vu de face, écran de connexion",
+    "release": "n/a"
+  },
+  {
+    "slot": "tile-web-admin",
+    "file": "assets/derived/web-admin-dashboard.png",
+    "kind": "card",
+    "alt": "Tableau de bord SamirPay Web Admin : montant total encaissé, soldes par opérateur et liste des transactions",
+    "release": "n/a"
+  },
+  {
+    "slot": "screen-business-connexion",
+    "file": "assets/legacy/screens/samirpay-business-01.webp",
+    "kind": "thumb",
+    "alt": "SamirPay Business : connexion par numéro de téléphone et code PIN",
+    "release": "n/a"
+  },
+  {
+    "slot": "screen-business-encaissement",
+    "file": "assets/legacy/screens/samirpay-business-03.webp",
+    "kind": "thumb",
+    "alt": "SamirPay Business : choix du moyen de paiement, monnaie électronique ou espèces",
+    "release": "n/a"
+  },
+  {
+    "slot": "screen-business-especes",
+    "file": "assets/legacy/screens/samirpay-business-07.webp",
+    "kind": "thumb",
+    "alt": "SamirPay Business : enregistrement d’un encaissement en espèces",
+    "release": "n/a"
+  },
+  {
+    "slot": "screen-business-lien",
+    "file": "assets/legacy/screens/samirpay-business-09.webp",
+    "kind": "thumb",
+    "alt": "SamirPay Business : lien de paiement permanent à partager",
+    "release": "n/a"
+  },
+  {
+    "slot": "brand-samirmoney",
+    "file": "assets/legacy/brand/samirmoney-logo-header.png",
+    "kind": "thumb",
+    "alt": "Samir Money",
+    "release": "n/a"
+  },
+  {
+    "slot": "brand-samirmoney-white",
+    "file": "assets/legacy/brand/samirmoney-logo-white.png",
+    "kind": "thumb",
+    "alt": "Samir Money",
+    "release": "n/a"
+  },
+  {
+    "slot": "brand-samirpay",
+    "file": "assets/legacy/brand/samirpay-logo-hires.webp",
+    "kind": "thumb",
+    "alt": "SamirPay",
+    "release": "n/a"
+  },
+  {
+    "slot": "brand-samirpay-white",
+    "file": "assets/legacy/brand/samirpay-logo-white.webp",
+    "kind": "thumb",
+    "alt": "SamirPay",
+    "release": "n/a"
+  }
+]

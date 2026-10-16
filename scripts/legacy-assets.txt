@@ -1,0 +1,63 @@
+# brand
+brand/samirmoney-logo-header.png|https://samirmoney.com/wp-content/uploads/2024/06/logo-samirmoney-header.png
+brand/samirmoney-logo-white.png|https://samirmoney.com/wp-content/uploads/2024/06/logo-samirmoney-white.png
+brand/samirmoney-logo-footer.png|https://samirmoney.com/wp-content/uploads/2019/02/logo-samirmoney-footer.png
+brand/samirmoney-icon-512.png|https://samirmoney.com/wp-content/uploads/2024/07/cropped-favicon-2.png
+brand/samirpay-logo.png|https://samirpay.com/wp-content/uploads/2024/08/logo_samir_pay3.png
+brand/samirpay-logo-hires.webp|https://samirpay.com/wp-content/uploads/2024/08/Logo-samirpay-.webp
+brand/samirpay-logo-white.webp|https://samirpay.com/wp-content/uploads/2024/08/logo_samir_pay_white1.webp
+brand/samirpay-favicon.webp|https://samirpay.com/wp-content/uploads/2024/08/favicons.webp
+# products
+products/tpe-01.png|https://samirpay.com/wp-content/uploads/2024/12/TPE.-V2-1-1.png
+products/tpe-02.png|https://samirpay.com/wp-content/uploads/2024/11/TPE-22.png
+products/tpe-03.jpg|https://samirpay.com/wp-content/uploads/2024/11/TPE-V2-.jpg
+products/tpe-04.webp|https://samirpay.com/wp-content/uploads/2024/08/TPE-resized1.webp
+products/tpe-05.webp|https://samirpay.com/wp-content/uploads/2024/08/TPE-1.webp
+products/tpe-06-front.png|https://samirmoney.com/wp-content/uploads/2024/09/QashierXS-front-ph-reviewed.png
+# screens
+screens/samir-money-phone-01.png|https://samirmoney.com/wp-content/uploads/2024/09/rev-tel-1-1-1-reviewed.png
+screens/samir-money-phone-02.png|https://samirmoney.com/wp-content/uploads/2024/06/rev-tel-1-1-1.png
+screens/mobile-mockup-samirpay.webp|https://samirpay.com/wp-content/uploads/2024/08/mobile1-2-709x1024-1.webp
+screens/inscription.webp|https://samirpay.com/wp-content/uploads/2024/08/inscription.webp
+screens/web-admin-dashboard.png|https://samirpay.com/wp-content/uploads/2024/11/dashboard.png
+screens/web-admin-capture.png|https://samirpay.com/wp-content/uploads/2024/11/Capture-decran-2024-11-10-a-22.01.40.png
+screens/samirpay-business-01.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/2d/77/00/2d770055-3716-e6f7-a5e0-e8817da726df/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.52.01.png/471x1024.webp
+screens/samirpay-business-02.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a7/80/10/a78010a0-6763-bebe-d2f9-160f32f4bb58/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.52.18.png/471x1024.webp
+screens/samirpay-business-03.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/b7/bd/c6/b7bdc610-52fb-9355-53b9-42203049b808/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.52.22.png/471x1024.webp
+screens/samirpay-business-04.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a4/31/34/a43134ad-adba-80a6-4b33-9c53f0ffe7c3/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.52.27.png/471x1024.webp
+screens/samirpay-business-05.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/da/2d/82/da2d82a9-23c2-b7b2-913d-38c39c4a8849/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.53.01.png/471x1024.webp
+screens/samirpay-business-06.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/56/4d/6d/564d6d88-d7f7-222c-c13c-9a4fc97ce90c/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.53.24.png/471x1024.webp
+screens/samirpay-business-07.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/2a/f5/fd/2af5fd17-22dc-f7f9-62da-dd553b92068a/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.54.13.png/471x1024.webp
+screens/samirpay-business-08.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f2/5d/6a/f25d6ad5-b7b2-c39e-c987-f0620803a424/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.53.54.png/471x1024.webp
+screens/samirpay-business-09.webp|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/97/1d/62/971d6238-bffc-1bb2-0e8e-130b97c19130/Simulator_Screenshot_-_iPhone_16_-_2025-03-26_at_14.53.35.png/471x1024.webp
+# illustrations (reference)
+illustrations/services-updated2.png|https://samirpay.com/wp-content/uploads/2024/12/services-updated2.png
+illustrations/services-updated.png|https://samirpay.com/wp-content/uploads/2024/12/services-updated.png
+illustrations/integration.webp|https://samirpay.com/wp-content/uploads/2024/08/integration-content-img1.webp
+illustrations/images-composite.webp|https://samirpay.com/wp-content/uploads/2024/08/IMAGES-.webp
+# partners & billers (validation required)
+partners/senelec.png|https://samirmoney.com/wp-content/uploads/2024/06/client_senelect.png
+partners/woyofal.png|https://samirmoney.com/wp-content/uploads/2024/06/client_woyofal.png
+partners/seneau.png|https://samirmoney.com/wp-content/uploads/2024/06/client_seneau.png
+partners/oolu.png|https://samirmoney.com/wp-content/uploads/2024/06/client_oolu.png
+partners/rapido.png|https://samirmoney.com/wp-content/uploads/2024/06/client_rapidio.png
+partners/der.png|https://samirmoney.com/wp-content/uploads/2024/06/client_der.png
+billers/anim-senelec.png|https://samirmoney.com/wp-content/uploads/2024/06/anim_senelec.png
+billers/anim-seneau.png|https://samirmoney.com/wp-content/uploads/2024/06/anim_seneau.png
+billers/anim-rapido.png|https://samirmoney.com/wp-content/uploads/2024/06/anim_rapido.png
+billers/anim-der.png|https://samirmoney.com/wp-content/uploads/2024/06/anim_der.png
+billers/anim-dgid.png|https://samirmoney.com/wp-content/uploads/2024/06/anim_dgid.png
+billers/anim-touba.png|https://samirmoney.com/wp-content/uploads/2024/06/anim_touba2.png
+# video (transcode before use — A.7)
+video/decaissement-wolof.mp4|https://samirpay.com/wp-content/uploads/2025/02/SAMIR-PAY-DECAISSEMENT-WOLOF.mp4
+video/presentation-samirpay-9x16.mp4|https://samirpay.com/wp-content/uploads/2024/12/Presentation-SAMIRPAY-French-9-16-v5.mp4
+# reference only
+reference/samirpay-hero-bg.jpg|https://samirpay.com/wp-content/uploads/2024/11/bgimage-1536x1127-V2-.jpg
+reference/samirpay-bg.png|https://samirpay.com/wp-content/uploads/2024/08/bgimage.png
+reference/samirmoney-about-bg.jpg|https://samirmoney.com/wp-content/uploads/2024/07/aa_bg_1_captivis2.jpg
+reference/samirmoney-about-layer-1.png|https://samirmoney.com/wp-content/uploads/2024/07/au_img_layer_1_captivis.png
+reference/samirmoney-about-layer-2.png|https://samirmoney.com/wp-content/uploads/2024/07/au_img_layer_2-_captivis.png
+reference/samirmoney-about-image.jpg|https://samirmoney.com/wp-content/uploads/2024/07/images-3-A-propos-.jpg
+reference/samirmoney-section-2.png|https://samirmoney.com/wp-content/uploads/2024/06/2.png
+reference/samirmoney-layers.png|https://samirmoney.com/wp-content/uploads/2024/06/images_layers_1-01-copie.png
+reference/samirmoney-services-layer.png|https://samirmoney.com/wp-content/uploads/2019/02/s_img_layer_1-1.png
