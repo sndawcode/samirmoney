@@ -6,7 +6,6 @@ import { trust } from "@/content/fr/trust";
 import { frTypo } from "@/lib/fr-typography";
 import { ServicesExplorer } from "@/components/home/services-explorer";
 import { FlowDiagram } from "@/components/motion/flow-diagram";
-import { Reveal, RevealItem } from "@/components/motion/reveal";
 import { CredentialSeal } from "@/components/trust/credential-seal";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Eyebrow, Heading, Section } from "@/components/ui/section";
@@ -17,16 +16,17 @@ export function HomeServices() {
   return (
     <Section
       theme="paper"
+      data-gsap-stack-next
       aria-labelledby="home-services-title"
       className="z-10 -mt-8 rounded-t-[32px] shadow-[0_-24px_48px_rgb(5_8_7/0.25)] motion-reduce:mt-0 motion-reduce:rounded-none"
     >
       <Container className="flex flex-col gap-12">
-        <Reveal className="flex flex-col gap-4">
+        <div data-gsap="rise" className="flex flex-col gap-4">
           <Eyebrow>{servicesSection.eyebrow}</Eyebrow>
           <Heading as="h2" id="home-services-title">
             {servicesSection.title}
           </Heading>
-        </Reveal>
+        </div>
         <ServicesExplorer />
       </Container>
     </Section>
@@ -39,30 +39,38 @@ export function HomeApi() {
     <Section theme="ink" texture aria-labelledby="home-api-title">
       <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
         <div className="flex flex-col gap-6 lg:col-span-5">
-          <Eyebrow>{apiSection.eyebrow}</Eyebrow>
-          <Heading as="h2" id="home-api-title">
-            {apiSection.title}
-          </Heading>
-          <p className="text-lead text-smoke">{frTypo(apiSection.lead)}</p>
-          <Reveal as="ul" stagger className="flex flex-col gap-3">
+          <div data-gsap="rise" className="flex flex-col gap-6">
+            <Eyebrow>{apiSection.eyebrow}</Eyebrow>
+            <Heading as="h2" id="home-api-title">
+              {apiSection.title}
+            </Heading>
+            <p className="text-lead text-smoke">{frTypo(apiSection.lead)}</p>
+          </div>
+          <ul className="flex flex-col gap-3">
             {apiSection.items.map((item) => (
-              <RevealItem as="li" key={item} className="flex items-start gap-3">
+              <li data-gsap="rise" key={item} className="flex items-start gap-3">
                 <Check
                   aria-hidden="true"
                   className="mt-1 size-4 shrink-0 text-accent"
                   strokeWidth={2.5}
                 />
                 <span>{frTypo(item)}</span>
-              </RevealItem>
+              </li>
             ))}
-          </Reveal>
-          <div>
+          </ul>
+          <div data-gsap="rise" data-magnetic className="self-start">
             <ButtonLink href="/developpeurs" arrow location="home-api">
               {apiSection.cta}
             </ButtonLink>
           </div>
         </div>
-        <div className="lg:col-span-7">
+        <div className="relative lg:col-span-7">
+          <div
+            aria-hidden="true"
+            data-gsap="parallax"
+            data-speed="0.2"
+            className="pointer-events-none absolute inset-[-15%] -z-10 bg-[radial-gradient(closest-side,rgb(60_176_136/0.18),transparent)]"
+          />
           <FlowDiagram />
         </div>
       </Container>
@@ -75,15 +83,19 @@ export function HomeTrust() {
   return (
     <Section theme="mist" aria-labelledby="home-trust-title">
       <Container className="flex flex-col gap-12">
-        <div className="flex flex-col gap-4">
+        <div data-gsap="rise" className="flex flex-col gap-4">
           <Eyebrow>{trust.eyebrow}</Eyebrow>
           <Heading as="h2" id="home-trust-title">
             {trust.title}
           </Heading>
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <CredentialSeal kind="bceao" />
-          <CredentialSeal kind="pciDss" />
+          <div data-gsap="rise">
+            <CredentialSeal kind="bceao" />
+          </div>
+          <div data-gsap="rise">
+            <CredentialSeal kind="pciDss" />
+          </div>
         </div>
       </Container>
     </Section>

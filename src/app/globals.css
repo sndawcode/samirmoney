@@ -357,3 +357,12 @@
 .chapter-swap {
   animation: chapter-in 400ms var(--ease-out-expo);
 }
+
+/* ── Home ecosystem scene ── fades in once its first frame is drawn. */
+.ecosystem-canvas {
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out-expo);
+}
+.ecosystem-canvas[data-ready] {
+  opacity: 1;
+}

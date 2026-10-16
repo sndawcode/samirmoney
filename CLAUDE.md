@@ -91,6 +91,7 @@ Spelling: **SamirPay** (one word, capital P — never the legacy "Samir Pay"), *
 - **Next.js** (latest stable, App Router, React Server Components) · **React** · **TypeScript** (strict).
 - **Tailwind CSS v4** (CSS-first `@theme`), `clsx` + `tailwind-merge` (`cn()`), `class-variance-authority` for variants.
 - **Motion** (`motion`, motion.dev) for all animation, including scroll-linked scenes (`useScroll`, `useTransform`) built on CSS `position: sticky`. No GSAP, no scroll-jacking (Lenis etc.), no WebGL.
+- **Home exception (client decision, 16 Oct 2026):** the home page adds **Three.js** (`three`, the S1 "ecosystem" scene, `src/components/home/ecosystem/`) and **GSAP + ScrollTrigger** (`gsap`, the home choreography, `src/components/home/home-motion.tsx`) on **every device**. Both load after `load` + idle as separate chunks (not counted in the initial-route budget); the scene adapts its quality tier, pauses off-screen and in hidden tabs, and is a still frame with reduced motion; GSAP does nothing with reduced motion. Native scrolling only — still no scroll-jacking. Other pages keep the rules above.
 - **Radix UI** primitives: NavigationMenu, Dialog, Accordion, Tabs, RadioGroup.
 - **lucide-react** icons (1.5 px stroke).
 - **Fonts**: **Open Sans** for all text (client decision, 16 Oct 2026 — replaces Geist + Geist Mono) via `next/font/google` (`Open_Sans`): variable weight, self-hosted at build time, `display: swap`, subsets `latin` + `latin-ext`, CSS variable `--font-open-sans`. Static TTFs in `src/assets/fonts/` serve the Open Graph images only. Titles (H1–H4 and the `text-display-*` / `text-h2` / `text-h3` utilities) use **Open Sans ExtraBold (800)**; labels stay semibold (600).
@@ -852,7 +853,7 @@ Mobile, Moto G Power class, Slow 4G:
 | LCP | ≤ 2.5 s (home: the H1 text, or a preloaded image ≤ 120 KB AVIF) |
 | CLS | ≤ 0.05 (width/height from `media.json`, aspect ratios reserved) |
 | INP | ≤ 200 ms |
-| JS, initial route (gzip) | ≤ 170 KB |
+| JS, initial route (gzip) | ≤ 170 KB (home: Three.js ≈ 133 KB and GSAP ≈ 52 KB load after first paint, outside this budget — §3.1 home exception) |
 | Fonts | Open Sans, variable, latin + latin-ext |
 | Photos (AVIF) | full-bleed ≤ 200 KB @1920w · card ≤ 70 KB @1080w · tile ≤ 45 KB @768w · thumbnail ≤ 20 KB @480w — enforced by `pnpm images` |
 | Video | never in the critical path; `preload="none"`; transcoded (A.7); ambient loops ≤ 2 MB or none |

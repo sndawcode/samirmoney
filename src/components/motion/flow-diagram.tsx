@@ -57,7 +57,11 @@ export function FlowDiagram() {
 
   return (
     <figure className="flex flex-col gap-4">
-      <div ref={ref} className="relative mx-auto aspect-[600/420] w-full max-w-[640px]">
+      <div
+        ref={ref}
+        data-gsap="pop"
+        className="relative mx-auto aspect-[600/420] w-full max-w-[640px]"
+      >
         <svg viewBox="0 0 600 420" className="absolute inset-0 size-full" aria-hidden="true">
           {EDGES.map((edge) => (
             <g
