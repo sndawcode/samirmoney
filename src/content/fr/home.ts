@@ -23,11 +23,20 @@ export const serviceScenes = {
   methods: ["Mobile money", "QR code", "Espèces", "Lien"],
   terminal: "Paiement reçu",
   dashboardTotal: "Total collecté",
-  recipients: "Bénéficiaires",
+  collected: "Collecté",
+  fanOut: "1 → n",
   linkMessage: "Voici votre lien de paiement",
+  linkUrl: "lien/•••",
   linkPaid: "Payé",
+  receipt: "Reçu",
   apiBlocks: ["Votre site", "API", "SamirPay"],
   nfc: "Sans contact",
+} as const;
+
+// Tile 06 code-card composition: generic steps, no real endpoint or payload. [Proposition]
+export const apiCard = {
+  lines: ["Votre plateforme", "→ API SamirPay", "→ Moyen de paiement", "Paiement confirmé"],
+  status: "Statut : confirmé",
 } as const;
 
 // S3 flow diagram. Node names from the brief's DESIGN note; status ticks [Proposition].

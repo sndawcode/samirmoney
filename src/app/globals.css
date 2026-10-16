@@ -105,7 +105,7 @@
 }
 
 /* Night-chapter texture: hairline columns (≤ 6 % opacity, §5.3). */
-@utility bg-hairlines {
+@utility hairlines {
   background-image: linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px);
   background-size: calc((min(100vw, 1440px) - 2 * var(--gutter)) / 12) 100%;
   background-position: center top;
@@ -178,5 +178,112 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ── Home bento (§9.1-S1) ─────────────────────────────────────────── */
+
+/* Load-in stagger: tiles from scale .96 and blur 6px. CSS-only so the first row paints without JS. */
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(6px);
+  }
+}
+.tile-enter {
+  animation: tile-in var(--dur-reveal) var(--ease-out-expo) backwards;
+}
+
+/* Audience filter dims non-matching tiles (never hides them). */
+[data-audience]:not([data-audience="tous"]) [data-tile] {
+  opacity: 0.35;
+}
+[data-audience="particulier"] [data-tile][data-audiences~="particulier"],
+[data-audience="commercant"] [data-tile][data-audiences~="commercant"],
+[data-audience="entreprise"] [data-tile][data-audiences~="entreprise"],
+[data-audience="institution"] [data-tile][data-audiences~="institution"],
+[data-audience="developpeur"] [data-tile][data-audiences~="developpeur"] {
+  opacity: 1;
+}
+[data-tile]:focus-within {
+  opacity: 1;
+}
+
+/* Cursor spotlight and visual parallax: fine pointers and full motion only. */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tile-spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(64 178 137 / 0.16),
+      transparent 60%
+    );
+    transition: opacity var(--dur-ui);
+  }
+  .tile-spotlight:hover::before {
+    opacity: 1;
+  }
+  .tile-spotlight .tile-parallax {
+    transform: translate3d(var(--px, 0), var(--py, 0), 0);
+    transition: transform var(--dur-ui) var(--ease-out-expo);
+  }
+}
+
+/* ── Kinetic headline (§5.3): per line, never per letter; the full text stays in the DOM ── */
+@keyframes line-rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+@keyframes underline-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+.kinetic-line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  padding-bottom: 0.06em;
+}
+.kinetic-line > span {
+  display: inline-block;
+  animation: line-rise var(--dur-reveal) var(--ease-out-expo) backwards;
+  animation-delay: calc(var(--line, 0) * 90ms);
+}
+.volt-underline {
+  position: relative;
+  white-space: nowrap;
+}
+.volt-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.02em;
+  height: 2px;
+  background: var(--color-volt);
+  transform-origin: left;
+  animation: underline-draw 700ms var(--ease-out-expo) 500ms backwards;
+}
+
+/* Slow ambient glow behind the home intro (static with reduced motion). */
+@keyframes glow-drift {
+  50% {
+    transform: translate3d(8%, 6%, 0) scale(1.1);
+  }
+}
+.ambient-glow {
+  background: radial-gradient(closest-side, rgb(64 178 137 / 0.12), transparent);
+  animation: glow-drift 20s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow {
+    animation: none;
   }
 }

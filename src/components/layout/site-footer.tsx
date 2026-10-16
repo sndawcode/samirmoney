@@ -21,10 +21,10 @@ export function SiteFooter() {
   return (
     <footer
       data-theme="ink"
-      className="border-t border-white/10 bg-ink-950 bg-hairlines pt-20 pb-10 text-white"
+      className="border-t border-white/10 bg-ink-950 hairlines pt-20 pb-10 text-white"
     >
       <Container width="media" className="flex flex-col gap-16">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_3fr]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.2fr_3fr]">
           <div className="flex flex-col gap-6">
             <Link
               href="/"
@@ -53,7 +53,7 @@ export function SiteFooter() {
             ))}
           </nav>
         </div>
-        <div className="grid gap-6 border-t border-white/10 pt-10 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 border-t border-white/10 pt-10 md:grid-cols-2">
           <div className="flex flex-col gap-2">
             <h2 className="text-eyebrow text-smoke">{footer.contactTitle}</h2>
             <Address className="text-sm text-smoke" />

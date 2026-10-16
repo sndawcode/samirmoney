@@ -40,7 +40,7 @@ export function MobileMenu({ extras }: { extras: ReactNode }) {
         <Dialog.Content
           data-theme="ink"
           aria-describedby={undefined}
-          className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-ink-950 bg-hairlines text-white"
+          className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-ink-950 hairlines text-white"
         >
           <div className="flex h-(--header-h) shrink-0 items-center justify-between border-b border-white/10 px-gutter">
             <Dialog.Title className="text-eyebrow text-smoke">{ui.menuTitle}</Dialog.Title>

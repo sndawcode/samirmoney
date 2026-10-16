@@ -34,7 +34,7 @@ export function Section({
         themeClasses[theme],
         spacing === "section" && "py-section",
         spacing === "compact" && "py-16 md:py-24",
-        texture && theme === "ink" && "grain overflow-hidden bg-hairlines",
+        texture && theme === "ink" && "grain overflow-hidden hairlines",
         className,
       )}
       {...rest}
