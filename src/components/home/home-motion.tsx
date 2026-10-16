@@ -7,7 +7,9 @@ import { useEffect } from "react";
  * - `data-gsap="rise"`      fade + rise + unblur when scrolled into view (batched, staggered)
  * - `data-gsap="pop"`       children of the element pop in one after another (diagram nodes)
  * - `data-gsap="parallax"`  drifts with scroll (`data-speed`, default 0.15)
- * - `data-gsap-stack`       the hero content recedes as the next section slides over it (card stack)
+ * - `data-gsap="hero-out"`  the full-screen hero copy lifts away while scrolling past the first screen
+ * - `data-gsap="scroll-cue"` the "Défiler" cue fades out on the first scroll
+ * - `data-gsap-stack`       the bento recedes as the next section slides over it (card stack)
  * - `data-magnetic`         follows the pointer slightly (CTAs)
  * - `[data-tile] > a`       3D tilt towards the pointer
  * Native scrolling only (no scroll-jacking). With reduced motion nothing runs and every element stays as rendered.
@@ -69,7 +71,32 @@ export function HomeMotion() {
           );
         });
 
-        // Card stack: the hero recedes while the services section slides over it.
+        // Full-screen hero: the copy lifts away and the scroll cue fades as you leave the first screen.
+        const hero = document.querySelector<HTMLElement>("[data-hero]");
+        if (hero) {
+          // fromTo with explicit start values: the CSS entrance may still hold these at opacity 0 on init.
+          gsap.fromTo(
+            "[data-gsap='hero-out']",
+            { yPercent: 0, autoAlpha: 1 },
+            {
+              yPercent: -12,
+              autoAlpha: 0,
+              ease: "none",
+              scrollTrigger: { trigger: hero, start: "top top", end: "bottom 25%", scrub: true },
+            },
+          );
+          gsap.fromTo(
+            "[data-gsap='scroll-cue']",
+            { autoAlpha: 1 },
+            {
+              autoAlpha: 0,
+              ease: "none",
+              scrollTrigger: { trigger: hero, start: "top top", end: "+=160", scrub: true },
+            },
+          );
+        }
+
+        // Card stack: the bento recedes while the services section slides over it.
         const stack = document.querySelector<HTMLElement>("[data-gsap-stack]");
         const next = document.querySelector<HTMLElement>("[data-gsap-stack-next]");
         if (stack && next) {

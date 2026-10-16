@@ -47,4 +47,16 @@ test.describe("home experience", () => {
     );
     expect(hidden).toBe(0);
   });
+
+  test("the hero fills the first screen and names all six solutions", async ({ page }) => {
+    await page.goto("/");
+    const viewport = page.viewportSize();
+    const hero = await page.locator("[data-hero]").boundingBox();
+    expect(hero?.height).toBeGreaterThanOrEqual((viewport?.height ?? 0) - 1);
+    const rail = page.getByRole("navigation", { name: "Nos solutions" });
+    await expect(rail.getByRole("link")).toHaveCount(6);
+    // The rail sits inside the first screen (it scrolls sideways on phones).
+    const box = await rail.boundingBox();
+    expect((box?.y ?? Infinity) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
+  });
 });
