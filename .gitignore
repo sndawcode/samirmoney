@@ -49,3 +49,5 @@ next-env.d.ts
 /playwright-report/
 /.lighthouseci/
 /assets/derived/
+
+!.env.example

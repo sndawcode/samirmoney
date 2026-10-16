@@ -147,7 +147,7 @@ samirmoney/                    # repository root
 │  │  ├─ page.tsx              # Accueil
 │  │  ├─ particuliers/  professionnels/  raps/  services/  developpeurs/  a-propos/
 │  │  ├─ contact/              # page.tsx + actions.ts (server action)
-│  │  ├─ mentions-legales/  confidentialite/  cgu/   # MDX
+│  │  ├─ mentions-legales/  confidentialite/  cgu/   # typed content in src/content/fr/legal.ts (no MDX)
 │  │  ├─ suppression-de-compte/
 │  │  ├─ not-found.tsx · opengraph-image.tsx · sitemap.ts · robots.ts
 │  │  └─ globals.css           # tokens (§6)
@@ -1476,3 +1476,5 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 | 29 | English version? | i18n | French only, i18n-ready content files |
 | 30 | Social media URLs | Footer, JSON-LD | Icons hidden |
 | 31 | Approver for [Proposition] copy | All | Client marketing lead |
+| 32 | French App Store badge artwork ("Télécharger dans l’App Store") — the localized file could not be downloaded | Store badges | Official English badge with a French accessible name |
+| 33 | Confirm the legacy screens may be shown with operator logos and phone numbers masked (`scripts/prepare-legacy.mjs`) | Tile 01, tile 04, `#web-admin` | Masked versions shown |

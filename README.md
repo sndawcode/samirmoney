@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Samir Money — samirmoney.com
 
-## Getting Started
+One website for Samir Money SA (consumer app, SamirPay, RAPS, API). The full build spec, brand rules and
+open client questions live in [`CLAUDE.md`](CLAUDE.md) — read §0–§4 before changing anything.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+cp .env.example .env.local   # optional: forms run as logged dry runs without Resend/Turnstile keys
+pnpm dev                     # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Quality gates
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | Checks |
+|---|---|
+| `pnpm lint` · `pnpm typecheck` · `pnpm test` | ESLint, TypeScript, Vitest (typography, schemas, rate limit) |
+| `pnpm build && pnpm e2e` | Playwright: routes, redirects, verbatim brief copy, axe, forms, navigation |
+| `pnpm lhci` | Lighthouse mobile budgets (§13); set `CHROME_PATH` if Chrome is not found |
+| `pnpm check:content` | Lists every `TODO(client)`; `STRICT_CONTENT=1` fails on any |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Assets
 
-## Learn More
+`pnpm assets:legacy` → `pnpm assets:derive` (masks operator logos and phone numbers) → `pnpm images`
+(reads `assets/selection.json`, writes `public/media/photos` and `src/content/media.json`).
+Raw downloads in `assets/legacy|drive|derived` are git-ignored.
 
-To learn more about Next.js, take a look at the following resources:
+## Stages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Preview** (any non-production build): missing visuals show labelled placeholders, robots block indexing,
+  forms skip Turnstile/e-mail when keys are absent (logged).
+- **Production** (`VERCEL_ENV=production` or `SITE_STAGE=production`): a remaining placeholder fails the build,
+  forms fail closed without keys, the site is indexable.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Decisions worth knowing
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 16 with Cache Components: every page is static. URL parameters (`?profil=`, `?sujet=`) are read on the
+  client so pages stay prerendered.
+- Motion only loads with the scenes that use it, on view; reveals and the seal ring are CSS. Client components
+  use `cx` (clsx) instead of `cn` so tailwind-merge stays on the server.
+- Legal pages are typed content (`src/content/fr/legal.ts`), not MDX.
+- Contact map is a static OpenStreetMap image (`scripts/build-static-map.mjs`), no iframe.
