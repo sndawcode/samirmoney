@@ -93,7 +93,7 @@ Spelling: **SamirPay** (one word, capital P — never the legacy "Samir Pay"), *
 - **Motion** (`motion`, motion.dev) for all animation, including scroll-linked scenes (`useScroll`, `useTransform`) built on CSS `position: sticky`. No GSAP, no scroll-jacking (Lenis etc.), no WebGL.
 - **Radix UI** primitives: NavigationMenu, Dialog, Accordion, Tabs, RadioGroup.
 - **lucide-react** icons (1.5 px stroke).
-- **Fonts**: **Open Sans** for all text (client decision, 16 Oct 2026 — replaces Geist + Geist Mono) via `next/font/google` (`Open_Sans`): variable weight, self-hosted at build time, `display: swap`, subsets `latin` + `latin-ext`, CSS variable `--font-open-sans`. Static TTFs in `src/assets/fonts/` serve the Open Graph images only.
+- **Fonts**: **Open Sans** for all text (client decision, 16 Oct 2026 — replaces Geist + Geist Mono) via `next/font/google` (`Open_Sans`): variable weight, self-hosted at build time, `display: swap`, subsets `latin` + `latin-ext`, CSS variable `--font-open-sans`. Static TTFs in `src/assets/fonts/` serve the Open Graph images only. Titles (H1–H4 and the `text-display-*` / `text-h2` / `text-h3` utilities) use **Open Sans ExtraBold (800)**; labels stay semibold (600).
 - **Forms**: `react-hook-form` + `zod` + `@hookform/resolvers`, Server Actions; e-mail via **Resend** (SMTP via `nodemailer` only if the client requires it); **Cloudflare Turnstile** (`@marsidev/react-turnstile`) + honeypot.
 - **Analytics**: Plausible (cookieless). GA4 only if the client insists — then a consent banner ships first.
 - **Images**: `next/image` + **sharp** (build-time pipeline, Appendix A.0). Video: **ffmpeg** (local, Appendix A.7).
@@ -331,10 +331,10 @@ apple.com (product tiles, sticky product sub-nav, scroll storytelling) · stripe
   --header-h: 64px;
 }
 
-@utility text-display-xl { font-size: clamp(3.25rem, 1.2rem + 8.4vw, 9.5rem); line-height: .9;  letter-spacing: -0.05em;  font-weight: 600; }
-@utility text-display-l  { font-size: clamp(2.75rem, 1.4rem + 5.2vw, 6.5rem); line-height: .95; letter-spacing: -0.045em; font-weight: 600; }
-@utility text-h2         { font-size: clamp(2.25rem, 1.4rem + 3.2vw, 4.5rem); line-height: 1;   letter-spacing: -0.035em; font-weight: 600; }
-@utility text-h3         { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); line-height: 1.1; letter-spacing: -0.02em;  font-weight: 600; }
+@utility text-display-xl { font-size: clamp(3.25rem, 1.2rem + 8.4vw, 9.5rem); line-height: .9;  letter-spacing: -0.05em;  font-weight: 800; }
+@utility text-display-l  { font-size: clamp(2.75rem, 1.4rem + 5.2vw, 6.5rem); line-height: .95; letter-spacing: -0.045em; font-weight: 800; }
+@utility text-h2         { font-size: clamp(2.25rem, 1.4rem + 3.2vw, 4.5rem); line-height: 1;   letter-spacing: -0.035em; font-weight: 800; }
+@utility text-h3         { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); line-height: 1.1; letter-spacing: -0.02em;  font-weight: 800; }
 @utility text-lead       { font-size: clamp(1.125rem, 1rem + .6vw, 1.5rem);   line-height: 1.45; letter-spacing: -0.01em; }
 @utility text-body       { font-size: 1.0625rem; line-height: 1.6; }
 @utility text-eyebrow    { font-size: .75rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: .12em; text-transform: uppercase; }

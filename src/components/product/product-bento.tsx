@@ -49,7 +49,7 @@ function ProductTile({ product, order }: { product: Product; order: number }) {
             className="h-full w-full"
           />
         </div>
-        <h3 className="text-base font-semibold tracking-tight sm:text-xl">{product.name}</h3>
+        <h3 className="text-base font-extrabold tracking-tight sm:text-xl">{product.name}</h3>
         <p className="mt-1 line-clamp-3 text-sm text-smoke sm:line-clamp-none sm:text-base">
           {frTypo(product.tagline)}
         </p>

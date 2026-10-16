@@ -34,7 +34,7 @@ export function LegalPage({
 
 export function LegalBlocks({ blocks }: { blocks: readonly LegalBlock[] }) {
   return (
-    <div className="flex flex-col gap-4 text-body [&_h2]:mt-8 [&_h2]:text-h3 [&_h3]:mt-4 [&_h3]:text-xl [&_h3]:font-semibold [&_h4]:font-semibold">
+    <div className="flex flex-col gap-4 text-body [&_h2]:mt-8 [&_h2]:text-h3 [&_h3]:mt-4 [&_h3]:text-xl [&_h3]:font-extrabold [&_h4]:font-extrabold">
       {blocks.map((block, i) => {
         switch (block.type) {
           case "ul":

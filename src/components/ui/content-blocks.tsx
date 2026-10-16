@@ -15,7 +15,7 @@ export function Steps({ steps, className }: { steps: readonly Step[]; className?
           <span className="text-eyebrow text-samir-700 ink:text-accent">
             {String(i + 1).padStart(2, "0")}
           </span>
-          <h3 className="text-xl font-semibold tracking-tight">{frTypo(step.title)}</h3>
+          <h3 className="text-xl font-extrabold tracking-tight">{frTypo(step.title)}</h3>
           <p className="text-graphite ink:text-smoke">{frTypo(step.text)}</p>
         </li>
       ))}

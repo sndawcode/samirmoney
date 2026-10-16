@@ -81,7 +81,7 @@ export default function RapsPage() {
                 className="flex flex-col gap-4 rounded-lg bg-paper p-4"
               >
                 <Placeholder label={item.visual.placeholder} ratio={item.visual.ratio} />
-                <h3 className="text-xl font-semibold tracking-tight">{frTypo(item.title)}</h3>
+                <h3 className="text-xl font-extrabold tracking-tight">{frTypo(item.title)}</h3>
                 <p className="text-graphite">{frTypo(item.text)}</p>
               </RevealItem>
             ))}

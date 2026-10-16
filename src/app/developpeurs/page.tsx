@@ -70,7 +70,7 @@ export default function DeveloppeursPage() {
                   className="flex flex-col gap-3 rounded-lg border border-white/10 bg-ink-900 p-6"
                 >
                   <span className="text-eyebrow text-smoke">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="text-xl font-semibold tracking-tight">{frTypo(item.name)}</h3>
+                  <h3 className="text-xl font-extrabold tracking-tight">{frTypo(item.name)}</h3>
                   <p className="text-smoke">{frTypo(item.text)}</p>
                   {href && (
                     <ButtonLink

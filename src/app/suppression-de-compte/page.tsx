@@ -18,7 +18,7 @@ export default function SuppressionDeComptePage() {
         aria-labelledby="deletion-retention"
         className="flex flex-col gap-3 border-t border-ink-950/10 pt-8"
       >
-        <h2 id="deletion-retention" className="text-xl font-semibold">
+        <h2 id="deletion-retention" className="text-xl font-extrabold">
           {frTypo(accountDeletion.retention.title)}
         </h2>
         <p className="text-graphite">{frTypo(accountDeletion.retention.text)}</p>
