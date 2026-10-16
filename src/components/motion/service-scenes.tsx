@@ -1,8 +1,8 @@
 "use client";
 
 import { Check, Link2, Nfc } from "lucide-react";
-import { m, type Transition } from "motion/react";
-import type { ReactNode } from "react";
+import { m, useInView, type Transition } from "motion/react";
+import { useRef, type ReactNode } from "react";
 import { serviceScenes as labels } from "@/content/fr/home";
 import type { ServiceId } from "@/content/fr/services";
 import { cn } from "@/lib/cn";
@@ -32,6 +32,17 @@ export function ServiceScene({
       )}
     >
       <Scene play={play} />
+    </div>
+  );
+}
+
+/** Plays its scene once, when half of it is visible. */
+export function ServiceSceneInView({ id, className }: { id: ServiceId; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  return (
+    <div ref={ref}>
+      <ServiceScene id={id} play={inView} className={className} />
     </div>
   );
 }
