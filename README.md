@@ -13,12 +13,12 @@ pnpm dev                     # http://localhost:3000
 
 ## Quality gates
 
-| Command | Checks |
-|---|---|
-| `pnpm lint` · `pnpm typecheck` · `pnpm test` | ESLint, TypeScript, Vitest (typography, schemas, rate limit) |
-| `pnpm build && pnpm e2e` | Playwright: routes, redirects, verbatim brief copy, axe, forms, navigation |
-| `pnpm lhci` | Lighthouse mobile budgets (§13); set `CHROME_PATH` if Chrome is not found |
-| `pnpm check:content` | Lists every `TODO(client)`; `STRICT_CONTENT=1` fails on any |
+| Command                                      | Checks                                                                     |
+| -------------------------------------------- | -------------------------------------------------------------------------- |
+| `pnpm lint` · `pnpm typecheck` · `pnpm test` | ESLint, TypeScript, Vitest (typography, schemas, rate limit)               |
+| `pnpm build && pnpm e2e`                     | Playwright: routes, redirects, verbatim brief copy, axe, forms, navigation |
+| `pnpm lhci`                                  | Lighthouse mobile budgets (§13); set `CHROME_PATH` if Chrome is not found  |
+| `pnpm check:content`                         | Lists every `TODO(client)`; `STRICT_CONTENT=1` fails on any                |
 
 ## Assets
 

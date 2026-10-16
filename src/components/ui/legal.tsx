@@ -23,7 +23,7 @@ export function LegalPage({
         <article className="mx-auto flex max-w-[72ch] flex-col gap-6">
           <header className="flex flex-col gap-3 border-b border-ink-950/10 pb-8">
             <h1 className="text-h2">{frTypo(title)}</h1>
-            {meta && <p className="font-mono text-sm text-graphite">{frTypo(meta)}</p>}
+            {meta && <p className="text-sm text-graphite">{frTypo(meta)}</p>}
           </header>
           {children}
         </article>

@@ -1,7 +1,7 @@
 import type { Cta } from "@/content/types";
 
 export const homeHero = {
-  // [Brief] — rendered on two lines; `highlight` gets the volt underline.
+  // [Brief] — rendered on two lines; `highlight` gets the accent underline.
   titleLines: ["Tous vos paiements.", "Un seul écosystème."],
   highlight: "écosystème",
   lead: "Samir Money accompagne les particuliers, commerçants, entreprises et institutions avec des solutions de paiement simples, sécurisées et connectées.", // [Brief]

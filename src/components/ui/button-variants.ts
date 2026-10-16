@@ -13,9 +13,9 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // ink on light / volt on dark (§7)
+        // ink on light / accent on dark (§7)
         primary:
-          "rounded-full bg-ink-950 text-white hover:bg-ink-700 ink:bg-volt ink:text-ink-950 ink:hover:bg-[#7af8c2]",
+          "rounded-full bg-ink-950 text-white hover:bg-ink-700 ink:bg-accent ink:text-ink-950 ink:hover:bg-samir-300",
         secondary:
           "rounded-full border border-ink-950/20 text-ink-950 hover:border-ink-950 ink:border-white/25 ink:text-white ink:hover:border-white",
         ghost: "rounded-full text-ink-950 hover:bg-ink-950/5 ink:text-white ink:hover:bg-white/10",

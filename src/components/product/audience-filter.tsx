@@ -87,7 +87,7 @@ export function AudienceFilter({ children, total }: { children: ReactNode; total
               className={cx(
                 "min-h-11 shrink-0 snap-start rounded-full border px-4 text-sm font-medium transition-colors duration-(--dur-micro)",
                 "border-white/20 text-white hover:border-white/50",
-                "data-[state=checked]:border-volt data-[state=checked]:bg-volt data-[state=checked]:text-ink-950",
+                "data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-ink-950",
               )}
             >
               {option === ALL ? audienceFilter.all : audienceLabels[option]}

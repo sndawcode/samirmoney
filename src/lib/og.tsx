@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { ogEyebrows, seo, type SeoRoute } from "@/content/fr/seo";
 import { trust } from "@/content/fr/trust";
@@ -5,8 +7,13 @@ import { trust } from "@/content/fr/trust";
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
-/** Route OG image: ink background, hairline grid, title in display type, compliance line in mono (§12). */
-export function renderOgImage(route: SeoRoute) {
+// Static Open Sans files (OFL) for next/og, which cannot use the page's variable web font.
+const fontFile = (weight: 400 | 600) =>
+  readFile(join(process.cwd(), `src/assets/fonts/open-sans-${weight}.ttf`));
+
+/** Route OG image: ink background, hairline grid, title in display type, compliance line (§12). */
+export async function renderOgImage(route: SeoRoute) {
+  const [regular, semibold] = await Promise.all([fontFile(400), fontFile(600)]);
   const eyebrow = ogEyebrows[route] ?? seo["/"].title;
   const title = seo[route].title.split(" — ")[0];
   const lines = Array.from({ length: 13 }, (_, i) => (i * ogSize.width) / 12);
@@ -14,6 +21,7 @@ export function renderOgImage(route: SeoRoute) {
     <div
       style={{
         display: "flex",
+        fontFamily: "Open Sans",
         flexDirection: "column",
         justifyContent: "space-between",
         width: "100%",
@@ -53,7 +61,7 @@ export function renderOgImage(route: SeoRoute) {
           display: "flex",
           fontSize: 96,
           fontWeight: 600,
-          letterSpacing: -4,
+          letterSpacing: -2,
           lineHeight: 1,
           maxWidth: 1000,
         }}
@@ -63,10 +71,16 @@ export function renderOgImage(route: SeoRoute) {
       <div
         style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 20, color: "#9aa7a2" }}
       >
-        <div style={{ width: 12, height: 12, borderRadius: 12, background: "#3df5a6" }} />
+        <div style={{ width: 12, height: 12, borderRadius: 12, background: "#3cb088" }} />
         {trust.complianceLine}
       </div>
     </div>,
-    ogSize,
+    {
+      ...ogSize,
+      fonts: [
+        { name: "Open Sans", data: regular, weight: 400, style: "normal" },
+        { name: "Open Sans", data: semibold, weight: 600, style: "normal" },
+      ],
+    },
   );
 }

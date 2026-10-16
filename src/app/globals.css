@@ -20,11 +20,12 @@
   --color-samir-50: #eaf7f1;
   --color-samir-100: #cdeddf;
   --color-samir-300: #5cb293; /* legacy light green */
-  --color-samir-500: #40b289; /* legacy primary — fills/icons on light; text ONLY on dark */
+  --color-samir-500: #3cb088; /* brand accent (client, 16 Oct 2026) — fills on light; text and icons ONLY on dark */
   --color-samir-700: #007552; /* legacy deep — text, links, buttons on light (5.7:1 on white) */
   --color-samir-900: #003d2b;
-  /* Signal — dark surfaces only (14:1 on ink-950, fails on white) */
-  --color-volt: #3df5a6;
+  /* Accent — the site's accent colour (client, 16 Oct 2026). 7.4:1 on ink-950; 2.7:1 on white, so on light
+     surfaces it is a fill only (text and links on light use samir-700). */
+  --color-accent: #3cb088;
   /* Text */
   --color-graphite: #5b6863; /* secondary text on light (5.8:1) */
   --color-smoke: #9aa7a2; /* secondary text on dark (8:1) */
@@ -34,8 +35,8 @@
   --color-danger-50: #fef3f2;
   --color-warning: #f5a524;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  /* Open Sans for all text (client, 16 Oct 2026). */
+  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: 6px; /* badges, receipt cards */
   --radius-md: 12px; /* inputs */
@@ -60,39 +61,40 @@
 @utility text-display-xl {
   font-size: clamp(3.25rem, 1.2rem + 8.4vw, 9.5rem);
   line-height: 0.9;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.035em;
   font-weight: 600;
 }
 @utility text-display-l {
   font-size: clamp(2.75rem, 1.4rem + 5.2vw, 6.5rem);
   line-height: 0.95;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.03em;
   font-weight: 600;
 }
 @utility text-h2 {
   font-size: clamp(2.25rem, 1.4rem + 3.2vw, 4.5rem);
   line-height: 1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
   font-weight: 600;
 }
 @utility text-h3 {
   font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   font-weight: 600;
 }
 @utility text-lead {
   font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
   line-height: 1.45;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 @utility text-body {
   font-size: 1.0625rem;
   line-height: 1.6;
 }
 @utility text-eyebrow {
-  font-family: var(--font-mono);
   font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -152,13 +154,13 @@
     font-size: 0.6em;
   }
 
-  /* Focus: 2 px samir-700 ring on light, volt on dark (§14). */
+  /* Focus: 2 px samir-700 ring on light, accent on dark (§14). */
   :focus-visible {
     outline: 2px solid var(--color-samir-700);
     outline-offset: 2px;
   }
   [data-theme="ink"] :focus-visible {
-    outline-color: var(--color-volt);
+    outline-color: var(--color-accent);
   }
   /* A light panel inside a dark header (mega menu) goes back to the light ring. */
   [data-theme="ink"] [data-theme="paper"] :focus-visible {
@@ -222,7 +224,7 @@
     opacity: 0;
     background: radial-gradient(
       420px circle at var(--mx, 50%) var(--my, 50%),
-      rgb(64 178 137 / 0.16),
+      rgb(60 176 136 / 0.16),
       transparent 60%
     );
     transition: opacity var(--dur-ui);
@@ -250,26 +252,27 @@
 .kinetic-line {
   display: block;
   overflow: clip;
-  overflow-clip-margin: 0.12em;
-  padding-bottom: 0.06em;
+  overflow-clip-margin: 0.2em;
+  padding-bottom: 0.08em;
 }
 .kinetic-line > span {
   display: inline-block;
   animation: line-rise var(--dur-reveal) var(--ease-out-expo) backwards;
   animation-delay: calc(var(--line, 0) * 90ms);
 }
-.volt-underline {
+.accent-underline {
   position: relative;
   white-space: nowrap;
 }
-.volt-underline::after {
+.accent-underline::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -0.02em;
+  /* Just under the baseline, above Open Sans’ deep descender box (which the line mask clips). */
+  bottom: 0.1em;
   height: 2px;
-  background: var(--color-volt);
+  background: var(--color-accent);
   transform-origin: left;
   animation: underline-draw 700ms var(--ease-out-expo) 500ms backwards;
 }
@@ -281,7 +284,7 @@
   }
 }
 .ambient-glow {
-  background: radial-gradient(closest-side, rgb(64 178 137 / 0.12), transparent);
+  background: radial-gradient(closest-side, rgb(60 176 136 / 0.12), transparent);
   animation: glow-drift 20s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {

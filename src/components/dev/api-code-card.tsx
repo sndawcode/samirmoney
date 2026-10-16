@@ -11,7 +11,7 @@ export function ApiCodeCard({ className }: { className?: string }) {
     <div
       aria-hidden="true"
       className={cn(
-        "w-full max-w-[300px] rounded-sm border border-white/10 bg-ink-900 p-4 font-mono text-[0.7rem] leading-relaxed text-smoke shadow-2xl shadow-ink-950/40 sm:text-xs",
+        "w-full max-w-[300px] rounded-sm border border-white/10 bg-ink-900 p-4 text-[0.7rem] leading-relaxed text-smoke shadow-2xl shadow-ink-950/40 sm:text-xs",
         className,
       )}
     >
@@ -30,7 +30,7 @@ export function ApiCodeCard({ className }: { className?: string }) {
           </li>
         ))}
       </ol>
-      <p className="mt-3 flex items-center gap-2 border-t border-dashed border-white/15 pt-3 text-volt">
+      <p className="mt-3 flex items-center gap-2 border-t border-dashed border-white/15 pt-3 text-accent">
         <Check className="size-3.5" strokeWidth={2} />
         {frTypo(apiCard.status)}
       </p>

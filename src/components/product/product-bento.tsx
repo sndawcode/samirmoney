@@ -55,7 +55,7 @@ function ProductTile({ product, order }: { product: Product; order: number }) {
         </p>
         <span
           aria-hidden="true"
-          className="mt-auto hidden items-center gap-2 pt-5 text-sm font-medium text-volt sm:inline-flex"
+          className="mt-auto hidden items-center gap-2 pt-5 text-sm font-medium text-accent sm:inline-flex"
         >
           {productsSection.cta}
           <span className="transition-transform duration-(--dur-ui) group-hover/tile:translate-x-1">

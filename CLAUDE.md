@@ -93,7 +93,7 @@ Spelling: **SamirPay** (one word, capital P — never the legacy "Samir Pay"), *
 - **Motion** (`motion`, motion.dev) for all animation, including scroll-linked scenes (`useScroll`, `useTransform`) built on CSS `position: sticky`. No GSAP, no scroll-jacking (Lenis etc.), no WebGL.
 - **Radix UI** primitives: NavigationMenu, Dialog, Accordion, Tabs, RadioGroup.
 - **lucide-react** icons (1.5 px stroke).
-- **Fonts**: Geist + Geist Mono via `next/font/google` (`Geist`, `Geist_Mono` — create-next-app already wires them): self-hosted at build time, `display: swap`, subsets `latin` + `latin-ext`, CSS variables `--font-geist-sans` / `--font-geist-mono`.
+- **Fonts**: **Open Sans** for all text (client decision, 16 Oct 2026 — replaces Geist + Geist Mono) via `next/font/google` (`Open_Sans`): variable weight, self-hosted at build time, `display: swap`, subsets `latin` + `latin-ext`, CSS variable `--font-open-sans`. Static TTFs in `src/assets/fonts/` serve the Open Graph images only.
 - **Forms**: `react-hook-form` + `zod` + `@hookform/resolvers`, Server Actions; e-mail via **Resend** (SMTP via `nodemailer` only if the client requires it); **Cloudflare Turnstile** (`@marsidev/react-turnstile`) + honeypot.
 - **Analytics**: Plausible (cookieless). GA4 only if the client insists — then a consent banner ships first.
 - **Images**: `next/image` + **sharp** (build-time pipeline, Appendix A.0). Video: **ffmpeg** (local, Appendix A.7).
@@ -249,8 +249,8 @@ export function frTypo(input: string): string {
 
 | Device | Where | Limit |
 |---|---|---|
-| Signal green `volt` | Dark chapters: focus rings, live dots, one key-word underline, primary CTA fill | ≤ 5 % of any viewport |
-| Mono labels (Geist Mono, uppercase, +0.12em) | Eyebrows, indices, data, legal references, photo captions | Never body text |
+| Accent `#3CB088` (`accent`, client decision 16 Oct 2026 — replaces the signal green `volt` #3DF5A6) | Dark chapters: focus rings, live dots, one key-word underline, primary CTA fill | ≤ 5 % of any viewport |
+| Labels (Open Sans semibold, uppercase, +0.12em, tabular numerals) | Eyebrows, indices, data, legal references, photo captions | Never body text |
 | Hairline grid + crosshairs | Dark chapters | ≤ 6 % opacity |
 | Film grain (static 128 px noise tile) | Dark chapters | opacity ≤ 0.04 |
 | Receipt cards (mono, dashed rules, ✓) | Illustrating flows | Illustrative amounts only; no fake customers, no fake "real" data |
@@ -296,11 +296,11 @@ apple.com (product tiles, sticky product sub-nav, scroll storytelling) · stripe
   --color-samir-50: #eaf7f1;
   --color-samir-100: #cdeddf;
   --color-samir-300: #5cb293; /* legacy light green */
-  --color-samir-500: #40b289; /* legacy primary — fills/icons on light; text ONLY on dark */
+  --color-samir-500: #3cb088; /* brand accent (client, 16 Oct 2026) — fills on light; text and icons ONLY on dark */
   --color-samir-700: #007552; /* legacy deep — text, links, buttons on light (5.7:1 on white) */
   --color-samir-900: #003d2b;
   /* Signal — dark surfaces only (14:1 on ink-950, fails on white) */
-  --color-volt: #3df5a6;
+  --color-accent: #3cb088; /* the site's accent (client, 16 Oct 2026): 7.4:1 on ink-950, 2.7:1 on white → fill only on light */
   /* Text */
   --color-graphite: #5b6863; /* secondary text on light (5.8:1) */
   --color-smoke: #9aa7a2;    /* secondary text on dark (8:1) */
@@ -308,8 +308,7 @@ apple.com (product tiles, sticky product sub-nav, scroll storytelling) · stripe
   --color-danger: #e5484d;
   --color-warning: #f5a524;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif; /* Open Sans for all text */
 
   --radius-sm: 6px;  /* badges, receipt cards */
   --radius-md: 12px; /* inputs */
@@ -338,7 +337,7 @@ apple.com (product tiles, sticky product sub-nav, scroll storytelling) · stripe
 @utility text-h3         { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); line-height: 1.1; letter-spacing: -0.02em;  font-weight: 600; }
 @utility text-lead       { font-size: clamp(1.125rem, 1rem + .6vw, 1.5rem);   line-height: 1.45; letter-spacing: -0.01em; }
 @utility text-body       { font-size: 1.0625rem; line-height: 1.6; }
-@utility text-eyebrow    { font-family: var(--font-mono); font-size: .75rem; line-height: 1; letter-spacing: .12em; text-transform: uppercase; }
+@utility text-eyebrow    { font-size: .75rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: .12em; text-transform: uppercase; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -354,11 +353,11 @@ apple.com (product tiles, sticky product sub-nav, scroll storytelling) · stripe
 
 | Foreground | Allowed on | Never on |
 |---|---|---|
-| ink-950 text | paper, mist, volt | — |
-| white text | ink-*, samir-700 | samir-500, volt |
+| ink-950 text | paper, mist, accent | — |
+| white text | ink-*, samir-700 | samir-500, accent |
 | samir-700 text | paper, mist | ink-* |
 | samir-500 text | ink-* | paper, mist (fills and icons only) |
-| volt | ink-* | paper, mist |
+| accent (text, icons, rings) | ink-* | paper, mist |
 
 **Layout:** breakpoints base 360 · `sm` 640 · `md` 768 · `lg` 1024 · `xl` 1280 · `2xl` 1536. Grid 4 cols (base) / 8 (md) / 12 (lg+). Max width 1280 px for text layouts, 1440 px for bento and media. `<Section theme="paper|mist|ink">`; the header reads the theme of the section beneath it (IntersectionObserver) and switches between light and dark glass.
 
@@ -381,7 +380,7 @@ apple.com (product tiles, sticky product sub-nav, scroll storytelling) · stripe
 | `MobileMenu` | Radix Dialog, full-screen ink sheet, large links with mono indices, CTAs + store badges + WhatsApp at the bottom; focus trap; closes on route change. |
 | `SiteFooter` | §9.10, includes `ComplianceLine`. |
 | `Section` · `Container` · `Eyebrow` · `Heading` · `Lead` | Theme-aware primitives. |
-| `Button` | `primary` (ink on light / volt on dark), `secondary` (outline), `ghost`, `link`. Pill, min height 48 px, optional arrow icon. |
+| `Button` | `primary` (ink on light / accent on dark), `secondary` (outline), `ghost`, `link`. Pill, min height 48 px, optional arrow icon. |
 | `StoreBadges` | Official French badges ("Télécharger dans l’App Store", "Disponible sur Google Play") per store guidelines. Each badge hidden if its URL is `null`. |
 | `WhatsAppButton` | `https://wa.me/<number>?text=<context prefill>`; hidden while the number is unknown. |
 | `ProductBento` · `ProductTile` | Home S1. Tile: mono index, real visual (may overflow the top edge), name, one line, button "Découvrir". Whole tile is one link; hover lift + spotlight; `view-transition-name` on the visual. |
@@ -508,7 +507,7 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 ### 9.1 Accueil `/`
 
 **S1 — Introduction [ink]** — *understand the ecosystem in 5 s; the six solutions visible immediately.*
-- H1 **[Brief]**: `Tous vos paiements. Un seul écosystème.` — two lines; "écosystème" gets a 2 px volt underline that draws in once.
+- H1 **[Brief]**: `Tous vos paiements. Un seul écosystème.` — two lines; "écosystème" gets a 2 px accent underline that draws in once.
 - Lead **[Brief]**: `Samir Money accompagne les particuliers, commerçants, entreprises et institutions avec des solutions de paiement simples, sécurisées et connectées.`
 - Eyebrow **[Brief]**: `Nos solutions`
 - `AudienceFilter` — `Je suis :` Tous · Particulier · Commerçant · Entreprise · Institution · Développeur **[Proposition]**
@@ -553,7 +552,7 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 **S4 — Sécurité, agrément et certifications [mist]**
 - Eyebrow **[Brief]** `Sécurité, agrément et certifications` · H2 **[Brief]** `La confiance au cœur de chaque transaction.`
 - Two `CredentialSeal` cards side by side (stacked on mobile), content from `trust.ts`:
-  - **Seal 1** — label **[Brief]** `Établissement de paiement agréé par la BCEAO` (uppercase via CSS allowed); text **[Brief]** `Samir Money SA est agréé sous la référence EP.SN.005/2025.`; the reference set large in Geist Mono inside a circular typographic seal; link `Vérifier sur la liste officielle de la BCEAO` → `trust.bceao.verifyUrl` (PDF, new tab, labelled "PDF") **[Proposition]**.
+  - **Seal 1** — label **[Brief]** `Établissement de paiement agréé par la BCEAO` (uppercase via CSS allowed); text **[Brief]** `Samir Money SA est agréé sous la référence EP.SN.005/2025.`; the reference set large in Open Sans inside a circular typographic seal; link `Vérifier sur la liste officielle de la BCEAO` → `trust.bceao.verifyUrl` (PDF, new tab, labelled "PDF") **[Proposition]**.
   - **Seal 2** — label **[Brief]** `Certification PCI DSS`; text **[Brief]** `Une certification attestant de notre conformité aux exigences de sécurité applicables à notre périmètre certifié pour la protection des données de cartes de paiement.`
 - Calm, large, high contrast; one ring draw-on (600 ms). No glow, no third-party logos unless authorised. The client signs off the final rendering (brief: *« avec leurs mentions officielles validées »*).
 
@@ -854,7 +853,7 @@ Mobile, Moto G Power class, Slow 4G:
 | CLS | ≤ 0.05 (width/height from `media.json`, aspect ratios reserved) |
 | INP | ≤ 200 ms |
 | JS, initial route (gzip) | ≤ 170 KB |
-| Fonts | Geist + Geist Mono, variable, latin + latin-ext; preload the sans only |
+| Fonts | Open Sans, variable, latin + latin-ext |
 | Photos (AVIF) | full-bleed ≤ 200 KB @1920w · card ≤ 70 KB @1080w · tile ≤ 45 KB @768w · thumbnail ≤ 20 KB @480w — enforced by `pnpm images` |
 | Video | never in the critical path; `preload="none"`; transcoded (A.7); ambient loops ≤ 2 MB or none |
 | Third parties | Plausible (≈ 1 KB) + Turnstile on `/contact` only |
@@ -870,7 +869,7 @@ Image rules:
 ## 14. Accessibility (WCAG 2.2 AA)
 
 - Skip link `Aller au contenu`; landmarks; one H1.
-- Focus visible everywhere: 2 px volt ring + 2 px offset on dark, samir-700 on light.
+- Focus visible everywhere: 2 px accent ring + 2 px offset on dark, samir-700 on light.
 - Keyboard: mega menu, mobile sheet (focus trap, Esc), accordions, hotspots (tabbable buttons), audience chips (radio-group semantics).
 - Motion: `prefers-reduced-motion` → static scenes; no content only visible mid-animation; pinned scenes never trap scrolling; no parallax.
 - Split-text animation: the full string stays as text; animated word spans are `aria-hidden` with an `sr-only` copy — or animate whole lines.

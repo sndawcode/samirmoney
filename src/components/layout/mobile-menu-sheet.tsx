@@ -54,7 +54,7 @@ export function MobileMenuSheet({
                     href={item.href}
                     onClick={close}
                     aria-current={pathname === item.href ? "page" : undefined}
-                    className="flex min-h-16 items-baseline gap-4 py-3 text-3xl font-semibold tracking-tight aria-[current=page]:text-volt"
+                    className="flex min-h-16 items-baseline gap-4 py-3 text-3xl font-semibold tracking-tight aria-[current=page]:text-accent"
                   >
                     <span aria-hidden="true" className="text-eyebrow text-smoke">
                       {String(i + 1).padStart(2, "0")}

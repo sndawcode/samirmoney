@@ -98,7 +98,7 @@ function ServiceSection({ detail, theme }: { detail: ServiceDetail; theme: "pape
             {service.name}
           </Heading>
           <p className="max-w-[40ch] text-lead text-graphite">{frTypo(service.line)}</p>
-          {detail.note && <p className="font-mono text-sm text-graphite">{frTypo(detail.note)}</p>}
+          {detail.note && <p className="text-sm text-graphite">{frTypo(detail.note)}</p>}
           <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
               <dt className="text-eyebrow text-graphite">{page.labels.audience}</dt>
@@ -130,9 +130,7 @@ function ServiceSection({ detail, theme }: { detail: ServiceDetail; theme: "pape
             <ol className="flex flex-col gap-3">
               {detail.steps.map((step, i) => (
                 <li key={step} className="flex items-baseline gap-4">
-                  <span className="font-mono text-sm text-samir-700">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                  <span className="text-sm text-samir-700">{String(i + 1).padStart(2, "0")}</span>
                   <span className="text-lg">{frTypo(step)}</span>
                 </li>
               ))}

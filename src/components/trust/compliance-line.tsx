@@ -6,7 +6,7 @@ import { frTypo } from "@/lib/fr-typography";
 export function ComplianceLine({ className }: { className?: string }) {
   const [before, after] = trust.complianceLine.split(trust.bceao.reference);
   return (
-    <p className={cn("font-mono text-xs leading-relaxed text-graphite ink:text-smoke", className)}>
+    <p className={cn("text-xs leading-relaxed text-graphite ink:text-smoke", className)}>
       {frTypo(before)}
       <span className="whitespace-nowrap">{trust.bceao.reference}</span>
       {frTypo(after)}

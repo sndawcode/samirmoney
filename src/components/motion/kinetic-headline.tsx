@@ -5,7 +5,7 @@ import { frTypo } from "@/lib/fr-typography";
 type KineticHeadlineProps = {
   as: "h1" | "h2";
   lines: readonly string[];
-  /** A word that gets the volt underline (dark surfaces only). */
+  /** A word that gets the accent underline (dark surfaces only). */
   highlight?: string;
   className?: string;
   id?: string;
@@ -43,7 +43,7 @@ function Highlighted({ line, word }: { line: string; word?: string }) {
   return (
     <>
       {before}
-      <span className={cn("volt-underline")}>{word}</span>
+      <span className={cn("accent-underline")}>{word}</span>
       {after}
     </>
   );

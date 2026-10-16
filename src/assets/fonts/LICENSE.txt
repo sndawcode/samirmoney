@@ -1,0 +1,1 @@
+Open Sans — SIL Open Font License 1.1 (https://openfontlicense.org). Static TTFs used only to render Open Graph images.

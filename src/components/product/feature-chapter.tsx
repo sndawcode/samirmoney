@@ -47,7 +47,7 @@ export function FeatureChapter({ steps }: { steps: readonly ChapterStep[] }) {
             className={cx(
               "flex flex-col gap-6 border-t py-10 lg:min-h-[60vh] lg:justify-center",
               "lg:transition-colors lg:duration-(--dur-ui)",
-              i === active ? "border-white/10 lg:border-volt" : "border-white/10",
+              i === active ? "border-white/10 lg:border-accent" : "border-white/10",
             )}
           >
             <div className="mx-auto w-full max-w-[220px] lg:hidden">{step.media}</div>
