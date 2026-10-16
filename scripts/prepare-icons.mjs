@@ -10,6 +10,9 @@ const SRC = "icone";
 const OUT = "public/media/icons";
 const HEIGHT = 128;
 
+// Centre of the globe: the Samir Money mark, larger because it is displayed bigger.
+const CORE = { file: "samir.png", slug: "samir-core", height: 256 };
+
 // Source file → slug. Order = order around the orbit.
 const ICONS = [
   ["Group 1171275041.png", "samir-money"],
@@ -24,6 +27,14 @@ const ICONS = [
 
 await fs.rm(OUT, { recursive: true, force: true });
 await fs.mkdir(OUT, { recursive: true });
+const core = await sharp(path.join(SRC, CORE.file))
+  .resize({ height: CORE.height })
+  .webp({ quality: 90, alphaQuality: 100 })
+  .toFile(path.join(OUT, `${CORE.slug}.webp`));
+console.log(
+  `ok   ${CORE.slug.padEnd(16)} ${core.width}×${core.height}  ${Math.round(core.size / 1024)} KB`,
+);
+
 for (const [file, slug] of ICONS) {
   const out = path.join(OUT, `${slug}.webp`);
   const info = await sharp(path.join(SRC, file))

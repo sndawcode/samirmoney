@@ -62,3 +62,8 @@ export const contactBand = {
   primary: { label: "Nous contacter", href: "/contact" } satisfies Cta, // [Brief]
   secondary: { label: "Devenir partenaire", href: "/contact?sujet=partenariat" } satisfies Cta, // [Brief]
 } as const;
+
+// Home 3D scene: the Samir Money mark at the centre of the globe (client file icone/samir.png → `pnpm icons`).
+export const ecosystemScene = {
+  coreLogo: "/media/icons/samir-core.webp",
+} as const;
