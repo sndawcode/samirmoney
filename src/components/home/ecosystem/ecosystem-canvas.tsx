@@ -14,10 +14,13 @@ const WIDE_QUERY = "(min-width: 1280px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 // Core position on screen (fractions) and camera distance, per layout.
-const LAYOUT_DESKTOP: Layout = { coreX: 0.76, coreY: 0.46, distance: 7.4, badgeScale: 1.05 };
+const LAYOUT_DESKTOP: Layout = { coreX: 0.76, coreY: 0.5, distance: 7.2, badgeScale: 1.05 };
 // 1024–1279 px: the headline takes more of the width, so the globe sits further right and a little smaller.
-const LAYOUT_DESKTOP_COMPACT: Layout = { coreX: 0.8, coreY: 0.5, distance: 8.8, badgeScale: 0.95 };
-const LAYOUT_MOBILE: Layout = { coreX: 0.5, coreY: 0.21, distance: 11, badgeScale: 0.8 };
+const LAYOUT_DESKTOP_COMPACT: Layout = { coreX: 0.8, coreY: 0.52, distance: 8.6, badgeScale: 0.95 };
+const LAYOUT_MOBILE: Layout = { coreX: 0.5, coreY: 0.23, distance: 11.5, badgeScale: 0.85 };
+// Phones shorter than this get a proportionally smaller, higher globe (up to 40 % smaller).
+const MOBILE_REFERENCE_HEIGHT = 740;
+const MOBILE_MAX_SHRINK = 1.4;
 
 type NetworkInformation = { saveData?: boolean };
 
@@ -105,8 +108,20 @@ export function EcosystemCanvas() {
 
       const desktop = window.matchMedia(DESKTOP_QUERY);
       const wide = window.matchMedia(WIDE_QUERY);
+      // Phones: the copy takes a fixed height at the bottom, so on short screens the globe shrinks and rises.
+      const mobileLayout = (): Layout => {
+        const shortness = Math.min(
+          MOBILE_MAX_SHRINK,
+          Math.max(1, MOBILE_REFERENCE_HEIGHT / Math.max(1, canvas.clientHeight)),
+        );
+        return {
+          ...LAYOUT_MOBILE,
+          distance: LAYOUT_MOBILE.distance * shortness,
+          coreY: LAYOUT_MOBILE.coreY / shortness,
+        };
+      };
       const layout = () =>
-        wide.matches ? LAYOUT_DESKTOP : desktop.matches ? LAYOUT_DESKTOP_COMPACT : LAYOUT_MOBILE;
+        wide.matches ? LAYOUT_DESKTOP : desktop.matches ? LAYOUT_DESKTOP_COMPACT : mobileLayout();
       const resize = () => active.resize(canvas.clientWidth, canvas.clientHeight, layout());
       const resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(canvas);

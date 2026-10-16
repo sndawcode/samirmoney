@@ -48,16 +48,22 @@ test.describe("home experience", () => {
     expect(hidden).toBe(0);
   });
 
-  test("the hero fills the first screen and names all six solutions", async ({ page }) => {
+  test("the hero fills the first screen and leads to the solutions", async ({ page }) => {
     await page.goto("/");
     const viewport = page.viewportSize();
+    const height = viewport?.height ?? 0;
     const hero = await page.locator("[data-hero]").boundingBox();
-    expect(hero?.height).toBeGreaterThanOrEqual((viewport?.height ?? 0) - 1);
-    const rail = page.getByRole("navigation", { name: "Nos solutions" });
-    await expect(rail.getByRole("link")).toHaveCount(6);
-    // The rail sits inside the first screen (it scrolls sideways on phones).
-    const box = await rail.boundingBox();
-    expect((box?.y ?? Infinity) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0);
+    expect(hero?.height).toBeGreaterThanOrEqual(height - 1);
+    // Headline and both calls to action sit inside the first screen.
+    for (const name of ["Nous contacter", "Voir nos solutions"]) {
+      const cta = page.locator("[data-hero]").getByRole("link", { name, exact: false }).first();
+      const box = await cta.boundingBox();
+      expect((box?.y ?? Infinity) + (box?.height ?? 0)).toBeLessThanOrEqual(height);
+    }
+    await expect(
+      page.locator("[data-hero]").getByRole("link", { name: "Voir nos solutions" }),
+    ).toHaveAttribute("href", "#solutions");
+    await expect(page.locator("#solutions [data-tile]")).toHaveCount(6);
   });
 });
 
