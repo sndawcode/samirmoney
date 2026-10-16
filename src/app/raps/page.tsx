@@ -7,7 +7,7 @@ import { frTypo } from "@/lib/fr-typography";
 import { breadcrumbJsonLd, faqJsonLd, JsonLd } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { Reveal, RevealItem } from "@/components/motion/reveal";
-import { TapRipple } from "@/components/motion/tap-ripple";
+import { LazyTapRipple } from "@/components/motion/lazy-tap-ripple";
 import { NextProduct } from "@/components/product/next-product";
 import { ProductHero } from "@/components/product/product-hero";
 import { ButtonLink } from "@/components/ui/button";
@@ -60,7 +60,7 @@ export default function RapsPage() {
             <Steps steps={page.how.steps} className="md:grid-cols-1 lg:grid-cols-1" />
           </div>
           <div className="flex justify-center lg:col-span-5">
-            <TapRipple labels={page.how.sceneLabels} />
+            <LazyTapRipple labels={page.how.sceneLabels} />
           </div>
         </Container>
       </Section>

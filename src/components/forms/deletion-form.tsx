@@ -8,11 +8,11 @@ import { useForm, type DefaultValues } from "react-hook-form";
 import { submitDeletion } from "@/app/suppression-de-compte/actions";
 import { contactForm } from "@/content/fr/contact";
 import { accountDeletion } from "@/content/fr/legal";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { deletionSchema, type DeletionInput, type DeletionRequest } from "@/lib/deletion-schema";
 import type { FormResult } from "@/lib/form-result";
 import { frTypo } from "@/lib/fr-typography";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { Field, fieldClasses, FormError } from "@/components/forms/field";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
@@ -148,7 +148,7 @@ export function DeletionForm() {
       <button
         type="submit"
         disabled={pending}
-        className={cn(buttonVariants({ variant: "primary" }), "self-start")}
+        className={cx(buttonVariants({ variant: "primary" }), "self-start")}
       >
         {pending ? contactForm.submitting : copy.submit}
       </button>

@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import type { Hotspot } from "@/content/fr/professionnels";
 import { ui } from "@/content/fr/ui";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { frTypo } from "@/lib/fr-typography";
 
 /**
@@ -39,7 +39,7 @@ export function Hotspots({ items, children }: { items: readonly Hotspot[]; child
               </button>
               <span
                 aria-hidden="true"
-                className={cn(
+                className={cx(
                   "pointer-events-none absolute top-full left-1/2 z-10 mt-1 w-56 -translate-x-1/2 rounded-sm bg-ink-950 px-3 py-2 text-sm text-white shadow-xl transition-opacity duration-(--dur-micro)",
                   open === i ? "opacity-100" : "opacity-0",
                 )}

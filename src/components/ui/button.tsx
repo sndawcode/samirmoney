@@ -1,4 +1,3 @@
-import { cva, type VariantProps } from "class-variance-authority";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -6,30 +5,9 @@ import { ui } from "@/content/fr/ui";
 import { eventClasses, type AnalyticsEvent, type EventProps } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import { frTypo } from "@/lib/fr-typography";
+import { buttonVariants, type ButtonVariantProps } from "@/components/ui/button-variants";
 
-export const buttonVariants = cva(
-  [
-    "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-base font-medium whitespace-nowrap",
-    "transition-[background-color,color,border-color,transform] duration-(--dur-micro) active:scale-[.98]",
-    "disabled:pointer-events-none disabled:opacity-60",
-  ],
-  {
-    variants: {
-      variant: {
-        // ink on light / volt on dark (§7)
-        primary:
-          "bg-ink-950 text-white hover:bg-ink-700 ink:bg-volt ink:text-ink-950 ink:hover:bg-[#7af8c2]",
-        secondary:
-          "border border-ink-950/20 text-ink-950 hover:border-ink-950 ink:border-white/25 ink:text-white ink:hover:border-white",
-        ghost: "text-ink-950 hover:bg-ink-950/5 ink:text-white ink:hover:bg-white/10",
-        link: "min-h-11 rounded-none px-0 text-samir-700 underline-offset-4 hover:underline ink:text-samir-300",
-      },
-    },
-    defaultVariants: { variant: "primary" },
-  },
-);
-
-type ButtonLinkProps = VariantProps<typeof buttonVariants> & {
+type ButtonLinkProps = ButtonVariantProps & {
   href: string;
   children: string;
   className?: string;
@@ -51,6 +29,7 @@ export function ButtonLink({
   href,
   children,
   variant,
+  size,
   className,
   arrow = false,
   srHint,
@@ -75,7 +54,11 @@ export function ButtonLink({
       : event
         ? eventClasses(event.name, event.props)
         : eventClasses("cta_click", { location, label: children });
-  const classes = cn(buttonVariants({ variant }), tracking, className);
+  const classes = cn(
+    buttonVariants({ variant, size: size ?? (variant === "link" ? "inline" : "md") }),
+    tracking,
+    className,
+  );
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>

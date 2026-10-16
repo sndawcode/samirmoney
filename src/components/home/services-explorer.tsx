@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { services, type Service } from "@/content/fr/services";
 import { productsSection } from "@/content/fr/products";
 import { eventClasses } from "@/lib/analytics";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { frTypo } from "@/lib/fr-typography";
 import { LazyServiceScene } from "@/components/motion/lazy-service-scene";
 
@@ -71,23 +71,23 @@ function ServiceItem({ service, index, active, onActivate, ref }: ServiceItemPro
       data-index={index}
       onPointerEnter={onActivate}
       onFocusCapture={onActivate}
-      className={cn(
-        "rounded-xl bg-mist p-5 lg:rounded-none lg:border-t lg:border-ink-950/10 lg:bg-transparent lg:px-0 lg:py-8",
+      className={cx(
+        "rounded-xl bg-mist p-5 lg:rounded-none lg:border-t lg:bg-transparent lg:px-0 lg:py-8",
         "lg:transition-colors lg:duration-(--dur-ui)",
-        active && "lg:border-ink-950",
+        active ? "lg:border-ink-950" : "lg:border-ink-950/10",
       )}
     >
       <div className="mb-5 lg:hidden">
-        <LazyServiceScene id={service.id} className="bg-paper" />
+        <LazyServiceScene id={service.id} tone="paper" />
       </div>
       <p className="text-eyebrow text-graphite">{String(index + 1).padStart(2, "0")}</p>
-      <h3 className={cn("mt-3 text-h3 lg:transition-colors", !active && "lg:text-graphite")}>
+      <h3 className={cx("mt-3 text-h3 lg:transition-colors", !active && "lg:text-graphite")}>
         {frTypo(service.name)}
       </h3>
       <p className="mt-3 max-w-[46ch] text-body text-graphite">{frTypo(service.line)}</p>
       <Link
         href={service.href}
-        className={cn(
+        className={cx(
           "mt-4 inline-flex min-h-11 items-center gap-2 font-medium text-samir-700 underline-offset-4 hover:underline",
           eventClasses("cta_click", { location: "home-services", label: service.name }),
         )}

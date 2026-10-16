@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { products } from "@/content/fr/products";
 import { contactPage } from "@/content/fr/contact";
+import { nav } from "@/content/fr/nav";
 import { ui } from "@/content/fr/ui";
 import { cn } from "@/lib/cn";
 import { getMedia } from "@/lib/media";
@@ -14,6 +15,7 @@ import { MobileMenu } from "@/components/layout/mobile-menu";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SaveDataFlag } from "@/components/motion/save-data-flag";
+import { ButtonLink } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/contact-links";
 import { Photo } from "@/components/ui/photo";
 import { StoreBadges } from "@/components/ui/store-badges";
@@ -74,6 +76,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteHeader
           logo={<Logo />}
           navigation={<MegaMenu visuals={megaMenuVisuals} />}
+          cta={
+            <ButtonLink href={nav.cta.href} size="sm" location="header">
+              {nav.cta.label}
+            </ButtonLink>
+          }
           mobileMenu={
             <MobileMenu
               extras={

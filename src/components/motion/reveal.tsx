@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useInViewOnce } from "@/hooks/use-in-view";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 type RevealProps = {
   children: ReactNode;
@@ -40,7 +40,7 @@ export function RevealItem({
   as?: "div" | "li";
 }) {
   return (
-    <Tag data-reveal-item="" className={cn(className)}>
+    <Tag data-reveal-item="" className={cx(className)}>
       {children}
     </Tag>
   );

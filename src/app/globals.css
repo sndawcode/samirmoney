@@ -341,3 +341,14 @@
     stroke-dashoffset: 1;
   }
 }
+
+/* Feature chapter: the sticky screen rises in when the active step changes (400 ms). */
+@keyframes chapter-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+.chapter-swap {
+  animation: chapter-in 400ms var(--ease-out-expo);
+}

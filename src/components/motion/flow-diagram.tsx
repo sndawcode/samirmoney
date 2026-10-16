@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useInViewOnce } from "@/hooks/use-in-view";
 import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
 import { apiFlow } from "@/content/fr/home";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { frTypo } from "@/lib/fr-typography";
 
 type NodeId = keyof typeof apiFlow.nodes;
@@ -62,7 +62,7 @@ export function FlowDiagram() {
           {EDGES.map((edge) => (
             <g
               key={edge.id}
-              className={cn(
+              className={cx(
                 "transition-opacity duration-(--dur-ui)",
                 isLit(edge) ? "opacity-100" : "opacity-20",
               )}
@@ -107,7 +107,7 @@ export function FlowDiagram() {
               onFocus={() => setFocus(id)}
               onBlur={() => setFocus(null)}
               style={{ left: `${(POS[id].x / 600) * 100}%`, top: `${(POS[id].y / 420) * 100}%` }}
-              className={cn(
+              className={cx(
                 "absolute flex min-h-11 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 rounded-lg border px-3 py-3 text-center sm:px-5 sm:py-4",
                 "transition-colors duration-(--dur-ui)",
                 core ? "border-samir-500/60 bg-ink-800 hairlines" : "border-white/15 bg-ink-900",
@@ -116,7 +116,7 @@ export function FlowDiagram() {
             >
               <Icon
                 aria-hidden="true"
-                className={cn("size-5 sm:size-6", core ? "text-volt" : "text-samir-300")}
+                className={cx("size-5 sm:size-6", core ? "text-volt" : "text-samir-300")}
                 strokeWidth={1.5}
               />
               <span className="max-w-[12ch] text-xs font-medium sm:text-sm">

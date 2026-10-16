@@ -9,7 +9,7 @@ import { nav } from "@/content/fr/nav";
 import { products, type ProductId } from "@/content/fr/products";
 import { services } from "@/content/fr/services";
 import { ui } from "@/content/fr/ui";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { frTypo } from "@/lib/fr-typography";
 
 const PRO_PRODUCTS: readonly ProductId[] = ["tpe", "business", "web-admin"];
@@ -37,7 +37,7 @@ export function MegaMenu({ visuals }: { visuals: Partial<Record<ProductId, React
             {item.menu ? (
               <>
                 <NavigationMenu.Trigger
-                  className={cn(itemClasses, "group")}
+                  className={cx(itemClasses, "group")}
                   aria-current={current(item.href)}
                 >
                   {item.label}

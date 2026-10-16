@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ui } from "@/content/fr/ui";
 import { eventClasses } from "@/lib/analytics";
-import { cn } from "@/lib/cn";
-import { buttonVariants } from "@/components/ui/button";
+import { cx } from "@/lib/cx";
+import { buttonVariants } from "@/components/ui/button-variants";
 
 type LocalNavProps = {
   name: string;
@@ -56,9 +56,9 @@ export function LocalNav({ name, links, cta }: LocalNavProps) {
         </ul>
         <Link
           href={cta.href}
-          className={cn(
-            buttonVariants({ variant: "primary" }),
-            "min-h-11 shrink-0 px-4 text-sm",
+          className={cx(
+            buttonVariants({ variant: "primary", size: "sm" }),
+            "shrink-0",
             eventClasses("cta_click", { location: "local-nav", label: cta.label }),
           )}
         >

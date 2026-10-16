@@ -1,7 +1,7 @@
 "use client";
 
 import { useInViewOnce } from "@/hooks/use-in-view";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 const DIAMETER = { sm: 112, lg: 176 } as const;
 
@@ -43,7 +43,7 @@ export function SealRing({ text, size }: { text: string; size: keyof typeof DIAM
         />
       </svg>
       <span
-        className={cn(
+        className={cx(
           "px-3 text-center font-mono leading-tight font-medium tracking-tight text-ink-950 ink:text-white",
           size === "lg" ? "text-[0.95rem]" : "text-[0.7rem]",
         )}

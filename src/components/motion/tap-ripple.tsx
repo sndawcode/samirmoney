@@ -4,7 +4,7 @@ import { Check, KeyRound } from "lucide-react";
 import { m } from "motion/react";
 import { useInViewOnce } from "@/hooks/use-in-view";
 import { MotionScope } from "@/components/motion/motion-scope";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { frTypo } from "@/lib/fr-typography";
 
 type TapRippleProps = {
@@ -25,7 +25,7 @@ export function TapRipple({ labels, className }: TapRippleProps) {
       <div
         ref={ref}
         aria-hidden="true"
-        className={cn(
+        className={cx(
           "relative grid aspect-square w-full max-w-[420px] place-items-center overflow-hidden rounded-xl bg-ink-950 text-white",
           className,
         )}

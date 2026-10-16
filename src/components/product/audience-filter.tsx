@@ -5,7 +5,7 @@ import { useState, useSyncExternalStore, type PointerEvent, type ReactNode } fro
 import { audienceFilter } from "@/content/fr/home";
 import { audienceLabels, products, type Audience } from "@/content/fr/products";
 import { track } from "@/lib/analytics";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { frTypo } from "@/lib/fr-typography";
 
 const ALL = "tous";
@@ -84,7 +84,7 @@ export function AudienceFilter({ children, total }: { children: ReactNode; total
             <RadioGroup.Item
               key={option}
               value={option}
-              className={cn(
+              className={cx(
                 "min-h-11 shrink-0 snap-start rounded-full border px-4 text-sm font-medium transition-colors duration-(--dur-micro)",
                 "border-white/20 text-white hover:border-white/50",
                 "data-[state=checked]:border-volt data-[state=checked]:bg-volt data-[state=checked]:text-ink-950",

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod-config";
 import { accountDeletion } from "@/content/fr/legal";
 
 const { errors } = accountDeletion.form;

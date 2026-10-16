@@ -30,7 +30,7 @@ import {
   sujetsByProfil,
 } from "@/content/fr/contact";
 import { track } from "@/lib/analytics";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import {
   contactSchema,
   parsePrefill,
@@ -39,7 +39,7 @@ import {
 } from "@/lib/contact-schema";
 import type { FormResult } from "@/lib/form-result";
 import { frTypo } from "@/lib/fr-typography";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { Field, fieldClasses, FormError } from "@/components/forms/field";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
@@ -295,7 +295,7 @@ export function ContactForm() {
           {...register("message")}
           aria-invalid={errors.message ? true : undefined}
           aria-describedby={describedBy("message", true)}
-          className={cn(fieldClasses, "min-h-40 py-3")}
+          className={cx(fieldClasses, "min-h-40 py-3")}
         />
       </Field>
 
@@ -339,7 +339,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className={cn(buttonVariants({ variant: "primary" }), "self-start")}
+        className={cx(buttonVariants({ variant: "primary" }), "self-start")}
       >
         {pending ? copy.submitting : copy.submit}
       </button>

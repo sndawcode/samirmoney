@@ -3,9 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import type { SectionTheme } from "@/content/types";
-import { nav } from "@/content/fr/nav";
-import { cn } from "@/lib/cn";
-import { ButtonLink } from "@/components/ui/button";
+import { cx } from "@/lib/cx";
 
 const HEADER_PROBE_Y = 32; // middle of the 64 px header
 const HIDE_AFTER_PX = 120;
@@ -25,9 +23,10 @@ type SiteHeaderProps = {
   /** Desktop navigation (rendered on the server so product visuals stay out of the client bundle). */
   navigation: ReactNode;
   mobileMenu: ReactNode;
+  cta: ReactNode;
 };
 
-export function SiteHeader({ logo, navigation, mobileMenu }: SiteHeaderProps) {
+export function SiteHeader({ logo, navigation, mobileMenu, cta }: SiteHeaderProps) {
   const pathname = usePathname();
   const [theme, setTheme] = useState<SectionTheme>("paper");
   const [hidden, setHidden] = useState(false);
@@ -64,7 +63,7 @@ export function SiteHeader({ logo, navigation, mobileMenu }: SiteHeaderProps) {
       data-site-header
       data-theme={dark ? "ink" : "paper"}
       onFocusCapture={() => setHidden(false)}
-      className={cn(
+      className={cx(
         "fixed inset-x-0 top-0 z-50 h-(--header-h) border-b backdrop-blur-xl backdrop-saturate-150",
         "transition-[transform,background-color,border-color] duration-(--dur-ui) ease-(--ease-out-expo)",
         dark
@@ -77,13 +76,7 @@ export function SiteHeader({ logo, navigation, mobileMenu }: SiteHeaderProps) {
         {logo}
         {navigation}
         <div className="flex items-center gap-2">
-          <ButtonLink
-            href={nav.cta.href}
-            location="header"
-            className="hidden min-h-11 px-5 text-sm lg:inline-flex"
-          >
-            {nav.cta.label}
-          </ButtonLink>
+          <div className="hidden lg:block">{cta}</div>
           {mobileMenu}
         </div>
       </div>

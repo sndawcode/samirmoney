@@ -3,7 +3,7 @@ import { site } from "@/content/fr/site";
 import { ui } from "@/content/fr/ui";
 import { eventClasses } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 
 export function whatsappHref(number: string, text: string): string {
   return `https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;

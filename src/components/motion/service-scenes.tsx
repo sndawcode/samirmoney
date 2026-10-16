@@ -5,9 +5,10 @@ import { m, type Transition } from "motion/react";
 import type { ReactNode } from "react";
 import { serviceScenes as labels } from "@/content/fr/home";
 import type { ServiceId } from "@/content/fr/services";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { frTypo } from "@/lib/fr-typography";
 import { MotionScope } from "@/components/motion/motion-scope";
+import { TONE_BG, type SceneTone } from "@/components/motion/scene-tone";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const spring: Transition = { duration: 0.8, ease: EASE };
@@ -21,15 +22,15 @@ type SceneProps = { play: boolean };
 export function ServiceScene({
   id,
   play,
-  className,
-}: SceneProps & { id: ServiceId; className?: string }) {
+  tone = "mist",
+}: SceneProps & { id: ServiceId; tone?: SceneTone }) {
   const Scene = SCENES[id];
   return (
     <div
       aria-hidden="true"
-      className={cn(
-        "relative grid aspect-[4/3] w-full place-items-center overflow-hidden rounded-xl bg-mist p-6",
-        className,
+      className={cx(
+        "relative grid aspect-[4/3] w-full place-items-center overflow-hidden rounded-xl p-6",
+        TONE_BG[tone],
       )}
     >
       <MotionScope>
@@ -42,7 +43,7 @@ export function ServiceScene({
 function Pill({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <span
-      className={cn(
+      className={cx(
         "rounded-full border border-ink-950/10 bg-paper px-3 py-1.5 font-mono text-[0.7rem] whitespace-nowrap shadow-sm",
         className,
       )}
@@ -54,7 +55,7 @@ function Pill({ children, className }: { children: ReactNode; className?: string
 
 function Screen({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn("rounded-lg bg-ink-950 p-4 text-white shadow-xl", className)}>
+    <div className={cx("rounded-lg bg-ink-950 p-4 text-white shadow-xl", className)}>
       {children}
     </div>
   );
@@ -215,7 +216,7 @@ function Api({ play }: SceneProps) {
           initial={false}
           animate={play ? { x: [offsets[i], 0] } : { x: 0 }}
           transition={{ ...spring, delay: 0.1 }}
-          className={cn(
+          className={cx(
             "grid h-16 w-24 place-items-center border font-mono text-[0.7rem]",
             i === 1
               ? "z-10 -mx-1 border-ink-950 bg-ink-950 text-volt"
