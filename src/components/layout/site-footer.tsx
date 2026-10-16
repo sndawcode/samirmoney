@@ -71,7 +71,7 @@ export function SiteFooter() {
         </div>
         <div className="flex flex-col gap-3 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
           <ComplianceLine />
-          <p className="font-mono text-xs text-smoke">{footer.copyright(COPYRIGHT_YEAR)}</p>
+          <p className="text-xs text-smoke">{footer.copyright(COPYRIGHT_YEAR)}</p>
         </div>
         {footer.signOff && <p className="text-sm text-smoke">{footer.signOff}</p>}
       </Container>

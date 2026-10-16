@@ -44,7 +44,7 @@ export function SealRing({ text, size }: { text: string; size: keyof typeof DIAM
       </svg>
       <span
         className={cx(
-          "px-3 text-center font-mono leading-tight font-medium tracking-tight text-ink-950 ink:text-white",
+          "px-3 text-center leading-tight font-medium tracking-tight text-ink-950 ink:text-white",
           size === "lg" ? "text-[0.95rem]" : "text-[0.7rem]",
         )}
       >

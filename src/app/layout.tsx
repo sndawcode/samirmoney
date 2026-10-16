@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import Script from "next/script";
 import { products } from "@/content/fr/products";
 import { contactPage } from "@/content/fr/contact";
@@ -21,17 +21,11 @@ import { Photo } from "@/components/ui/photo";
 import { StoreBadges } from "@/components/ui/store-badges";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Open Sans for all text (client decision, 16 Oct 2026): variable weight, self-hosted at build time.
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin", "latin-ext"],
   display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  preload: false, // preload the sans only (§13)
 });
 
 export const metadata: Metadata = baseMetadata;
@@ -64,7 +58,7 @@ const megaMenuVisuals = Object.fromEntries(
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className={cn(geistSans.variable, geistMono.variable, "antialiased")}>
+    <html lang="fr" className={cn(openSans.variable, "antialiased")}>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#contenu"

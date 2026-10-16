@@ -77,7 +77,7 @@ export function FlowDiagram() {
               />
               {animate &&
                 [0, 0.6].map((offset) => (
-                  <circle key={offset} r="4" fill="var(--color-volt)">
+                  <circle key={offset} r="4" fill="var(--color-accent)">
                     <animateMotion
                       dur={`${PACKET_SECONDS}s`}
                       begin={`${offset}s`}
@@ -111,12 +111,12 @@ export function FlowDiagram() {
                 "absolute flex min-h-11 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 rounded-lg border px-3 py-3 text-center sm:px-5 sm:py-4",
                 "transition-colors duration-(--dur-ui)",
                 core ? "border-samir-500/60 bg-ink-800 hairlines" : "border-white/15 bg-ink-900",
-                focus === id && "border-volt",
+                focus === id && "border-accent",
               )}
             >
               <Icon
                 aria-hidden="true"
-                className={cx("size-5 sm:size-6", core ? "text-volt" : "text-samir-300")}
+                className={cx("size-5 sm:size-6", core ? "text-accent" : "text-samir-300")}
                 strokeWidth={1.5}
               />
               <span className="max-w-[12ch] text-xs font-medium sm:text-sm">
@@ -126,14 +126,11 @@ export function FlowDiagram() {
           );
         })}
       </div>
-      <p
-        aria-live="polite"
-        className="flex items-center justify-center gap-2 font-mono text-xs text-smoke"
-      >
+      <p aria-live="polite" className="flex items-center justify-center gap-2 text-xs text-smoke">
         {confirmed ? (
           <>
-            <Check aria-hidden="true" className="size-3.5 text-volt" strokeWidth={2.5} />
-            <span className="text-volt">{frTypo(done)}</span>
+            <Check aria-hidden="true" className="size-3.5 text-accent" strokeWidth={2.5} />
+            <span className="text-accent">{frTypo(done)}</span>
           </>
         ) : (
           <span>{frTypo(initiated)}</span>

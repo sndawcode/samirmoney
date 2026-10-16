@@ -70,7 +70,7 @@ export default function DeveloppeursPage() {
                   className="flex flex-col gap-3 rounded-lg border border-white/10 bg-ink-900 p-6"
                 >
                   <span className="text-eyebrow text-smoke">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="text-xl font-semibold tracking-tight">{frTypo(item.name)}</h3>
+                  <h3 className="text-xl font-extrabold tracking-tight">{frTypo(item.name)}</h3>
                   <p className="text-smoke">{frTypo(item.text)}</p>
                   {href && (
                     <ButtonLink
@@ -107,9 +107,9 @@ export default function DeveloppeursPage() {
               <li key={step} className="flex flex-col items-center gap-3 lg:flex-1 lg:flex-row">
                 <span
                   className={cn(
-                    "flex w-full items-center gap-3 rounded-lg border px-4 py-4 font-mono text-sm",
+                    "flex w-full items-center gap-3 rounded-lg border px-4 py-4 text-sm",
                     step.includes("SamirPay")
-                      ? "border-samir-500/60 bg-ink-800 text-volt"
+                      ? "border-samir-500/60 bg-ink-800 text-accent"
                       : "border-white/15 bg-ink-900",
                   )}
                 >

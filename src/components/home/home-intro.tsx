@@ -25,7 +25,7 @@ export function HomeIntro() {
             id="home-intro-title"
             lines={homeHero.titleLines}
             highlight={homeHero.highlight}
-            className="text-[clamp(2.5rem,0.9rem+4vw,4.75rem)] leading-[0.95] font-semibold tracking-[-0.045em] lg:col-span-7 lg:[&_.kinetic-line]:whitespace-nowrap"
+            className="text-[clamp(2.5rem,0.9rem+4vw,4.75rem)] leading-[0.95] font-extrabold tracking-[-0.03em] lg:col-span-7 lg:[&_.kinetic-line]:whitespace-nowrap"
           />
           <Lead className="text-base text-smoke sm:text-lg lg:col-span-5 lg:max-w-none lg:text-xl">
             {homeHero.lead}

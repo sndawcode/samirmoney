@@ -68,7 +68,7 @@ export default function ParticuliersPage() {
               ),
               content: (
                 <div className="flex flex-col gap-3">
-                  <span className="text-eyebrow text-volt">{feature.index}</span>
+                  <span className="text-eyebrow text-accent">{feature.index}</span>
                   <h3 className="text-h3">{frTypo(feature.title)}</h3>
                   <p className="max-w-[40ch] text-lead text-smoke">{frTypo(feature.text)}</p>
                   {"link" in feature && feature.link && (
@@ -99,7 +99,7 @@ export default function ParticuliersPage() {
             </Heading>
           </div>
           <Steps steps={page.start.steps} />
-          <p className="font-mono text-sm text-graphite">{frTypo(page.start.note)}</p>
+          <p className="text-sm text-graphite">{frTypo(page.start.note)}</p>
         </Container>
       </Section>
 

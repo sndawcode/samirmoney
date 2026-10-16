@@ -49,7 +49,7 @@ export function HomeApi() {
               <RevealItem as="li" key={item} className="flex items-start gap-3">
                 <Check
                   aria-hidden="true"
-                  className="mt-1 size-4 shrink-0 text-volt"
+                  className="mt-1 size-4 shrink-0 text-accent"
                   strokeWidth={2.5}
                 />
                 <span>{frTypo(item)}</span>

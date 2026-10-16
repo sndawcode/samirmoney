@@ -49,13 +49,13 @@ function ProductTile({ product, order }: { product: Product; order: number }) {
             className="h-full w-full"
           />
         </div>
-        <h3 className="text-base font-semibold tracking-tight sm:text-xl">{product.name}</h3>
+        <h3 className="text-base font-extrabold tracking-tight sm:text-xl">{product.name}</h3>
         <p className="mt-1 line-clamp-3 text-sm text-smoke sm:line-clamp-none sm:text-base">
           {frTypo(product.tagline)}
         </p>
         <span
           aria-hidden="true"
-          className="mt-auto hidden items-center gap-2 pt-5 text-sm font-medium text-volt sm:inline-flex"
+          className="mt-auto hidden items-center gap-2 pt-5 text-sm font-medium text-accent sm:inline-flex"
         >
           {productsSection.cta}
           <span className="transition-transform duration-(--dur-ui) group-hover/tile:translate-x-1">

@@ -70,7 +70,7 @@ export default function AProposPage() {
                 <span className="text-eyebrow text-samir-700">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="text-xl font-semibold tracking-tight">{value.title}</h3>
+                <h3 className="text-xl font-extrabold tracking-tight">{value.title}</h3>
                 <p className="text-graphite">{frTypo(value.text)}</p>
               </RevealItem>
             ))}
@@ -104,7 +104,7 @@ export default function AProposPage() {
           <ul className="grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2">
             {page.commitments.items.map((item) => (
               <li key={item.title} className="flex flex-col gap-2 border-t border-ink-950/10 pt-6">
-                <h3 className="text-xl font-semibold tracking-tight">{item.title}</h3>
+                <h3 className="text-xl font-extrabold tracking-tight">{item.title}</h3>
                 <p className="text-graphite">{frTypo(item.text)}</p>
               </li>
             ))}
@@ -118,7 +118,7 @@ export default function AProposPage() {
             <ul className="flex flex-col gap-4">
               {page.milestones.map((milestone) => (
                 <li key={milestone.title}>
-                  <h3 className="font-semibold">{milestone.title}</h3>
+                  <h3 className="font-extrabold">{milestone.title}</h3>
                   <p className="text-graphite">{frTypo(milestone.text)}</p>
                 </li>
               ))}

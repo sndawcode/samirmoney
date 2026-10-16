@@ -33,7 +33,7 @@ export function Hotspots({ items, children }: { items: readonly Hotspot[]; child
                 onBlur={() => setOpen(null)}
                 className="grid size-11 place-items-center"
               >
-                <span className="relative grid size-7 place-items-center rounded-full bg-volt font-mono text-xs font-semibold text-ink-950 shadow-lg ring-4 ring-volt/25">
+                <span className="relative grid size-7 place-items-center rounded-full bg-accent text-xs font-semibold text-ink-950 shadow-lg ring-4 ring-accent/25">
                   {i + 1}
                 </span>
               </button>
@@ -53,7 +53,7 @@ export function Hotspots({ items, children }: { items: readonly Hotspot[]; child
       <ol aria-label={ui.hotspotsList} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {items.map((item, i) => (
           <li key={item.label} className="flex items-start gap-3">
-            <span className="grid size-6 shrink-0 place-items-center rounded-full border border-volt font-mono text-xs text-volt">
+            <span className="grid size-6 shrink-0 place-items-center rounded-full border border-accent text-xs text-accent">
               {i + 1}
             </span>
             <span className="text-smoke">{frTypo(item.label)}</span>

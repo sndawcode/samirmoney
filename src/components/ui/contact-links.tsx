@@ -41,7 +41,7 @@ export function WhatsAppButton({
 /** Confirmed phone / e-mail / WhatsApp, as a compact mono line (home S6, footer). */
 export function ContactLine({ className }: { className?: string }) {
   return (
-    <ul className={cn("flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm", className)}>
+    <ul className={cn("flex flex-wrap gap-x-6 gap-y-2 text-sm", className)}>
       <li>
         <a
           className={cn(

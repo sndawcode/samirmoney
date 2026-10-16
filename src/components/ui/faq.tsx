@@ -16,7 +16,7 @@ export function Faq({ items }: { items: readonly FaqItem[] }) {
         <Accordion.Item key={item.question} value={`q${i}`}>
           <Accordion.Header asChild>
             <h3>
-              <Accordion.Trigger className="group flex min-h-16 w-full items-center justify-between gap-6 py-4 text-left text-lg font-semibold tracking-tight">
+              <Accordion.Trigger className="group flex min-h-16 w-full items-center justify-between gap-6 py-4 text-left text-lg font-extrabold tracking-tight">
                 {frTypo(item.question)}
                 <Plus
                   aria-hidden="true"

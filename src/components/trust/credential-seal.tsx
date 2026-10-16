@@ -67,7 +67,7 @@ function BceaoText() {
   return (
     <>
       {frTypo(before)}
-      <span className="font-mono whitespace-nowrap">{trust.bceao.reference}</span>
+      <span className="whitespace-nowrap">{trust.bceao.reference}</span>
       {frTypo(after)}
     </>
   );

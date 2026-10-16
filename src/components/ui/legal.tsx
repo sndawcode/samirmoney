@@ -23,7 +23,7 @@ export function LegalPage({
         <article className="mx-auto flex max-w-[72ch] flex-col gap-6">
           <header className="flex flex-col gap-3 border-b border-ink-950/10 pb-8">
             <h1 className="text-h2">{frTypo(title)}</h1>
-            {meta && <p className="font-mono text-sm text-graphite">{frTypo(meta)}</p>}
+            {meta && <p className="text-sm text-graphite">{frTypo(meta)}</p>}
           </header>
           {children}
         </article>
@@ -34,7 +34,7 @@ export function LegalPage({
 
 export function LegalBlocks({ blocks }: { blocks: readonly LegalBlock[] }) {
   return (
-    <div className="flex flex-col gap-4 text-body [&_h2]:mt-8 [&_h2]:text-h3 [&_h3]:mt-4 [&_h3]:text-xl [&_h3]:font-semibold [&_h4]:font-semibold">
+    <div className="flex flex-col gap-4 text-body [&_h2]:mt-8 [&_h2]:text-h3 [&_h3]:mt-4 [&_h3]:text-xl [&_h3]:font-extrabold [&_h4]:font-extrabold">
       {blocks.map((block, i) => {
         switch (block.type) {
           case "ul":

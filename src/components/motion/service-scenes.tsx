@@ -44,7 +44,7 @@ function Pill({ children, className }: { children: ReactNode; className?: string
   return (
     <span
       className={cx(
-        "rounded-full border border-ink-950/10 bg-paper px-3 py-1.5 font-mono text-[0.7rem] whitespace-nowrap shadow-sm",
+        "rounded-full border border-ink-950/10 bg-paper px-3 py-1.5 text-[0.7rem] whitespace-nowrap shadow-sm",
         className,
       )}
     >
@@ -64,7 +64,7 @@ function Screen({ children, className }: { children: ReactNode; className?: stri
 function Paid({ text, play, delay = 0.6 }: { text: string; play: boolean; delay?: number }) {
   return (
     <m.span
-      className="inline-flex items-center gap-1.5 font-mono text-xs text-volt"
+      className="inline-flex items-center gap-1.5 text-xs text-accent"
       initial={false}
       animate={play ? { opacity: [0, 1], y: [6, 0] } : { opacity: 1, y: 0 }}
       transition={{ ...spring, delay }}
@@ -128,7 +128,7 @@ function Collecte({ play }: SceneProps) {
         ))}
       </div>
       <Screen className="w-36">
-        <p className="font-mono text-[0.65rem] text-smoke uppercase">{labels.dashboardTotal}</p>
+        <p className="text-[0.65rem] text-smoke uppercase">{labels.dashboardTotal}</p>
         <m.div
           className="mt-3 h-2 rounded-full bg-samir-500"
           initial={false}
@@ -148,7 +148,7 @@ function Masse({ play }: SceneProps) {
   const rows = [0, 1, 2, 3];
   return (
     <div className="flex items-center gap-6">
-      <Screen className="grid size-20 place-items-center font-mono text-[0.65rem] uppercase">
+      <Screen className="grid size-20 place-items-center text-[0.65rem] uppercase">
         {labels.fanOut}
       </Screen>
       <ul className="flex flex-col gap-2">
@@ -181,7 +181,7 @@ function Lien({ play }: SceneProps) {
         transition={spring}
       >
         {frTypo(labels.linkMessage)}
-        <span className="mt-1 flex items-center gap-1 font-mono text-samir-700">
+        <span className="mt-1 flex items-center gap-1 text-samir-700">
           <Link2 className="size-3.5" strokeWidth={2} />
           {labels.linkUrl}
         </span>
@@ -192,7 +192,7 @@ function Lien({ play }: SceneProps) {
         animate={play ? { opacity: [0, 1], scale: [0.9, 1] } : { opacity: 1, scale: 1 }}
         transition={{ ...spring, delay: 0.5 }}
       >
-        <Screen className="rounded-sm px-4 py-3 font-mono text-xs">
+        <Screen className="rounded-sm px-4 py-3 text-xs">
           <span className="block border-b border-dashed border-white/20 pb-2 text-smoke">
             {labels.receipt}
           </span>
@@ -217,9 +217,9 @@ function Api({ play }: SceneProps) {
           animate={play ? { x: [offsets[i], 0] } : { x: 0 }}
           transition={{ ...spring, delay: 0.1 }}
           className={cx(
-            "grid h-16 w-24 place-items-center border font-mono text-[0.7rem]",
+            "grid h-16 w-24 place-items-center border text-[0.7rem]",
             i === 1
-              ? "z-10 -mx-1 border-ink-950 bg-ink-950 text-volt"
+              ? "z-10 -mx-1 border-ink-950 bg-ink-950 text-accent"
               : "border-ink-950/15 bg-paper",
             i === 0 && "rounded-l-lg",
             i === 2 && "rounded-r-lg",
@@ -246,9 +246,9 @@ function Nfc_({ play }: SceneProps) {
         />
       ))}
       <Screen className="relative grid size-24 place-items-center rounded-full">
-        <Nfc className="size-8 text-volt" strokeWidth={1.5} />
+        <Nfc className="size-8 text-accent" strokeWidth={1.5} />
       </Screen>
-      <span className="mt-4 font-mono text-xs">{labels.nfc}</span>
+      <span className="mt-4 text-xs">{labels.nfc}</span>
     </div>
   );
 }

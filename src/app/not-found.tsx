@@ -18,7 +18,7 @@ export default function NotFound() {
         <div className="flex flex-col items-start gap-6 lg:col-span-7">
           <p
             aria-hidden="true"
-            className="font-mono text-[clamp(5rem,4rem+8vw,12rem)] leading-none text-volt"
+            className="text-[clamp(5rem,4rem+8vw,12rem)] leading-none text-accent"
           >
             {page.code}
           </p>
@@ -41,7 +41,7 @@ export default function NotFound() {
           </ButtonLink>
         </div>
         <div aria-hidden="true" className="lg:col-span-5">
-          <div className="mx-auto max-w-[300px] rounded-sm bg-paper p-6 font-mono text-sm text-ink-950 shadow-2xl">
+          <div className="mx-auto max-w-[300px] rounded-sm bg-paper p-6 text-sm text-ink-950 shadow-2xl">
             <p className="text-eyebrow text-graphite">{page.receipt.title}</p>
             <dl className="mt-4 flex flex-col gap-2 border-y border-dashed border-ink-950/30 py-4">
               {page.receipt.rows.map((row) => (

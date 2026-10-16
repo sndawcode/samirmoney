@@ -31,21 +31,21 @@ export function TapRipple({ labels, className }: TapRippleProps) {
         )}
       >
         <div className="relative flex h-64 w-40 flex-col items-center justify-between rounded-[22px] bg-ink-800 p-4 ring-1 ring-white/10">
-          <span className="font-mono text-[0.65rem] tracking-[.12em] text-smoke uppercase">
+          <span className="text-[0.65rem] tracking-[.12em] text-smoke uppercase">
             {labels.terminal}
           </span>
           <div className="relative grid size-20 place-items-center">
             {[0, 1, 2].map((i) => (
               <m.span
                 key={i}
-                className="absolute inset-0 rounded-full border-2 border-volt"
+                className="absolute inset-0 rounded-full border-2 border-accent"
                 initial={{ scale: 0.6, opacity: 0 }}
                 animate={play ? { scale: [0.6, 2], opacity: [0.7, 0] } : undefined}
                 transition={{ duration: 1.2, ease: "easeOut", delay: 0.9 + i * 0.2 }}
               />
             ))}
             <m.span
-              className="grid size-14 place-items-center rounded-full bg-volt text-ink-950"
+              className="grid size-14 place-items-center rounded-full bg-accent text-ink-950"
               initial={{ scale: 0, opacity: 0 }}
               animate={play ? { scale: 1, opacity: 1 } : undefined}
               transition={{ duration: 0.5, ease: EASE, delay: 1.4 }}
@@ -54,7 +54,7 @@ export function TapRipple({ labels, className }: TapRippleProps) {
             </m.span>
           </div>
           <m.span
-            className="font-mono text-xs text-volt"
+            className="text-xs text-accent"
             initial={{ opacity: 0 }}
             animate={play ? { opacity: 1 } : undefined}
             transition={{ delay: 1.6 }}
@@ -71,9 +71,7 @@ export function TapRipple({ labels, className }: TapRippleProps) {
           <span className="grid size-16 place-items-center rounded-2xl bg-samir-500 text-ink-950 shadow-xl shadow-ink-950/50">
             <KeyRound className="size-7" strokeWidth={1.5} />
           </span>
-          <span className="font-mono text-[0.65rem] tracking-[.12em] uppercase">
-            {labels.keychain}
-          </span>
+          <span className="text-[0.65rem] tracking-[.12em] uppercase">{labels.keychain}</span>
         </m.div>
       </div>
     </MotionScope>

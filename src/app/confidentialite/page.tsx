@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMetadata("/confidentialite");
 export default function ConfidentialitePage() {
   return (
     <LegalPage title={privacyPage.title} meta={privacyPolicy.updated}>
-      <h2 className="text-xl font-semibold">{frTypo(privacyPolicy.title)}</h2>
+      <h2 className="text-xl font-extrabold">{frTypo(privacyPolicy.title)}</h2>
       <LegalBlocks blocks={privacyPolicy.blocks} />
       <section
         aria-labelledby="privacy-website"
