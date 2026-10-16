@@ -92,6 +92,12 @@ const BADGE_ORBIT: Orbit = {
 };
 const BADGE_HEIGHT = 0.4;
 const BADGE_FADE_IN_SPEED = 2.5;
+// Draw order: glow and lines (0) → centre logo (1) → badges (2). Badges in front of the globe cover the logo;
+// badges behind it are hidden by the depth occluder, so the logo shows.
+const RENDER_ORDER = { logo: 1, badge: 2 } as const;
+// Centre logo: a little smaller than the glowing shell so its rim still frames it; breathes gently.
+const LOGO_SIZE = 1.0;
+const LOGO_BREATH = 0.025;
 // Depth fade: badges dim from fully opaque in front of the globe to faint behind it (view-space units).
 const BADGE_DEPTH_FADE = { behind: -1.1, front: 0.35, minOpacity: 0.12 };
 
@@ -102,6 +108,8 @@ export type EcosystemOptions = {
   animate: boolean;
   nodeIds: readonly string[];
   badges?: readonly Badge[];
+  /** Image shown at the centre of the globe (the Samir Money mark). */
+  coreLogo?: string;
 };
 
 type Packet = { link: number; t: number; speed: number };
@@ -184,6 +192,12 @@ export class EcosystemScene {
     loaded: boolean;
     visibility: number;
   }[] = [];
+  private logo: {
+    sprite: Sprite;
+    material: SpriteMaterial;
+    loaded: boolean;
+    visibility: number;
+  } | null = null;
   private readonly scratchView = new Vector3();
   private readonly coreView = new Vector3();
 
@@ -201,7 +215,7 @@ export class EcosystemScene {
   private readonly scratchMid = new Vector3();
   private readonly scratchPoint = new Vector3();
 
-  constructor({ canvas, quality, animate, nodeIds, badges = [] }: EcosystemOptions) {
+  constructor({ canvas, quality, animate, nodeIds, badges = [], coreLogo }: EcosystemOptions) {
     this.settings = QUALITY[quality];
     this.animate = animate;
     this.nodeIds = nodeIds;
@@ -361,11 +375,47 @@ export class EcosystemScene {
     this.world.add(occluder);
     this.disposables.push(occluderGeometry, occluderMaterial);
 
+    if (coreLogo) this.addCoreLogo(coreLogo);
     this.addBadges(badges);
 
     this.root.add(this.world, this.dust);
     this.scene.add(this.root);
     this.camera.position.set(0, 0, CAMERA_Z);
+  }
+
+  /** The brand mark at the heart of the globe: always facing the viewer, faded in once loaded. */
+  private addCoreLogo(src: string): void {
+    const material = new SpriteMaterial({
+      transparent: true,
+      opacity: 0,
+      depthTest: false,
+      depthWrite: false,
+    });
+    const sprite = new Sprite(material);
+    sprite.renderOrder = RENDER_ORDER.logo;
+    sprite.scale.setScalar(LOGO_SIZE);
+    this.logo = { sprite, material, loaded: false, visibility: 0 };
+    this.world.add(sprite);
+    this.disposables.push(material);
+    new TextureLoader().load(
+      src,
+      (texture) => {
+        texture.colorSpace = SRGBColorSpace;
+        texture.anisotropy = Math.min(4, this.renderer.capabilities.getMaxAnisotropy());
+        material.map = texture;
+        material.needsUpdate = true;
+        this.disposables.push(texture);
+        if (this.logo) this.logo.loaded = true;
+        if (!this.running && this.logo) {
+          this.logo.visibility = 1;
+          this.renderFrame(0);
+        }
+      },
+      undefined,
+      () => {
+        sprite.visible = false;
+      },
+    );
   }
 
   /** Loads each badge texture; badges fade in as they arrive, the scene never waits for them. */
@@ -374,6 +424,7 @@ export class EcosystemScene {
     badges.forEach((badge) => {
       const material = new SpriteMaterial({ transparent: true, opacity: 0, depthWrite: false });
       const sprite = new Sprite(material);
+      sprite.renderOrder = RENDER_ORDER.badge;
       sprite.scale.set(BADGE_HEIGHT * badge.aspect, BADGE_HEIGHT, 1);
       const entry = { sprite, material, aspect: badge.aspect, loaded: false, visibility: 0 };
       this.badges.push(entry);
@@ -520,6 +571,16 @@ export class EcosystemScene {
 
     this.coreMaterial.uniforms.uTime.value = t;
     this.wire.rotation.set(t * 0.12, t * 0.18, 0);
+
+    if (this.logo) {
+      if (this.logo.loaded)
+        this.logo.visibility = Math.min(
+          1,
+          this.logo.visibility + (delta * BADGE_FADE_IN_SPEED || 1),
+        );
+      this.logo.material.opacity = this.logo.visibility;
+      this.logo.sprite.scale.setScalar(LOGO_SIZE * (1 + LOGO_BREATH * Math.sin(t * 1.6)));
+    }
 
     this.nodes.forEach((node, i) => {
       const orbit = ORBITS[i];
