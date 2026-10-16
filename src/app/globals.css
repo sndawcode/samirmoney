@@ -366,3 +366,11 @@
 .ecosystem-canvas[data-ready] {
   opacity: 1;
 }
+
+/* Hero copy sits over the live 3D scene: a soft ink halo keeps it legible whatever passes behind. */
+.hero-legible {
+  text-shadow:
+    0 0 2px rgb(5 8 7 / 0.9),
+    0 0 18px rgb(5 8 7 / 0.85),
+    0 0 36px rgb(5 8 7 / 0.6);
+}

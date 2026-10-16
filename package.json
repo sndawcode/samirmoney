@@ -18,7 +18,8 @@
     "images": "node scripts/optimize-images.mjs assets/selection.json",
     "check:content": "tsx scripts/check-content.ts",
     "check:links": "linkinator http://localhost:3000 --recurse --skip '^(?!http://localhost)'",
-    "assets:derive": "node scripts/prepare-legacy.mjs"
+    "assets:derive": "node scripts/prepare-legacy.mjs",
+    "icons": "node scripts/prepare-icons.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",

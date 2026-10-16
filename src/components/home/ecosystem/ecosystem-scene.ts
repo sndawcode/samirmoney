@@ -21,6 +21,7 @@ import {
   Sprite,
   SpriteMaterial,
   SRGBColorSpace,
+  TextureLoader,
   Timer,
   Vector3,
   WebGLRenderer,
@@ -73,7 +74,26 @@ export type Layout = {
   coreY: number;
   /** Larger = smaller scene. */
   distance: number;
+  /** Badge size multiplier (smaller on phones, where the orbit passes near the headline). */
+  badgeScale: number;
 };
+
+/** Artwork that orbits close around the globe (payment-method badges). */
+export type Badge = { src: string; aspect: number };
+
+// Badge ring: just outside the wireframe shell, inside the solutions' orbits.
+const BADGE_ORBIT: Orbit = {
+  radius: 1.55,
+  tiltX: 0.32,
+  tiltZ: -0.18,
+  speed: 0.2,
+  phase: 0,
+  lift: 0,
+};
+const BADGE_HEIGHT = 0.4;
+const BADGE_FADE_IN_SPEED = 2.5;
+// Depth fade: badges dim from fully opaque in front of the globe to faint behind it (view-space units).
+const BADGE_DEPTH_FADE = { behind: -1.1, front: 0.35, minOpacity: 0.12 };
 
 export type EcosystemOptions = {
   canvas: HTMLCanvasElement;
@@ -81,6 +101,7 @@ export type EcosystemOptions = {
   /** false = reduced motion: one still frame, re-rendered only on resize or focus. */
   animate: boolean;
   nodeIds: readonly string[];
+  badges?: readonly Badge[];
 };
 
 type Packet = { link: number; t: number; speed: number };
@@ -128,6 +149,7 @@ const fresnelMaterial = () =>
       }`,
     transparent: true,
     depthWrite: false,
+    depthTest: false, // the glow is the globe: never hidden by the depth-only occluder inside it
     blending: AdditiveBlending,
   });
 
@@ -155,9 +177,18 @@ export class EcosystemScene {
   private readonly packets: Packet[] = [];
   private readonly packetGeometry = new BufferGeometry();
   private readonly dust: Points;
+  private readonly badges: {
+    sprite: Sprite;
+    material: SpriteMaterial;
+    aspect: number;
+    loaded: boolean;
+    visibility: number;
+  }[] = [];
+  private readonly scratchView = new Vector3();
+  private readonly coreView = new Vector3();
 
   private size = { width: 1, height: 1 };
-  private layout: Layout = { coreX: 0.5, coreY: 0.5, distance: CAMERA_Z };
+  private layout: Layout = { coreX: 0.5, coreY: 0.5, distance: CAMERA_Z, badgeScale: 1 };
   private pointer = { x: 0, y: 0 };
   private tilt = { x: 0, y: 0 };
   private scroll = 0;
@@ -170,7 +201,7 @@ export class EcosystemScene {
   private readonly scratchMid = new Vector3();
   private readonly scratchPoint = new Vector3();
 
-  constructor({ canvas, quality, animate, nodeIds }: EcosystemOptions) {
+  constructor({ canvas, quality, animate, nodeIds, badges = [] }: EcosystemOptions) {
     this.settings = QUALITY[quality];
     this.animate = animate;
     this.nodeIds = nodeIds;
@@ -208,6 +239,7 @@ export class EcosystemScene {
         opacity: 0.55,
         blending: AdditiveBlending,
         depthWrite: false,
+        depthTest: false, // part of the globe's glow, like the core
       }),
     );
     halo.scale.setScalar(4.2);
@@ -321,9 +353,53 @@ export class EcosystemScene {
     this.dust = new Points(dustGeometry, dustMaterial);
     this.disposables.push(dustGeometry, dustMaterial);
 
+    // Depth-only sphere inside the glow: badges passing behind the globe are hidden by it, not drawn over it.
+    const occluderGeometry = new SphereGeometry(0.6, 32, 32);
+    const occluderMaterial = new MeshBasicMaterial({ colorWrite: false });
+    const occluder = new Mesh(occluderGeometry, occluderMaterial);
+    occluder.renderOrder = -1;
+    this.world.add(occluder);
+    this.disposables.push(occluderGeometry, occluderMaterial);
+
+    this.addBadges(badges);
+
     this.root.add(this.world, this.dust);
     this.scene.add(this.root);
     this.camera.position.set(0, 0, CAMERA_Z);
+  }
+
+  /** Loads each badge texture; badges fade in as they arrive, the scene never waits for them. */
+  private addBadges(badges: readonly Badge[]): void {
+    const loader = new TextureLoader();
+    badges.forEach((badge) => {
+      const material = new SpriteMaterial({ transparent: true, opacity: 0, depthWrite: false });
+      const sprite = new Sprite(material);
+      sprite.scale.set(BADGE_HEIGHT * badge.aspect, BADGE_HEIGHT, 1);
+      const entry = { sprite, material, aspect: badge.aspect, loaded: false, visibility: 0 };
+      this.badges.push(entry);
+      this.world.add(sprite);
+      this.disposables.push(material);
+      loader.load(
+        badge.src,
+        (texture) => {
+          texture.colorSpace = SRGBColorSpace;
+          texture.anisotropy = Math.min(4, this.renderer.capabilities.getMaxAnisotropy());
+          material.map = texture;
+          material.needsUpdate = true;
+          entry.loaded = true;
+          this.disposables.push(texture);
+          if (!this.running) {
+            entry.visibility = 1;
+            this.renderFrame(0);
+          }
+        },
+        undefined,
+        () => {
+          // A missing badge simply never appears; the rest of the scene is unaffected.
+          sprite.visible = false;
+        },
+      );
+    });
   }
 
   /** Compiles every shader without blocking the main thread (KHR_parallel_shader_compile where available). */
@@ -379,6 +455,13 @@ export class EcosystemScene {
       this.size.height,
     );
     this.camera.updateProjectionMatrix();
+    for (const badge of this.badges) {
+      badge.sprite.scale.set(
+        BADGE_HEIGHT * badge.aspect * layout.badgeScale,
+        BADGE_HEIGHT * layout.badgeScale,
+        1,
+      );
+    }
     if (!this.running) this.renderFrame(0);
   }
 
@@ -463,6 +546,37 @@ export class EcosystemScene {
         focus === null ? LINK_OPACITY.idle : isFocused ? LINK_OPACITY.focused : LINK_OPACITY.dimmed;
       link.material.opacity += (target - link.material.opacity) * Math.min(1, delta * 6 || 1);
     });
+
+    // Badges: evenly spaced on their ring, dimming as they pass behind the globe.
+    if (this.badges.length > 0) {
+      this.root.updateMatrixWorld();
+      this.camera.updateMatrixWorld();
+      this.coreView
+        .setFromMatrixPosition(this.world.matrixWorld)
+        .applyMatrix4(this.camera.matrixWorldInverse);
+      const step = (Math.PI * 2) / this.badges.length;
+      this.badges.forEach((badge, i) => {
+        this.orbitPoint(BADGE_ORBIT, i * step + t * BADGE_ORBIT.speed, badge.sprite.position);
+        if (badge.loaded)
+          badge.visibility = Math.min(1, badge.visibility + (delta * BADGE_FADE_IN_SPEED || 1));
+        this.scratchView
+          .copy(badge.sprite.position)
+          .applyMatrix4(this.world.matrixWorld)
+          .applyMatrix4(this.camera.matrixWorldInverse);
+        const depth = this.scratchView.z - this.coreView.z; // > 0: in front of the globe
+        const k = Math.min(
+          1,
+          Math.max(
+            0,
+            (depth - BADGE_DEPTH_FADE.behind) / (BADGE_DEPTH_FADE.front - BADGE_DEPTH_FADE.behind),
+          ),
+        );
+        const smooth = k * k * (3 - 2 * k);
+        badge.material.opacity =
+          badge.visibility *
+          (BADGE_DEPTH_FADE.minOpacity + (1 - BADGE_DEPTH_FADE.minOpacity) * smooth);
+      });
+    }
 
     const packetPositions = this.packetGeometry.getAttribute("position") as BufferAttribute;
     const p = this.scratchPoint;

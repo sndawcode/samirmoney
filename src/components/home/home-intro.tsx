@@ -28,7 +28,7 @@ export function HomeIntro() {
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[min(100svh,880px)] bg-[linear-gradient(200deg,transparent_5%,rgb(5_8_7/0.55)_32%,var(--color-ink-950)_58%)] lg:bg-[linear-gradient(90deg,var(--color-ink-950)_30%,rgb(5_8_7/0.4)_58%,transparent_75%)]"
       />
       <Container data-gsap-stack width="media" className="flex flex-col gap-8 lg:gap-10">
-        <div data-hero-copy className="flex max-w-[44rem] flex-col gap-5">
+        <div data-hero-copy className="hero-legible flex max-w-[44rem] flex-col gap-5">
           <KineticHeadline
             as="h1"
             id="home-intro-title"

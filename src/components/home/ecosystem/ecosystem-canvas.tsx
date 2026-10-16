@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { paymentMethodBadges } from "@/content/fr/payment-methods";
 import { products } from "@/content/fr/products";
 import type { EcosystemScene, Layout, Quality } from "@/components/home/ecosystem/ecosystem-scene";
 
@@ -11,8 +12,8 @@ const DESKTOP_QUERY = "(min-width: 1024px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 // Core position on screen (fractions) and camera distance, per layout.
-const LAYOUT_DESKTOP: Layout = { coreX: 0.76, coreY: 0.3, distance: 8.5 };
-const LAYOUT_MOBILE: Layout = { coreX: 0.78, coreY: 0.15, distance: 10.5 };
+const LAYOUT_DESKTOP: Layout = { coreX: 0.76, coreY: 0.3, distance: 8.5, badgeScale: 1 };
+const LAYOUT_MOBILE: Layout = { coreX: 0.84, coreY: 0.1, distance: 11, badgeScale: 0.8 };
 
 type NetworkInformation = { saveData?: boolean };
 
@@ -77,6 +78,7 @@ export function EcosystemCanvas() {
           quality: detectQuality(),
           animate: !reduce,
           nodeIds: products.map((p) => p.id),
+          badges: paymentMethodBadges,
         });
       } catch (error) {
         // No WebGL: keep the CSS background. Visible in the console for QA, harmless for visitors.

@@ -1455,7 +1455,7 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 | 8 | API docs URL, sandbox access process | `/developpeurs` | Docs CTA hidden; contact CTA only |
 | 9 | WooCommerce plugin link | `/developpeurs` | Card without link |
 | 10 | Validated partner list + logo files + authorisation | Home S5, À propos | Section hidden |
-| 11 | Accepted payment methods per product; permission to show operator/card logos | TPE, Business, e-commerce, Services | Generic wording, no logos |
+| 11 | Accepted payment methods per product; **written permission for the payment badges now orbiting the home globe** (Visa, Mastercard, Wave, Orange Money, Wizall Money, Mixx by Yas, KPay, PI-SPI/BCEAO — files supplied 16 Oct 2026 in `icone/`, see `src/content/fr/payment-methods.ts`) | Home S1, TPE, Business, e-commerce, Services | Badges shown on the home globe at the client's request (illustration only, never a list of accepted methods); no logos elsewhere |
 | 12 | RAPS details: purchase/where, loss/theft, recharge limits, compatible terminals | `/raps` FAQ | FAQ hidden |
 | 13 | TPE technical sheet; OEM naming | `#tpe` SpecList | SpecList hidden |
 | 14 | PCI DSS scope and date; permission to show any badge | S4 | Typographic seal only |
