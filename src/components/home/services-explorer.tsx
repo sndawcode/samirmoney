@@ -69,6 +69,7 @@ function ServiceItem({ service, index, active, onActivate, ref }: ServiceItemPro
     <li
       ref={ref}
       data-index={index}
+      data-gsap="rise"
       onPointerEnter={onActivate}
       onFocusCapture={onActivate}
       className={cx(

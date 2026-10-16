@@ -18,7 +18,8 @@
     "images": "node scripts/optimize-images.mjs assets/selection.json",
     "check:content": "tsx scripts/check-content.ts",
     "check:links": "linkinator http://localhost:3000 --recurse --skip '^(?!http://localhost)'",
-    "assets:derive": "node scripts/prepare-legacy.mjs"
+    "assets:derive": "node scripts/prepare-legacy.mjs",
+    "icons": "node scripts/prepare-icons.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",
@@ -30,6 +31,7 @@
     "@radix-ui/react-tabs": "1.2.1",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "gsap": "3.15.0",
     "lucide-react": "1.57.0",
     "motion": "14.3.0",
     "next": "16.4.1",
@@ -38,6 +40,7 @@
     "react-hook-form": "7.90.0",
     "resend": "6.33.0",
     "tailwind-merge": "3.7.0",
+    "three": "0.186.1",
     "zod": "4.6.7"
   },
   "devDependencies": {
@@ -48,6 +51,7 @@
     "@types/node": "20.19.43",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "@types/three": "0.186.0",
     "eslint": "9.39.5",
     "eslint-config-next": "16.4.1",
     "linkinator": "8.1.0",

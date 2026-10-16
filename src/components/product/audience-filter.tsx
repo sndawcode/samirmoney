@@ -7,6 +7,7 @@ import { audienceLabels, products, type Audience } from "@/content/fr/products";
 import { track } from "@/lib/analytics";
 import { cx } from "@/lib/cx";
 import { frTypo } from "@/lib/fr-typography";
+import { ECOSYSTEM_FOCUS_EVENT } from "@/components/home/ecosystem/ecosystem-canvas";
 
 const ALL = "tous";
 type FilterValue = Audience | typeof ALL;
@@ -33,7 +34,16 @@ const readProfilOnServer = () => null;
  * "Je suis :" chips (radio-group semantics). Dims non-matching tiles — never hides them —, syncs ?profil=
  * and announces the result (§7). Also drives the tiles' cursor spotlight and ±8 px parallax on fine pointers.
  */
-export function AudienceFilter({ children, total }: { children: ReactNode; total: number }) {
+export function AudienceFilter({
+  children,
+  total,
+  heading,
+}: {
+  children: ReactNode;
+  total: number;
+  /** Optional section label shown at the start of the filter row (home: "Nos solutions"). */
+  heading?: ReactNode;
+}) {
   const urlProfil = useSyncExternalStore(subscribeToHistory, readProfil, readProfilOnServer);
   const [selected, setSelected] = useState<FilterValue | null>(null);
   const [announcement, setAnnouncement] = useState("");
@@ -67,38 +77,57 @@ export function AudienceFilter({ children, total }: { children: ReactNode; total
     tile.style.setProperty("--py", `${(y - 0.5) * 2 * PARALLAX_PX}px`);
   }
 
+  // Hover or keyboard focus on a tile lights up its node in the hero scene.
+  function focusProduct(target: EventTarget | null) {
+    const id =
+      target instanceof Element
+        ? (target.closest<HTMLElement>("[data-product]")?.dataset.product ?? null)
+        : null;
+    window.dispatchEvent(new CustomEvent(ECOSYSTEM_FOCUS_EVENT, { detail: id }));
+  }
+
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <span id="audience-filter-label" className="text-eyebrow text-smoke">
-          {frTypo(audienceFilter.label)}
-        </span>
-        <RadioGroup.Root
-          aria-labelledby="audience-filter-label"
-          value={value}
-          onValueChange={select}
-          orientation="horizontal"
-          className="-mx-1 flex snap-x [scrollbar-width:none] gap-2 overflow-x-auto px-1 pb-1"
-        >
-          {OPTIONS.map((option) => (
-            <RadioGroup.Item
-              key={option}
-              value={option}
-              className={cx(
-                "min-h-11 shrink-0 snap-start rounded-full border px-4 text-sm font-medium transition-colors duration-(--dur-micro)",
-                "border-white/20 text-white hover:border-white/50",
-                "data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-ink-950",
-              )}
-            >
-              {option === ALL ? audienceFilter.all : audienceLabels[option]}
-            </RadioGroup.Item>
-          ))}
-        </RadioGroup.Root>
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-8">
+        {heading}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <span id="audience-filter-label" className="text-eyebrow text-smoke">
+            {frTypo(audienceFilter.label)}
+          </span>
+          <RadioGroup.Root
+            aria-labelledby="audience-filter-label"
+            value={value}
+            onValueChange={select}
+            orientation="horizontal"
+            className="-mx-1 flex snap-x [scrollbar-width:none] gap-2 overflow-x-auto px-1 pb-1"
+          >
+            {OPTIONS.map((option) => (
+              <RadioGroup.Item
+                key={option}
+                value={option}
+                className={cx(
+                  "min-h-11 shrink-0 snap-start rounded-full border px-4 text-sm font-medium transition-colors duration-(--dur-micro)",
+                  "border-white/20 text-white hover:border-white/50",
+                  "data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-ink-950",
+                )}
+              >
+                {option === ALL ? audienceFilter.all : audienceLabels[option]}
+              </RadioGroup.Item>
+            ))}
+          </RadioGroup.Root>
+        </div>
       </div>
       <p aria-live="polite" className="sr-only">
         {announcement}
       </p>
-      <div data-audience={value} onPointerMove={onPointerMove}>
+      <div
+        data-audience={value}
+        onPointerMove={onPointerMove}
+        onPointerOver={(event) => focusProduct(event.target)}
+        onPointerLeave={() => focusProduct(null)}
+        onFocus={(event) => focusProduct(event.target)}
+        onBlur={() => focusProduct(null)}
+      >
         {children}
       </div>
     </div>

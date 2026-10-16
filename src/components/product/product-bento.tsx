@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { products, productsSection, type Product } from "@/content/fr/products";
 import { eventClasses } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
@@ -11,9 +12,9 @@ const TILE_SIZES = "(min-width: 1024px) 33vw, 50vw";
 const LCP_PRODUCT = "tpe";
 
 /** Home S1: the six solutions, visible immediately, each one link (§9.1-S1). */
-export function ProductBento() {
+export function ProductBento({ heading }: { heading?: ReactNode }) {
   return (
-    <AudienceFilter total={products.length}>
+    <AudienceFilter total={products.length} heading={heading}>
       <ul className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3">
         {products.map((product, i) => (
           <ProductTile key={product.id} product={product} order={i} />
@@ -27,6 +28,7 @@ function ProductTile({ product, order }: { product: Product; order: number }) {
   return (
     <li
       data-tile
+      data-product={product.id}
       data-audiences={product.audiences.join(" ")}
       style={{ animationDelay: `calc(${order} * var(--stagger))` }}
       className="tile-enter transition-opacity duration-(--dur-ui)"
@@ -34,13 +36,13 @@ function ProductTile({ product, order }: { product: Product; order: number }) {
       <Link
         href={product.href}
         className={cn(
-          "group/tile tile-spotlight relative flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-ink-900 p-3 sm:p-5",
+          "group/tile tile-spotlight relative flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[linear-gradient(180deg,var(--color-ink-800),var(--color-ink-900)_60%)] p-3 shadow-[inset_0_1px_0_rgb(255_255_255/0.07),0_24px_48px_-24px_rgb(0_0_0/0.6)] sm:p-5",
           "transition-[transform,border-color] duration-(--dur-ui) ease-(--ease-out-expo) hover:-translate-y-1 hover:border-white/25",
           eventClasses("product_tile_click", { product: product.id }),
         )}
       >
         <span className="text-eyebrow text-smoke">{product.index}</span>
-        <div className="tile-parallax my-3 flex h-28 items-end justify-center sm:my-4 sm:h-44 lg:h-52 xl:h-60">
+        <div className="tile-parallax my-3 flex h-28 items-end justify-center sm:my-4 sm:h-44 lg:h-48">
           <ProductVisual
             product={product}
             sizes={TILE_SIZES}
