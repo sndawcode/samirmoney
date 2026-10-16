@@ -1,0 +1,354 @@
+@import "tailwindcss";
+
+/* `ink:` styles apply inside dark chapters (<Section theme="ink">, ink header, mobile sheet),
+   except inside a light panel nested in a dark surface (mega menu over the ink header). */
+@custom-variant ink (&:where([data-theme="ink"], [data-theme="ink"] *):not(:where([data-theme="ink"] [data-theme="paper"], [data-theme="ink"] [data-theme="paper"] *)));
+@custom-variant pointer-fine (@media (pointer: fine));
+
+@theme {
+  /* Surfaces — ink (dark) */
+  --color-ink-950: #050807;
+  --color-ink-900: #0a0f0d;
+  --color-ink-800: #121816;
+  --color-ink-700: #1c2421;
+  --color-ink-600: #2a3430;
+  /* Surfaces — paper (light) */
+  --color-paper: #ffffff;
+  --color-mist: #f4f6f5;
+  --color-fog: #e7ecea;
+  /* Brand */
+  --color-samir-50: #eaf7f1;
+  --color-samir-100: #cdeddf;
+  --color-samir-300: #5cb293; /* legacy light green */
+  --color-samir-500: #40b289; /* legacy primary — fills/icons on light; text ONLY on dark */
+  --color-samir-700: #007552; /* legacy deep — text, links, buttons on light (5.7:1 on white) */
+  --color-samir-900: #003d2b;
+  /* Signal — dark surfaces only (14:1 on ink-950, fails on white) */
+  --color-volt: #3df5a6;
+  /* Text */
+  --color-graphite: #5b6863; /* secondary text on light (5.8:1) */
+  --color-smoke: #9aa7a2; /* secondary text on dark (8:1) */
+  /* Feedback */
+  --color-danger: #e5484d; /* fills and icons */
+  --color-danger-strong: #b42318; /* error text on light surfaces (6.5:1 on white; danger fails AA as text) */
+  --color-danger-50: #fef3f2;
+  --color-warning: #f5a524;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-sm: 6px; /* badges, receipt cards */
+  --radius-md: 12px; /* inputs */
+  --radius-lg: 20px; /* cards */
+  --radius-xl: 28px; /* product tiles, media */
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+:root {
+  --dur-micro: 120ms; /* hover, press */
+  --dur-ui: 240ms; /* menus, toggles */
+  --dur-reveal: 800ms; /* entrances */
+  --dur-scene: 1200ms; /* scroll scenes */
+  --stagger: 60ms;
+  --gutter: clamp(20px, 4vw, 48px);
+  --section-y: clamp(96px, 12vw, 200px);
+  --header-h: 64px;
+}
+
+@utility text-display-xl {
+  font-size: clamp(3.25rem, 1.2rem + 8.4vw, 9.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+}
+@utility text-display-l {
+  font-size: clamp(2.75rem, 1.4rem + 5.2vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+}
+@utility text-h2 {
+  font-size: clamp(2.25rem, 1.4rem + 3.2vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+@utility text-h3 {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+@utility text-lead {
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+@utility text-body {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+@utility text-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Horizontal padding shared by every layout container. */
+@utility px-gutter {
+  padding-inline: var(--gutter);
+}
+@utility py-section {
+  padding-block: var(--section-y);
+}
+
+/* Night-chapter texture: hairline columns (≤ 6 % opacity, §5.3). */
+@utility hairlines {
+  background-image: linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: calc((min(100vw, 1440px) - 2 * var(--gutter)) / 12) 100%;
+  background-position: center top;
+}
+
+/* Static film grain, opacity ≤ 0.04 (§5.3). The tile is generated SVG noise: no request, no animation. */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='128' height='128' filter='url(%23n)'/></svg>");
+    background-size: 128px 128px;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink-950);
+    font-family: var(--font-sans);
+    hyphens: manual;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+  sup {
+    font-size: 0.6em;
+  }
+
+  /* Focus: 2 px samir-700 ring on light, volt on dark (§14). */
+  :focus-visible {
+    outline: 2px solid var(--color-samir-700);
+    outline-offset: 2px;
+  }
+  [data-theme="ink"] :focus-visible {
+    outline-color: var(--color-volt);
+  }
+  /* A light panel inside a dark header (mega menu) goes back to the light ring. */
+  [data-theme="ink"] [data-theme="paper"] :focus-visible {
+    outline-color: var(--color-samir-700);
+  }
+}
+
+/* Shared-element transition for product visuals (progressive; ignored by unsupported browsers). */
+::view-transition-group(.morph) {
+  animation-duration: 400ms;
+  animation-timing-function: var(--ease-out-expo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Home bento (§9.1-S1) ─────────────────────────────────────────── */
+
+/* Load-in stagger: tiles from scale .96 and blur 6px. CSS-only so the first row paints without JS. */
+/* No opacity in the keyframes: elements that start invisible are not LCP candidates until they finish. */
+@keyframes tile-in {
+  from {
+    transform: scale(0.96);
+    filter: blur(6px);
+  }
+}
+.tile-enter {
+  animation: tile-in var(--dur-reveal) var(--ease-out-expo) backwards;
+}
+
+/* Audience filter dims non-matching tiles (never hides them). */
+[data-audience]:not([data-audience="tous"]) [data-tile] {
+  opacity: 0.35;
+}
+[data-audience="particulier"] [data-tile][data-audiences~="particulier"],
+[data-audience="commercant"] [data-tile][data-audiences~="commercant"],
+[data-audience="entreprise"] [data-tile][data-audiences~="entreprise"],
+[data-audience="institution"] [data-tile][data-audiences~="institution"],
+[data-audience="developpeur"] [data-tile][data-audiences~="developpeur"] {
+  opacity: 1;
+}
+[data-tile]:focus-within {
+  opacity: 1;
+}
+
+/* Cursor spotlight and visual parallax: fine pointers and full motion only. */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tile-spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(64 178 137 / 0.16),
+      transparent 60%
+    );
+    transition: opacity var(--dur-ui);
+  }
+  .tile-spotlight:hover::before {
+    opacity: 1;
+  }
+  .tile-spotlight .tile-parallax {
+    transform: translate3d(var(--px, 0), var(--py, 0), 0);
+    transition: transform var(--dur-ui) var(--ease-out-expo);
+  }
+}
+
+/* ── Kinetic headline (§5.3): per line, never per letter; the full text stays in the DOM ── */
+@keyframes line-rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+@keyframes underline-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+.kinetic-line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  padding-bottom: 0.06em;
+}
+.kinetic-line > span {
+  display: inline-block;
+  animation: line-rise var(--dur-reveal) var(--ease-out-expo) backwards;
+  animation-delay: calc(var(--line, 0) * 90ms);
+}
+.volt-underline {
+  position: relative;
+  white-space: nowrap;
+}
+.volt-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.02em;
+  height: 2px;
+  background: var(--color-volt);
+  transform-origin: left;
+  animation: underline-draw 700ms var(--ease-out-expo) 500ms backwards;
+}
+
+/* Slow ambient glow behind the home intro (static with reduced motion). */
+@keyframes glow-drift {
+  50% {
+    transform: translate3d(8%, 6%, 0) scale(1.1);
+  }
+}
+.ambient-glow {
+  background: radial-gradient(closest-side, rgb(64 178 137 / 0.12), transparent);
+  animation: glow-drift 20s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow {
+    animation: none;
+  }
+}
+
+/* Save-Data: no ambient effects (§6). */
+[data-save-data] .ambient-glow,
+[data-save-data] .grain::after {
+  display: none;
+}
+
+/* ── Reveal (§6): hidden only when JS runs and motion is allowed ── */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal="self"],
+  [data-reveal="stagger"] > [data-reveal-item] {
+    transition:
+      opacity var(--dur-reveal) var(--ease-out-expo),
+      transform var(--dur-reveal) var(--ease-out-expo),
+      filter var(--dur-reveal) var(--ease-out-expo);
+  }
+  [data-reveal="self"]:not([data-shown]),
+  [data-reveal="stagger"]:not([data-shown]) > [data-reveal-item] {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(6px);
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(2) {
+    transition-delay: calc(1 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(3) {
+    transition-delay: calc(2 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(4) {
+    transition-delay: calc(3 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(5) {
+    transition-delay: calc(4 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(6) {
+    transition-delay: calc(5 * var(--stagger));
+  }
+  [data-reveal="stagger"] > [data-reveal-item]:nth-child(n + 7) {
+    transition-delay: calc(6 * var(--stagger));
+  }
+}
+
+/* Seal ring draws on once (600 ms, §9.1-S4); drawn by default without JS or with reduced motion. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .seal-ring {
+    stroke-dasharray: 1;
+    transition: stroke-dashoffset 600ms var(--ease-out-expo);
+  }
+  svg:not([data-shown]) > .seal-ring {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* Feature chapter: the sticky screen rises in when the active step changes (400 ms). */
+@keyframes chapter-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+.chapter-swap {
+  animation: chapter-in 400ms var(--ease-out-expo);
+}
