@@ -29,7 +29,9 @@
   --color-graphite: #5b6863; /* secondary text on light (5.8:1) */
   --color-smoke: #9aa7a2; /* secondary text on dark (8:1) */
   /* Feedback */
-  --color-danger: #e5484d;
+  --color-danger: #e5484d; /* fills and icons */
+  --color-danger-strong: #b42318; /* error text on light surfaces (6.5:1 on white; danger fails AA as text) */
+  --color-danger-50: #fef3f2;
   --color-warning: #f5a524;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;

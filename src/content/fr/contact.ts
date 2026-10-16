@@ -58,6 +58,7 @@ export const MESSAGE_MIN = 20;
 export const MESSAGE_MAX = 2000;
 
 export const contactPage = {
+  breadcrumb: "Contact",
   title: "La solution qu’il vous faut commence ici.", // [Brief S6]
   lead: "Vous êtes commerçant, entreprise, institution ou développeur ? Échangeons sur vos besoins.", // [Brief S6]
   supportNote:

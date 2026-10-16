@@ -75,6 +75,15 @@ export const accountDeletion = {
     submit: "Soumettre la demande",
     success:
       "Votre demande de suppression a bien été envoyée. Notre équipe la traite et vous recontacte si besoin.",
+    errors: {
+      firstName: "Indiquez votre prénom.",
+      lastName: "Indiquez votre nom.",
+      phone:
+        "Indiquez le numéro de votre compte avec l’indicatif pays, par exemple +221 77 000 00 00.",
+      confirm:
+        "Cochez la case pour confirmer que vous comprenez que la suppression est définitive.",
+    },
+    phoneHint: "Avec l’indicatif pays, par exemple +221 77 000 00 00.",
   },
   // [Proposition] — grounded in the privacy policy ("Supprimez vos données personnelles")
   retention: {
