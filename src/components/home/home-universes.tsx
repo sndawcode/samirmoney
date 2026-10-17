@@ -28,14 +28,14 @@ import type { CSSProperties } from "react";
 import {
   universes,
   universesSection,
-  type OrbitService,
+  type FloatingService,
   type ServiceIcon,
   type Universe,
 } from "@/content/fr/universes";
 import { eventClasses } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import { frTypo } from "@/lib/fr-typography";
-import { OrbitPauseButton, UniversesMotion } from "@/components/home/universes-controls";
+import { FloatPauseButton, UniversesMotion } from "@/components/home/universes-controls";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Eyebrow, Heading, Section } from "@/components/ui/section";
 import { Photo } from "@/components/ui/photo";
@@ -65,17 +65,46 @@ const ICONS: Record<ServiceIcon, LucideIcon> = {
   Zap,
 };
 
-// Two rings per device: inner (closer, flatter, slower) and outer (wider, steeper, reversed).
-const RINGS = [
-  { radius: "33cqi", tilt: "-24deg", roll: "7deg", lift: "-6cqi", duration: "48s", reverse: false },
-  { radius: "44cqi", tilt: "-30deg", roll: "-6deg", lift: "4cqi", duration: "64s", reverse: true },
-] as const;
+// Where each service label floats, in % of the stage. `side` anchors the label so it never runs past the
+// card edge: "l" = its left edge at x, "r" = its right edge at x, "c" = centred on x.
+type Spot = { x: number; y: number; side: "l" | "r" | "c" };
+
+const SPOTS: Record<Universe["id"], readonly Spot[]> = {
+  // SamirPay: the terminal sits bottom-left, so the services fill the right side, staggered.
+  samirpay: [
+    { x: 54, y: 10, side: "l" },
+    { x: 96, y: 21, side: "r" },
+    { x: 60, y: 32, side: "l" },
+    { x: 96, y: 43, side: "r" },
+    { x: 62, y: 54, side: "l" },
+    { x: 96, y: 65, side: "r" },
+    { x: 64, y: 76, side: "l" },
+    { x: 96, y: 87, side: "r" },
+  ],
+  // Samir Money: the phone sits centred and low; services on both sides and across the top.
+  "samir-money": [
+    { x: 4, y: 8, side: "l" },
+    { x: 50, y: 4, side: "c" },
+    { x: 96, y: 8, side: "r" },
+    { x: 4, y: 24, side: "l" },
+    { x: 96, y: 24, side: "r" },
+    { x: 4, y: 39, side: "l" },
+    { x: 96, y: 39, side: "r" },
+    { x: 4, y: 54, side: "l" },
+    { x: 96, y: 54, side: "r" },
+    { x: 4, y: 69, side: "l" },
+    { x: 96, y: 69, side: "r" },
+    { x: 4, y: 84, side: "l" },
+    { x: 96, y: 84, side: "r" },
+    { x: 50, y: 16, side: "c" },
+  ],
+};
 
 /**
  * Home, right below the hero (client decision, 17 Oct 2026): SamirPay and Samir Money as two framed product
- * cards, each device bleeding off the bottom of its card with its services orbiting on visible 3D tracks.
- * Labels are real links; the orbit pauses on hover, on focus, with each card's pause button (WCAG 2.2.2)
- * and while off-screen, and becomes tidy rows with reduced motion.
+ * cards, each with a large device image cropped by the card edges and its services floating around it.
+ * Labels are real links; the floating pauses on hover, on focus, with each card's pause button (WCAG 2.2.2)
+ * and while off-screen, and stops with reduced motion.
  */
 export function HomeUniverses() {
   return (
@@ -125,7 +154,7 @@ function UniverseCard({ universe }: { universe: Universe }) {
       )}
     >
       <div aria-hidden="true" className="universe-card-bg absolute inset-0 -z-10" />
-      <header className="flex items-start justify-between gap-4 p-6 sm:p-8">
+      <header className="relative z-10 flex items-start justify-between gap-4 p-6 sm:p-8">
         <div className="flex flex-col gap-3">
           <p className="text-eyebrow text-graphite ink:text-smoke">
             {universe.index} — {universe.name}
@@ -142,98 +171,74 @@ function UniverseCard({ universe }: { universe: Universe }) {
             {universe.cta.label}
           </ButtonLink>
         </div>
-        <OrbitPauseButton pauseLabel={universesSection.pause} playLabel={universesSection.play} />
+        <FloatPauseButton pauseLabel={universesSection.pause} playLabel={universesSection.play} />
       </header>
       <div
         data-universe-stage
-        className="universe-stage relative -mt-20 aspect-[1/0.9] w-full sm:-mt-24"
+        data-layout={universe.id}
+        className="universe-stage relative aspect-[1/0.95] w-full"
       >
-        <div
-          aria-hidden="true"
-          className="universe-glow absolute inset-x-[10%] top-[8%] bottom-[-20%] rounded-full"
-        />
-        <div className="universe-scene absolute inset-0">
-          {/* Orbit paths on their own flat layer: a 3D plane through the labels would slice them. */}
-          <div aria-hidden="true" className="orbit-tracks">
-            {RINGS.map((ring, r) => (
-              <span key={r} className="orbit-track" style={ringStyle(ring)} />
-            ))}
-          </div>
-          <div className="universe-device">
-            <Photo
-              slot={universe.media}
-              sizes="(min-width: 1024px) 24vw, 52vw"
-              className="h-auto w-full"
-            />
-          </div>
-          {/* One named group for both rings (display: contents keeps the 3D chain intact). */}
-          <div
-            role="group"
-            aria-label={universesSection.servicesOf(universe.name)}
-            className="contents"
-          >
-            {universe.rings.map((services, r) => (
-              <OrbitRing key={r} services={services} ring={RINGS[r]} universe={universe.id} />
-            ))}
-          </div>
+        <div aria-hidden="true" className="universe-glow absolute inset-0" />
+        <div className="universe-device">
+          <Photo
+            slot={universe.media}
+            sizes="(min-width: 1024px) 34vw, 80vw"
+            className="h-auto w-full"
+          />
         </div>
+        <ul aria-label={universesSection.servicesOf(universe.name)} className="contents">
+          {universe.services.map((service, i) => (
+            <FloatingLabel
+              key={service.label}
+              service={service}
+              spot={SPOTS[universe.id][i]}
+              index={i}
+              universe={universe.id}
+            />
+          ))}
+        </ul>
       </div>
     </article>
   );
 }
 
-function ringStyle(ring: (typeof RINGS)[number]): CSSProperties {
-  return {
-    "--r": ring.radius,
-    "--tilt": ring.tilt,
-    "--roll": ring.roll,
-    "--lift": ring.lift,
-    "--dur": ring.duration,
-  } as CSSProperties;
-}
-
-function OrbitRing({
-  services,
-  ring,
+function FloatingLabel({
+  service,
+  spot,
+  index,
   universe,
 }: {
-  services: readonly OrbitService[];
-  ring: (typeof RINGS)[number];
+  service: FloatingService;
+  spot: Spot | undefined;
+  index: number;
   universe: string;
 }) {
+  if (!spot) throw new Error(`No floating spot for service ${index} of ${universe}`);
+  const Icon = ICONS[service.icon];
+  const position: CSSProperties =
+    spot.side === "r"
+      ? { right: `${100 - spot.x}%`, top: `${spot.y}%` }
+      : { left: `${spot.x}%`, top: `${spot.y}%` };
   return (
-    <div
-      className="orbit-ring"
-      data-reverse={ring.reverse ? "" : undefined}
-      style={{ ...ringStyle(ring), "--n": services.length } as CSSProperties}
+    <li
+      className="float-item"
+      data-side={spot.side}
+      style={{ ...position, "--i": index } as CSSProperties}
     >
-      <ul className="orbit-list">
-        {services.map((service, i) => {
-          const Icon = ICONS[service.icon];
-          return (
-            <li
-              key={service.label}
-              className="orbit-item"
-              style={{ "--a": `${(360 / services.length) * i}deg`, "--i": i } as CSSProperties}
-            >
-              <Link
-                href={service.href}
-                className={cn(
-                  "orbit-chip",
-                  eventClasses("cta_click", {
-                    location: `home-orbit-${universe}`,
-                    label: service.label,
-                  }),
-                )}
-              >
-                <Icon aria-hidden="true" className="orbit-chip-icon" strokeWidth={1.75} />
-                {/* Non-breaking hyphens: "PI-SPI" never splits when a label wraps. */}
-                <span>{frTypo(service.label).replace(/-/g, "‑")}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+      <Link
+        href={service.href}
+        className={cn(
+          "float-chip",
+          eventClasses("cta_click", {
+            location: `home-universe-${universe}`,
+            label: service.label,
+          }),
+        )}
+      >
+        <Icon aria-hidden="true" className="float-chip-icon" strokeWidth={1.75} />
+        {/* Non-breaking hyphens: "PI-SPI" never splits when a label wraps. */}
+        <span>{frTypo(service.label).replace(/-/g, "‑")}</span>
+      </Link>
+    </li>
   );
 }

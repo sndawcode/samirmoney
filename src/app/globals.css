@@ -425,8 +425,8 @@
   color: var(--color-samir-900);
 }
 
-/* ── Home "Nos univers": two framed product cards, devices with their services orbiting on visible
-   CSS-3D tracks (client, 17 Oct 2026) ── */
+/* ── Home "Nos univers": two framed product cards, large device images cropped by the card edges with
+   their services floating around them (client, 17 Oct 2026) ── */
 .universe-card {
   box-shadow:
     0 1px 0 rgb(255 255 255 / 0.6) inset,
@@ -461,248 +461,132 @@
 }
 .universe-stage {
   container-type: inline-size;
-  perspective: 1400px;
 }
 .universe-glow {
-  background: radial-gradient(closest-side, rgb(60 176 136 / 0.25), transparent);
+  background: radial-gradient(55% 55% at 45% 60%, rgb(60 176 136 / 0.28), transparent 70%);
 }
-.universe-scene {
-  transform-style: preserve-3d;
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transition: transform 700ms var(--ease-out-expo);
-}
-/* The device sits low and bleeds off the bottom of the card (hides the photo's crop). */
+/* Large device images, cropped by the card edges. */
 .universe-device {
   position: absolute;
-  left: 50%;
-  top: 76%;
-  width: 46%;
-  transform: translate(-50%, -50%) translateZ(0);
+  pointer-events: none;
   filter: drop-shadow(0 30px 40px rgb(5 8 7 / 0.3));
 }
-.orbit-ring,
-.orbit-track {
-  position: absolute;
+/* SamirPay: anchored bottom-left and pushed past the edges, so the card masks the hand's straight cut. */
+[data-layout="samirpay"] .universe-device {
+  left: -22%;
+  bottom: -14%;
+  width: 82%;
+}
+/* Samir Money: centred, bleeding off the bottom edge. */
+[data-layout="samir-money"] .universe-device {
   left: 50%;
-  top: 52%;
-  width: 0;
-  height: 0;
-  transform-style: preserve-3d;
-  /* Ring radius, capped so a label at the side never runs past the card (the chip's half-width). */
-  --rr: min(var(--r), calc(50cqi - min(5.25rem, 17cqi)));
-  /* Rings sit at different heights so their labels interleave instead of stacking. */
-  transform: translateY(var(--lift, 0)) rotateZ(var(--roll)) rotateX(var(--tilt));
+  bottom: -20%;
+  width: 74%;
+  transform: translateX(-50%);
 }
-/* Orbit paths: a flat layer (no shared 3D context with the labels), so nothing is ever sliced.
-   Each path is the ring's projection: an ellipse squashed by the ring's tilt, rotated by its roll. */
-.orbit-tracks {
+.float-item {
   position: absolute;
-  inset: 0;
-  transform: translateZ(-1px);
+  z-index: 1;
+  translate: 0 -50%;
 }
-.orbit-track {
-  --rr: min(var(--r), calc(50cqi - min(5.25rem, 17cqi)));
-  width: calc(2 * var(--rr));
-  height: calc(2 * var(--rr) * sin(calc(-1 * var(--tilt))));
-  border-radius: 50%;
-  border: 1px solid rgb(5 8 7 / 0.13);
-  transform: translate(-50%, -50%) translateY(var(--lift, 0)) rotateZ(var(--roll));
+.float-item[data-side="c"] {
+  translate: -50% -50%;
 }
-[data-tone="ink"] .orbit-track {
-  border-color: rgb(255 255 255 / 0.16);
-}
-.orbit-list {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-style: preserve-3d;
-}
-.orbit-item {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-style: preserve-3d;
-  /* Placed on the ring, then turned back to face the viewer (static state = reduced motion). */
-  transform: rotateY(var(--a)) translateZ(var(--rr)) rotateY(calc(-1 * var(--a)))
-    rotateX(calc(-1 * var(--tilt))) rotateZ(calc(-1 * var(--roll)));
-}
-.orbit-chip {
-  position: absolute;
-  left: 0;
-  top: 0;
+.float-chip {
   display: inline-flex;
-  min-height: 2.25rem;
-  max-width: min(11rem, 34cqi);
+  min-height: 2.5rem;
   align-items: center;
-  gap: 0.4rem;
-  transform: translate(-50%, -50%);
+  gap: 0.5rem;
   border: 1px solid rgb(5 8 7 / 0.07);
   border-radius: 9999px;
   background: rgb(255 255 255 / 0.95);
-  padding: 0.375rem 0.8rem 0.375rem 0.45rem;
+  padding: 0.4rem 0.95rem 0.4rem 0.45rem;
   color: var(--color-ink-950);
-  font-size: clamp(0.6875rem, 0.6rem + 0.35vw, 0.8125rem);
+  font-size: clamp(0.75rem, 0.65rem + 0.35vw, 0.875rem);
   font-weight: 600;
   line-height: 1.2;
-  white-space: normal;
+  white-space: nowrap;
   box-shadow:
     0 1px 0 rgb(255 255 255) inset,
-    0 12px 28px -14px rgb(5 8 7 / 0.4);
+    0 14px 30px -14px rgb(5 8 7 / 0.4);
   transition:
-    background-color var(--dur-ui),
-    color var(--dur-ui),
-    border-color var(--dur-ui);
+    border-color var(--dur-ui),
+    transform var(--dur-ui) var(--ease-out-expo);
 }
-.orbit-chip-icon {
+.float-chip:hover {
+  transform: scale(1.05);
+  border-color: var(--color-samir-700);
+}
+.float-chip-icon {
   box-sizing: content-box;
-  width: 0.85rem;
-  height: 0.85rem;
+  width: 0.9rem;
+  height: 0.9rem;
   flex-shrink: 0;
   border-radius: 9999px;
-  padding: 0.3rem;
+  padding: 0.35rem;
   background: var(--color-samir-50);
   color: var(--color-samir-700);
 }
-[data-tone="ink"] .orbit-chip {
+[data-tone="ink"] .float-chip {
   border-color: rgb(255 255 255 / 0.14);
-  background: rgb(18 24 22 / 0.92);
+  background: rgb(18 24 22 / 0.88);
   color: #ffffff;
   box-shadow:
     0 1px 0 rgb(255 255 255 / 0.08) inset,
-    0 12px 28px -14px rgb(0 0 0 / 0.7);
+    0 14px 30px -14px rgb(0 0 0 / 0.7);
 }
-[data-tone="ink"] .orbit-chip-icon {
+[data-tone="ink"] .float-chip:hover {
+  border-color: var(--color-accent);
+}
+[data-tone="ink"] .float-chip-icon {
   background: rgb(60 176 136 / 0.18);
   color: var(--color-accent);
 }
-.orbit-chip:hover {
-  border-color: var(--color-samir-700);
-}
-[data-tone="ink"] .orbit-chip:hover {
-  border-color: var(--color-accent);
-}
-@container (min-width: 520px) {
-  .orbit-chip {
-    white-space: nowrap;
-  }
-}
+/* Each label floats on its own rhythm (staggered duration and delay). */
 @media (prefers-reduced-motion: no-preference) {
-  .universe-device {
-    animation: device-float 7s ease-in-out infinite;
+  .float-chip {
+    animation: float-bob calc(5s + var(--i) * 0.37s) ease-in-out infinite;
+    animation-delay: calc(var(--i) * -0.9s);
   }
-  .orbit-item {
-    animation:
-      orbit-spin var(--dur) linear infinite,
-      orbit-depth var(--dur) linear infinite;
-    /* The depth fade starts at each item's own angle on the ring. */
-    animation-delay: 0s, calc(var(--dur) * var(--i) / var(--n) * -1);
-  }
-  .orbit-ring[data-reverse] .orbit-item {
-    animation-direction: reverse;
-  }
-  .universe-stage:hover .orbit-item,
-  .universe-stage:focus-within .orbit-item,
-  [data-universe][data-paused] .orbit-item,
-  [data-universe][data-paused] .universe-device,
-  [data-universes][data-offscreen] .orbit-item,
-  [data-universes][data-offscreen] .universe-device {
+  .universe-stage:hover .float-chip,
+  .universe-stage:focus-within .float-chip,
+  [data-universe][data-paused] .float-chip,
+  [data-universes][data-offscreen] .float-chip {
     animation-play-state: paused;
   }
 }
-@keyframes orbit-spin {
-  from {
-    transform: rotateY(var(--a)) translateZ(var(--rr)) rotateY(calc(-1 * var(--a)))
-      rotateX(calc(-1 * var(--tilt))) rotateZ(calc(-1 * var(--roll)));
-  }
-  to {
-    transform: rotateY(calc(var(--a) + 360deg)) translateZ(var(--rr))
-      rotateY(calc(-1 * var(--a) - 360deg)) rotateX(calc(-1 * var(--tilt)))
-      rotateZ(calc(-1 * var(--roll)));
-  }
-}
-/* Front of the ring (0°) fully visible, back (180°) recedes softly. */
-@keyframes orbit-depth {
+@keyframes float-bob {
   0%,
   100% {
-    opacity: 1;
+    translate: 0 0;
   }
   50% {
-    opacity: 0.35;
+    translate: 0 -9px;
   }
 }
-@keyframes device-float {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) translateZ(0) translateY(0);
-  }
-  50% {
-    transform: translate(-50%, -50%) translateZ(0) translateY(-2%);
-  }
-}
-/* Reduced motion: no frozen ring with overlapping links — tidy rows of services above the device. */
-@media (prefers-reduced-motion: reduce) {
-  .universe-stage {
-    aspect-ratio: auto;
-    perspective: none;
-    margin-top: 0;
-  }
-  .universe-scene {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0 1.5rem;
-    transform: none;
-  }
-  .universe-device {
-    order: 2;
-    position: relative;
-    left: auto;
-    top: auto;
-    width: min(55%, 16rem);
-    margin-top: 1.5rem;
-    margin-bottom: -18%;
-    transform: none;
-  }
-  .orbit-tracks {
-    display: none;
-  }
-  .orbit-ring,
-  .orbit-list,
-  .orbit-item,
-  .orbit-chip {
-    position: static;
-    transform: none;
-  }
-  .orbit-ring,
-  .orbit-list {
-    display: flex;
-    width: auto;
-    height: auto;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  .orbit-chip {
-    max-width: none;
-    white-space: nowrap;
-  }
-}
-/* Narrow cards (phones): compact labels without icons, and a taller stage so the rings breathe. */
+/* Narrow cards (phones): compact labels without icons that may wrap on two lines, SamirPay labels all
+   aligned to the right edge, and a slimmer Samir Money phone so the side columns stay clear of it. */
 @container (max-width: 479px) {
-  .orbit-chip {
+  .float-chip {
     gap: 0;
-    min-height: 1.75rem;
-    padding: 0.25rem 0.6rem;
+    min-height: 1.85rem;
+    max-width: 30cqi;
+    padding: 0.25rem 0.65rem;
     font-size: 0.6875rem;
+    white-space: normal;
   }
-  .orbit-chip-icon {
+  [data-layout="samirpay"] .float-item[data-side="l"] {
+    left: auto !important;
+    right: 4%;
+  }
+  [data-layout="samirpay"] .float-chip {
+    max-width: 44cqi;
+  }
+  [data-layout="samir-money"] .universe-device {
+    width: 58%;
+    bottom: -14%;
+  }
+  .float-chip-icon {
     display: none;
-  }
-}
-@media (max-width: 479px) and (prefers-reduced-motion: no-preference) {
-  .universe-stage {
-    aspect-ratio: 1 / 1.1;
   }
 }

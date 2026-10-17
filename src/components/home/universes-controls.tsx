@@ -3,10 +3,8 @@
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const TILT_DEG = 7;
-
-/** Per-card pause / play for the orbit (WCAG 2.2.2: moving content must be stoppable). */
-export function OrbitPauseButton({
+/** Per-card pause / play for the floating labels (WCAG 2.2.2: moving content must be stoppable). */
+export function FloatPauseButton({
   pauseLabel,
   playLabel,
 }: {
@@ -39,51 +37,19 @@ export function OrbitPauseButton({
   );
 }
 
-/**
- * Section-level behaviour: stops the orbit while the section is off-screen, and tilts each device scene
- * gently towards the pointer (fine pointers, full motion only).
- */
+/** Section-level behaviour: stops the floating labels while the section is off-screen. */
 export function UniversesMotion() {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const section = ref.current?.closest<HTMLElement>("[data-universes]");
     if (!section) return;
-    const cleanups: (() => void)[] = [];
-
     const observer = new IntersectionObserver(([entry]) => {
       if (entry?.isIntersecting) delete section.dataset.offscreen;
       else section.dataset.offscreen = "";
     });
     observer.observe(section);
-    cleanups.push(() => observer.disconnect());
-
-    if (window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) {
-      for (const stage of section.querySelectorAll<HTMLElement>("[data-universe-stage]")) {
-        const move = (event: PointerEvent) => {
-          const rect = stage.getBoundingClientRect();
-          stage.style.setProperty(
-            "--ry",
-            `${((event.clientX - rect.left) / rect.width - 0.5) * TILT_DEG * 2}deg`,
-          );
-          stage.style.setProperty(
-            "--rx",
-            `${-((event.clientY - rect.top) / rect.height - 0.5) * TILT_DEG * 2}deg`,
-          );
-        };
-        const leave = () => {
-          stage.style.removeProperty("--ry");
-          stage.style.removeProperty("--rx");
-        };
-        stage.addEventListener("pointermove", move);
-        stage.addEventListener("pointerleave", leave);
-        cleanups.push(() => {
-          stage.removeEventListener("pointermove", move);
-          stage.removeEventListener("pointerleave", leave);
-        });
-      }
-    }
-    return () => cleanups.forEach((cleanup) => cleanup());
+    return () => observer.disconnect();
   }, []);
 
   return <span ref={ref} hidden />;
