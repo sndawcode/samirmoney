@@ -3,13 +3,10 @@
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const TILT_DEG = 8;
+const TILT_DEG = 7;
 
-/**
- * Pause / play for the orbiting services (WCAG 2.2.2: moving content must be stoppable), plus a gentle
- * pointer tilt of each device scene on fine pointers. Both act on the closest [data-universes] section.
- */
-export function UniversesControls({
+/** Per-card pause / play for the orbit (WCAG 2.2.2: moving content must be stoppable). */
+export function OrbitPauseButton({
   pauseLabel,
   playLabel,
 }: {
@@ -20,64 +17,74 @@ export function UniversesControls({
   const ref = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const section = ref.current?.closest<HTMLElement>("[data-universes]");
-    if (!section) return;
-    if (paused) section.dataset.paused = "";
-    else delete section.dataset.paused;
+    const card = ref.current?.closest<HTMLElement>("[data-universe]");
+    if (!card) return;
+    if (paused) card.dataset.paused = "";
+    else delete card.dataset.paused;
   }, [paused]);
 
-  // Off screen, the orbit stops: no compositing work for an animation nobody sees.
+  const Icon = paused ? Play : Pause;
+  const label = paused ? playLabel : pauseLabel;
+  return (
+    <button
+      ref={ref}
+      type="button"
+      aria-label={label}
+      title={label}
+      onClick={() => setPaused((value) => !value)}
+      className="grid size-11 shrink-0 place-items-center rounded-full border border-ink-950/10 bg-white/60 text-ink-950 transition-colors hover:bg-white motion-reduce:hidden ink:border-white/15 ink:bg-white/5 ink:text-white ink:hover:bg-white/15"
+    >
+      <Icon aria-hidden="true" className="size-4" strokeWidth={1.75} />
+    </button>
+  );
+}
+
+/**
+ * Section-level behaviour: stops the orbit while the section is off-screen, and tilts each device scene
+ * gently towards the pointer (fine pointers, full motion only).
+ */
+export function UniversesMotion() {
+  const ref = useRef<HTMLSpanElement>(null);
+
   useEffect(() => {
     const section = ref.current?.closest<HTMLElement>("[data-universes]");
     if (!section) return;
+    const cleanups: (() => void)[] = [];
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry?.isIntersecting) delete section.dataset.offscreen;
       else section.dataset.offscreen = "";
     });
     observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
+    cleanups.push(() => observer.disconnect());
 
-  useEffect(() => {
-    const section = ref.current?.closest<HTMLElement>("[data-universes]");
-    if (
-      !section ||
-      !window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches
-    )
-      return;
-    const stages = [...section.querySelectorAll<HTMLElement>("[data-universe-stage]")];
-    const cleanups = stages.map((stage) => {
-      const move = (event: PointerEvent) => {
-        const rect = stage.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - 0.5;
-        const y = (event.clientY - rect.top) / rect.height - 0.5;
-        stage.style.setProperty("--ry", `${x * TILT_DEG * 2}deg`);
-        stage.style.setProperty("--rx", `${-y * TILT_DEG * 2}deg`);
-      };
-      const leave = () => {
-        stage.style.removeProperty("--ry");
-        stage.style.removeProperty("--rx");
-      };
-      stage.addEventListener("pointermove", move);
-      stage.addEventListener("pointerleave", leave);
-      return () => {
-        stage.removeEventListener("pointermove", move);
-        stage.removeEventListener("pointerleave", leave);
-      };
-    });
+    if (window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) {
+      for (const stage of section.querySelectorAll<HTMLElement>("[data-universe-stage]")) {
+        const move = (event: PointerEvent) => {
+          const rect = stage.getBoundingClientRect();
+          stage.style.setProperty(
+            "--ry",
+            `${((event.clientX - rect.left) / rect.width - 0.5) * TILT_DEG * 2}deg`,
+          );
+          stage.style.setProperty(
+            "--rx",
+            `${-((event.clientY - rect.top) / rect.height - 0.5) * TILT_DEG * 2}deg`,
+          );
+        };
+        const leave = () => {
+          stage.style.removeProperty("--ry");
+          stage.style.removeProperty("--rx");
+        };
+        stage.addEventListener("pointermove", move);
+        stage.addEventListener("pointerleave", leave);
+        cleanups.push(() => {
+          stage.removeEventListener("pointermove", move);
+          stage.removeEventListener("pointerleave", leave);
+        });
+      }
+    }
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);
 
-  const Icon = paused ? Play : Pause;
-  return (
-    <button
-      ref={ref}
-      type="button"
-      onClick={() => setPaused((value) => !value)}
-      className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ink-950/15 px-4 text-sm font-medium text-graphite transition-colors hover:border-ink-950 hover:text-ink-950 motion-reduce:hidden"
-    >
-      <Icon aria-hidden="true" className="size-4" strokeWidth={1.5} />
-      {paused ? playLabel : pauseLabel}
-    </button>
-  );
+  return <span ref={ref} hidden />;
 }

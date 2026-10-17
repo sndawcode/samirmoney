@@ -28,15 +28,13 @@ test.describe("home — Nos univers", () => {
 
   test("the orbit can be paused and resumed (WCAG 2.2.2)", async ({ page }) => {
     await page.goto("/");
-    const section = page.locator("[data-universes]");
-    await section.scrollIntoViewIfNeeded();
-    await section.getByRole("button", { name: "Mettre en pause l’animation" }).click();
-    await expect(section).toHaveAttribute("data-paused", "");
-    await expect(section.locator(".orbit-item").first()).toHaveCSS(
-      "animation-play-state",
-      /paused/,
-    );
-    await section.getByRole("button", { name: "Relancer l’animation" }).click();
-    await expect(section).not.toHaveAttribute("data-paused", "");
+    // Each card has its own pause button.
+    const card = page.locator("[data-universe]").first();
+    await card.scrollIntoViewIfNeeded();
+    await card.getByRole("button", { name: "Mettre en pause l’animation" }).click();
+    await expect(card).toHaveAttribute("data-paused", "");
+    await expect(card.locator(".orbit-item").first()).toHaveCSS("animation-play-state", /paused/);
+    await card.getByRole("button", { name: "Relancer l’animation" }).click();
+    await expect(card).not.toHaveAttribute("data-paused", "");
   });
 });
