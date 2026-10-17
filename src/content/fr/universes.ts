@@ -7,7 +7,6 @@ export type FloatingService = { label: string; href: string };
 
 export type Universe = {
   id: "samirpay" | "samir-money";
-  index: string;
   /** Card identity: deep ink (professionals) or light mint (consumers). */
   tone: "ink" | "mint";
   name: string;
@@ -31,7 +30,6 @@ const PARTICULIERS = "/particuliers#fonctionnalites";
 export const universes: readonly Universe[] = [
   {
     id: "samirpay",
-    index: "01",
     tone: "ink",
     name: "SamirPay",
     media: "universe-samirpay",
@@ -52,7 +50,6 @@ export const universes: readonly Universe[] = [
   },
   {
     id: "samir-money",
-    index: "02",
     tone: "mint",
     name: "Samir Money",
     media: "universe-samirmoney",

@@ -105,9 +105,6 @@ function UniverseCard({ universe }: { universe: Universe }) {
       <div aria-hidden="true" className="universe-card-bg absolute inset-0 -z-10" />
       <header className="relative z-10 flex items-start justify-between gap-4 p-6 sm:p-8">
         <div className="flex flex-col gap-3">
-          <p className="text-eyebrow text-graphite ink:text-smoke">
-            {universe.index} — {universe.name}
-          </p>
           <h3 className="text-h3">{universe.name}</h3>
           <ButtonLink
             href={universe.cta.href}
