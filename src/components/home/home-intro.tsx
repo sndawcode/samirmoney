@@ -52,14 +52,14 @@ export function HomeIntro() {
           data-gsap="hero-out"
           className="flex flex-1 flex-col justify-end pt-10 pb-24 sm:pb-28 lg:justify-center lg:pt-0 lg:pb-20"
         >
-          <div className="flex max-w-[44rem] flex-col items-start gap-6 lg:gap-8">
+          <div data-hero-copy className="flex max-w-[44rem] flex-col items-start gap-6 lg:gap-8">
             <CredentialPill />
             <KineticHeadline
               as="h1"
               id="home-intro-title"
               lines={homeHero.titleLines}
               highlight={homeHero.highlight}
-              className="hero-legible text-[clamp(2.6rem,0.9rem+4.3vw,5.5rem)] leading-[0.9] font-extrabold tracking-[-0.04em] lg:[&_.kinetic-line]:whitespace-nowrap"
+              className="hero-legible text-[clamp(2.6rem,0.9rem+3.9vw,5.25rem)] leading-[0.9] font-extrabold tracking-[-0.04em] lg:[&_.kinetic-line]:whitespace-nowrap"
             />
             <Lead className="hero-enter hero-legible max-w-[35rem] text-base leading-relaxed text-white/70 [--d:280ms] sm:text-lg xl:text-xl ink:text-white/70">
               {homeHero.lead}

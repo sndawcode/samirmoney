@@ -14,13 +14,19 @@ const WIDE_QUERY = "(min-width: 1280px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 // Core position on screen (fractions) and camera distance, per layout.
-const LAYOUT_DESKTOP: Layout = { coreX: 0.76, coreY: 0.5, distance: 7.2, badgeScale: 1.05 };
+const LAYOUT_DESKTOP: Layout = { coreX: 0.79, coreY: 0.5, distance: 7.6, badgeScale: 1.05 };
 // 1024–1279 px: the headline takes more of the width, so the globe sits further right and a little smaller.
-const LAYOUT_DESKTOP_COMPACT: Layout = { coreX: 0.8, coreY: 0.52, distance: 8.6, badgeScale: 0.95 };
+const LAYOUT_DESKTOP_COMPACT: Layout = { coreX: 0.82, coreY: 0.52, distance: 9, badgeScale: 0.95 };
 const LAYOUT_MOBILE: Layout = { coreX: 0.5, coreY: 0.23, distance: 11.5, badgeScale: 0.85 };
-// Phones shorter than this get a proportionally smaller, higher globe (up to 40 % smaller).
+// Phones shorter than this get a proportionally smaller globe (up to 40 % smaller).
 const MOBILE_REFERENCE_HEIGHT = 740;
 const MOBILE_MAX_SHRINK = 1.4;
+// Phones: the globe sits just above the hero copy. Its visual half-height (core, badge ring and badges) in
+// scene units, the gap kept above the headline, and the camera's vertical field of view.
+const GLOBE_HALF_HEIGHT_UNITS = 1.3;
+const GLOBE_GAP_PX = 12;
+const HEADER_PX = 64;
+const FOV_TAN = Math.tan((40 / 2) * (Math.PI / 180));
 
 type NetworkInformation = { saveData?: boolean };
 
@@ -35,6 +41,20 @@ function detectQuality(): Quality {
 }
 
 const IDLE_TIMEOUT_MS = 4000;
+
+/**
+ * Top of `element` within `container` from layout offsets only: transformed ancestors (the GSAP hero-out
+ * tween) become offset parents, so the offsets are summed up the chain; transforms themselves are ignored.
+ */
+function layoutTop(element: HTMLElement, container: HTMLElement): number {
+  let top = 0;
+  let node: HTMLElement | null = element;
+  while (node && node !== container && container.contains(node)) {
+    top += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+  return top;
+}
 
 /**
  * Runs once the page has loaded and the main thread is idle, so building the scene never competes with
@@ -108,17 +128,22 @@ export function EcosystemCanvas() {
 
       const desktop = window.matchMedia(DESKTOP_QUERY);
       const wide = window.matchMedia(WIDE_QUERY);
-      // Phones: the copy takes a fixed height at the bottom, so on short screens the globe shrinks and rises.
+      // Phones: the copy sits at the bottom, so the globe is placed just above where the copy starts
+      // (layout offset, unaffected by scroll transforms) and shrinks on short screens.
+      const copy = section.querySelector<HTMLElement>("[data-hero-copy]");
       const mobileLayout = (): Layout => {
+        const height = Math.max(1, canvas.clientHeight);
         const shortness = Math.min(
           MOBILE_MAX_SHRINK,
-          Math.max(1, MOBILE_REFERENCE_HEIGHT / Math.max(1, canvas.clientHeight)),
+          Math.max(1, MOBILE_REFERENCE_HEIGHT / height),
         );
-        return {
-          ...LAYOUT_MOBILE,
-          distance: LAYOUT_MOBILE.distance * shortness,
-          coreY: LAYOUT_MOBILE.coreY / shortness,
-        };
+        const distance = LAYOUT_MOBILE.distance * shortness;
+        if (!copy) return { ...LAYOUT_MOBILE, distance, coreY: LAYOUT_MOBILE.coreY / shortness };
+        const pxPerUnit = height / (2 * distance * FOV_TAN);
+        const halfHeight = GLOBE_HALF_HEIGHT_UNITS * pxPerUnit;
+        const copyTop = layoutTop(copy, section);
+        const centre = Math.max(HEADER_PX + halfHeight * 0.6, copyTop - GLOBE_GAP_PX - halfHeight);
+        return { ...LAYOUT_MOBILE, distance, coreY: centre / height };
       };
       const layout = () =>
         wide.matches ? LAYOUT_DESKTOP : desktop.matches ? LAYOUT_DESKTOP_COMPACT : mobileLayout();
