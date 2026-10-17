@@ -88,7 +88,7 @@ export function productById(id: ProductId): Product {
   return product;
 }
 
-/** Visitor-facing audience labels (AudienceFilter, contact form). [Proposition] */
+/** Visitor-facing audience labels (contact form). [Proposition] */
 export const audienceLabels: Record<Audience, string> = {
   particulier: "Particulier",
   commercant: "Commerçant",

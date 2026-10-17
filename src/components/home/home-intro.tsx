@@ -113,7 +113,7 @@ export function HomeIntro() {
   );
 }
 
-/** Home S1 (continued): the six solutions with their real visuals and the audience filter. */
+/** Home S1 (continued): a centred title, then the six solutions with their real visuals. */
 export function HomeSolutions() {
   return (
     <Section theme="ink" texture spacing="none" aria-labelledby="home-solutions-title">
@@ -123,13 +123,10 @@ export function HomeSolutions() {
         data-gsap-stack
         className="flex flex-col gap-8 pt-12 pb-16 lg:gap-10 lg:pt-16 lg:pb-24"
       >
-        <ProductBento
-          heading={
-            <h2 id="home-solutions-title" className="text-eyebrow text-smoke">
-              {productsSection.eyebrow}
-            </h2>
-          }
-        />
+        <h2 id="home-solutions-title" className="text-center text-h2 text-balance">
+          {productsSection.eyebrow}
+        </h2>
+        <ProductBento />
       </Container>
     </Section>
   );

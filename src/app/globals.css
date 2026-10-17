@@ -203,21 +203,6 @@
   animation: tile-in var(--dur-reveal) var(--ease-out-expo) backwards;
 }
 
-/* Audience filter dims non-matching tiles (never hides them). */
-[data-audience]:not([data-audience="tous"]) [data-tile] {
-  opacity: 0.35;
-}
-[data-audience="particulier"] [data-tile][data-audiences~="particulier"],
-[data-audience="commercant"] [data-tile][data-audiences~="commercant"],
-[data-audience="entreprise"] [data-tile][data-audiences~="entreprise"],
-[data-audience="institution"] [data-tile][data-audiences~="institution"],
-[data-audience="developpeur"] [data-tile][data-audiences~="developpeur"] {
-  opacity: 1;
-}
-[data-tile]:focus-within {
-  opacity: 1;
-}
-
 /* Cursor spotlight and visual parallax: fine pointers and full motion only. */
 @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .tile-spotlight::before {

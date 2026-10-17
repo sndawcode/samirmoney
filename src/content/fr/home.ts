@@ -12,15 +12,6 @@ export const homeHero = {
 } as const;
 
 // [Proposition]
-export const audienceFilter = {
-  label: "Je suis :",
-  all: "Tous",
-  announce: (count: number, audience: string | null) =>
-    audience === null
-      ? `Les ${count} solutions sont affichées.`
-      : `${count} solution${count > 1 ? "s" : ""} pour : ${audience}. Les autres restent accessibles.`,
-} as const;
-
 // Generic labels for the S2 mini-scenes. [Proposition] — illustrative, no operator names.
 // Methods are limited to those visible in the SamirPay Business screens (accepted methods: Appendix D #11).
 export const serviceScenes = {

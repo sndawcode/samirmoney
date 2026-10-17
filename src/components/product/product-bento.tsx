@@ -1,25 +1,24 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
 import { products, productsSection, type Product } from "@/content/fr/products";
 import { eventClasses } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import { frTypo } from "@/lib/fr-typography";
-import { AudienceFilter } from "@/components/product/audience-filter";
 import { ProductVisual } from "@/components/product/product-visual";
+import { TileInteractions } from "@/components/product/tile-interactions";
 import { Photo } from "@/components/ui/photo";
 
 const TILE_SIZES = "(min-width: 1024px) 33vw, 50vw";
 
 /** Home S1: the six solutions, visible immediately, each one link (§9.1-S1). */
-export function ProductBento({ heading }: { heading?: ReactNode }) {
+export function ProductBento() {
   return (
-    <AudienceFilter total={products.length} heading={heading}>
+    <TileInteractions>
       <ul className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3">
         {products.map((product, i) => (
           <ProductTile key={product.id} product={product} order={i} />
         ))}
       </ul>
-    </AudienceFilter>
+    </TileInteractions>
   );
 }
 
@@ -28,9 +27,8 @@ function ProductTile({ product, order }: { product: Product; order: number }) {
     <li
       data-tile
       data-product={product.id}
-      data-audiences={product.audiences.join(" ")}
       style={{ animationDelay: `calc(${order} * var(--stagger))` }}
-      className="tile-enter transition-opacity duration-(--dur-ui)"
+      className="tile-enter"
     >
       <Link
         href={product.href}

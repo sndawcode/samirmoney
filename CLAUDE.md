@@ -511,7 +511,7 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 - H1 **[Brief]**: `Tous vos paiements. Un seul écosystème.` — four lines (`Tous vos` / `paiements.` / `Un seul` / `écosystème.`, client decision 17 Oct 2026); "écosystème" gets a 2 px accent underline that draws in once.
 - Lead **[Brief]**: `Samir Money accompagne les particuliers, commerçants, entreprises et institutions avec des solutions de paiement simples, sécurisées et connectées.`
 - Eyebrow **[Brief]**: `Nos solutions`
-- `AudienceFilter` — `Je suis :` Tous · Particulier · Commerçant · Entreprise · Institution · Développeur **[Proposition]**
+- Bento title: `Nos solutions` as a centred H2 above the tiles (client decision, 17 Oct 2026 — replaces the eyebrow + `AudienceFilter` row; the filter is no longer on the home page).
 - `ProductBento` — six tiles, button label **[Brief]** `Découvrir`:
 
 | # | Name [Brief] | One line [Brief] | Link | Visual (Appendix A) | Audiences |
