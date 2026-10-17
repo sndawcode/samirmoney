@@ -15,8 +15,11 @@ export function HomeIntro() {
   return (
     <Section theme="ink" texture spacing="none" aria-labelledby="home-intro-title">
       <div data-hero className="relative isolate flex min-h-[100svh] flex-col pt-(--header-h)">
-        {/* Depth: a flat ink base, the engineering grid fading out towards the edges, a soft top light. */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-30 bg-ink-950" />
+        {/* Depth: the brand-green gradient, the engineering grid fading out towards the edges, a soft top light. */}
+        <div
+          aria-hidden="true"
+          className="hero-gradient pointer-events-none absolute inset-0 -z-30"
+        />
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-30 hairlines [mask-image:radial-gradient(70%_60%_at_60%_45%,black,transparent)]"
@@ -34,16 +37,16 @@ export function HomeIntro() {
         {/* Scrims keep the copy at AA contrast over the scene: bottom-up on phones, left-to-right on desktop. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent_22%,rgb(5_8_7/0.7)_48%,var(--color-ink-950)_70%)] lg:bg-[linear-gradient(90deg,var(--color-ink-950)_22%,rgb(5_8_7/0.55)_46%,transparent_66%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent_22%,rgb(0_38_27/0.65)_48%,var(--color-hero-deep)_72%)] lg:bg-[linear-gradient(90deg,rgb(0_38_27/0.85)_18%,rgb(0_38_27/0.4)_44%,transparent_62%)]"
         />
         {/* Vignette and a soft floor so the hero melts into the bento below. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_90%_at_60%_40%,transparent_55%,rgb(5_8_7/0.85)_100%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_90%_at_60%_40%,transparent_55%,rgb(0_38_27/0.7)_100%)]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-ink-950"
+          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[45%] bg-[linear-gradient(180deg,transparent,rgb(5_8_7/0.35)_45%,rgb(5_8_7/0.8)_80%,var(--color-ink-950))]"
         />
 
         {/* The copy owns the whole screen: centred beside the globe on desktop, under it on phones. */}
@@ -70,7 +73,7 @@ export function HomeIntro() {
                   href={homeHero.primary.href}
                   arrow
                   location="home-hero"
-                  className="max-sm:min-h-11 max-sm:px-4 max-sm:text-sm"
+                  className="max-sm:min-h-11 max-sm:px-4 max-sm:text-sm ink:bg-white ink:text-samir-900 ink:hover:bg-samir-50 ink:hover:shadow-[0_8px_32px_-6px_rgb(0_38_27/0.6)]"
                 >
                   {homeHero.primary.label}
                 </ButtonLink>
@@ -120,7 +123,7 @@ function CredentialPill() {
     // From 640 px: the regulatory wording cannot be shortened (§15.3) and would wrap awkwardly on phones,
     // which still meet the licence in the trust section (S4).
     <p className="hero-enter hidden items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-2 text-[0.8125rem] leading-snug font-medium text-white/80 backdrop-blur-md [--d:120ms] sm:inline-flex">
-      <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-accent" />
+      <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-white" />
       <span>
         {trust.bceao.label}
         <span aria-hidden="true" className="mx-2 text-white/30">

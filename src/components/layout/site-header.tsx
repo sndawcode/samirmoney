@@ -70,6 +70,7 @@ export function SiteHeader({ logo, navigation, mobileMenu, cta }: SiteHeaderProp
     <header
       data-site-header
       data-theme={dark ? "ink" : "paper"}
+      data-transparent={transparent ? "" : undefined}
       onFocusCapture={() => setHidden(false)}
       className={cx(
         "fixed inset-x-0 top-0 z-50 h-(--header-h) border-b",

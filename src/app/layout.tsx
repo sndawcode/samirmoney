@@ -71,7 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           logo={<Logo />}
           navigation={<MegaMenu visuals={megaMenuVisuals} />}
           cta={
-            <ButtonLink href={nav.cta.href} size="sm" location="header">
+            <ButtonLink href={nav.cta.href} size="sm" location="header" className="header-cta">
               {nav.cta.label}
             </ButtonLink>
           }

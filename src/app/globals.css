@@ -26,6 +26,8 @@
   /* Accent — the site's accent colour (client, 16 Oct 2026). 7.4:1 on ink-950; 2.7:1 on white, so on light
      surfaces it is a fill only (text and links on light use samir-700). */
   --color-accent: #3cb088;
+  /* Home hero gradient (client, 17 Oct 2026): deep forest green → samir-900 → samir-700 → accent. */
+  --color-hero-deep: #00261b;
   /* Text */
   --color-graphite: #5b6863; /* secondary text on light (5.8:1) */
   --color-smoke: #9aa7a2; /* secondary text on dark (8:1) */
@@ -371,9 +373,32 @@
 /* Hero copy sits over the live 3D scene: a soft ink halo keeps it legible whatever passes behind. */
 .hero-legible {
   text-shadow:
-    0 0 2px rgb(5 8 7 / 0.9),
-    0 0 18px rgb(5 8 7 / 0.85),
-    0 0 36px rgb(5 8 7 / 0.6);
+    0 0 2px rgb(0 38 27 / 0.6),
+    0 0 18px rgb(0 38 27 / 0.55),
+    0 0 36px rgb(0 38 27 / 0.4);
+}
+
+/* ── Home hero: an elegant #3CB088 gradient (client, 17 Oct 2026). The copy always sits on the deep end
+   (white text ≥ 4.5:1); the luminous #3CB088 end blooms behind the globe. */
+.hero-gradient {
+  /* Phones: a deep band under the header keeps the white logo and "Menu" at AA over the bloom. */
+  background:
+    linear-gradient(180deg, rgb(0 38 27 / 0.9) 0, rgb(0 38 27 / 0.6) 72px, transparent 150px),
+    radial-gradient(55% 55% at 50% 28%, rgb(60 176 136 / 0.85), transparent 72%),
+    linear-gradient(180deg, #00553c 0%, #003d2b 55%, var(--color-hero-deep) 100%);
+}
+@media (min-width: 1024px) {
+  .hero-gradient {
+    background:
+      radial-gradient(48% 70% at 77% 50%, rgb(60 176 136 / 0.95), transparent 72%),
+      radial-gradient(60% 60% at 100% 0%, rgb(155 227 198 / 0.22), transparent 70%),
+      linear-gradient(110deg, var(--color-hero-deep) 0%, #003d2b 38%, #007552 70%, #2a9a74 100%);
+  }
+}
+/* Over the green, the accent turns white so the underline and the credential dot stay visible. */
+[data-hero] .accent-underline::after {
+  background: #ffffff;
+  box-shadow: 0 0 14px rgb(255 255 255 / 0.45);
 }
 
 /* ── Full-screen hero ── staggered entrance (CSS only, so nothing waits on JS).
@@ -418,4 +443,10 @@
   html {
     scroll-behavior: smooth;
   }
+}
+
+/* Header CTA over the green hero (header transparent): white, so it never melts into the gradient. */
+[data-site-header][data-transparent] .header-cta {
+  background-color: #ffffff;
+  color: var(--color-samir-900);
 }
