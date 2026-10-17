@@ -508,7 +508,7 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 ### 9.1 Accueil `/`
 
 **S1 — Introduction [ink]** — *understand the ecosystem in 5 s; the six solutions visible immediately.*
-- H1 **[Brief]**: `Tous vos paiements. Un seul écosystème.` — two lines; "écosystème" gets a 2 px accent underline that draws in once.
+- H1 **[Brief]**: `Tous vos paiements. Un seul écosystème.` — four lines (`Tous vos` / `paiements.` / `Un seul` / `écosystème.`, client decision 17 Oct 2026); "écosystème" gets a 2 px accent underline that draws in once.
 - Lead **[Brief]**: `Samir Money accompagne les particuliers, commerçants, entreprises et institutions avec des solutions de paiement simples, sécurisées et connectées.`
 - Eyebrow **[Brief]**: `Nos solutions`
 - `AudienceFilter` — `Je suis :` Tous · Particulier · Commerçant · Entreprise · Institution · Développeur **[Proposition]**
@@ -523,7 +523,7 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 | 05 | RAPS | Payez sans contact grâce à la technologie NFC. | `/raps` | Keychain from **Shoot RAPS / TPE 2026** | particulier, commercant, entreprise, institution |
 | 06 | API SamirPay | Intégrez nos solutions de paiement à vos applications et plateformes. | `/developpeurs` | Code-card composition (generic, no real endpoints) | developpeur, entreprise |
 
-- **Layout (client decisions, 16 Oct 2026): full-screen hero.** The hero fills the viewport (`100svh`) with the headline, lead and CTAs (`Nous contacter` · `Voir nos solutions` → `#solutions`) beside the 3D globe (copy centred on desktop, under the globe on phones) and a discreet "Défiler" cue. The six solutions are **not** named on the first screen any more (the solutions rail was removed at the client's request — a conscious departure from the brief's "visible immediately" priority): they are one scroll or one click away, in the bento with real visuals and the audience filter directly below, in the same dark chapter. *(Replaces: headline 7 cols + lead 5 cols with the bento top row visible at 1440 × 900.)*
+- **Layout (client decisions, 16 Oct 2026): full-screen hero.** The hero fills the viewport (`100svh`) with the headline, lead and CTAs (`Nous contacter` · `Voir nos solutions` → `#solutions`) beside the 3D globe (copy centred on desktop, under the globe on phones) and a discreet "Défiler" cue. Above the headline (≥ 640 px), a static credential pill composed from `trust.ts` (`bceao.label · bceao.reference`, never retyped); the header is transparent while at the top of this hero and returns to frosted glass on scroll. The six solutions are **not** named on the first screen any more (the solutions rail was removed at the client's request — a conscious departure from the brief's "visible immediately" priority): they are one scroll or one click away, in the bento with real visuals and the audience filter directly below, in the same dark chapter. *(Replaces: headline 7 cols + lead 5 cols with the bento top row visible at 1440 × 900.)*
 - Interactions: load-in stagger (tiles from `scale .96`, `blur 6px`); spotlight on hover; visual parallax ±8 px on pointer move; click → product page with a shared-element transition (progressive).
 - Background: ink-950 + hairline grid + grain + one slow radial glow (samir-500 at 12 %, 20 s drift; static with reduced motion).
 
