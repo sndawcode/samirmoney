@@ -96,5 +96,45 @@
     "kind": "card",
     "alt": "Smartphone affichant l’écran d’accueil de l’application Samir Money",
     "release": "n/a"
+  },
+  {
+    "slot": "tile-photo-samir-money",
+    "file": "icone/section3/SAMIR-MONEY.jpg",
+    "kind": "tile",
+    "ratio": "3/2",
+    "alt": "Jeune homme souriant, assis sur son scooter, son smartphone à la main",
+    "release": "client-supplied"
+  },
+  {
+    "slot": "tile-photo-tpe",
+    "file": "icone/section3/TPE-SAMIR.jpg",
+    "kind": "tile",
+    "ratio": "3/2",
+    "alt": "Serveuse présentant le terminal SamirPay TPE à des clients attablés dans un restaurant",
+    "release": "client-supplied"
+  },
+  {
+    "slot": "tile-photo-business",
+    "file": "icone/section3/SAMIRPAY-BUSINESS.jpg",
+    "kind": "tile",
+    "ratio": "3/2",
+    "alt": "Trois jeunes hommes souriants consultant leurs smartphones dans une échoppe, de nuit",
+    "release": "client-supplied"
+  },
+  {
+    "slot": "tile-photo-web-admin",
+    "file": "icone/section3/SAMIRPAY-WEB-ADMIN.jpg",
+    "kind": "tile",
+    "ratio": "3/2",
+    "alt": "Ordinateur portable affichant le tableau de bord SamirPay Web Admin sur un comptoir de cuisine",
+    "release": "client-supplied"
+  },
+  {
+    "slot": "tile-photo-raps",
+    "file": "icone/section3/RAPS.jpg",
+    "kind": "tile",
+    "ratio": "3/2",
+    "alt": "Enfant souriant tenant un porte-clés RAPS en forme de ballon de football",
+    "release": "client-supplied"
   }
 ]

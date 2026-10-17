@@ -12,6 +12,8 @@ export type Product = {
   href: string;
   audiences: readonly Audience[];
   media: MediaSlot | null; // slot id in media.json, or null → <Placeholder>
+  /** Home tile photo (client's "ASSETS SECTION3", 17 Oct 2026); null → the product visual. */
+  photo: MediaSlot | null;
 };
 
 export const productsSection = { eyebrow: "Nos solutions", cta: "Découvrir" } as const;
@@ -25,6 +27,7 @@ export const products: readonly Product[] = [
     href: "/particuliers",
     audiences: ["particulier"],
     media: "tile-samir-money",
+    photo: "tile-photo-samir-money",
   },
   {
     id: "tpe",
@@ -34,6 +37,7 @@ export const products: readonly Product[] = [
     href: "/professionnels#tpe",
     audiences: ["commercant", "entreprise"],
     media: "tile-tpe",
+    photo: "tile-photo-tpe",
   },
   {
     id: "business",
@@ -43,6 +47,7 @@ export const products: readonly Product[] = [
     href: "/professionnels#business",
     audiences: ["commercant", "entreprise"],
     media: "screen-business-encaissement",
+    photo: "tile-photo-business",
   },
   {
     id: "web-admin",
@@ -52,8 +57,9 @@ export const products: readonly Product[] = [
     href: "/professionnels#web-admin",
     audiences: ["entreprise", "institution"],
     media: "tile-web-admin",
+    photo: "tile-photo-web-admin",
   },
-  // TODO(client): RAPS keychain photo (Shoot RAPS / TPE 2026) — Appendix A.8
+  // TODO(client): RAPS keychain cut-out for the product pages (Shoot RAPS / TPE 2026) — Appendix A.8
   {
     id: "raps",
     index: "05",
@@ -62,6 +68,7 @@ export const products: readonly Product[] = [
     href: "/raps",
     audiences: ["particulier", "commercant", "entreprise", "institution"],
     media: null,
+    photo: "tile-photo-raps",
   },
   {
     id: "api",
@@ -71,6 +78,7 @@ export const products: readonly Product[] = [
     href: "/developpeurs",
     audiences: ["developpeur", "entreprise"],
     media: null /* code-card composition, no photo */,
+    photo: null,
   },
 ];
 
