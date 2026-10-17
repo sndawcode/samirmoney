@@ -8,7 +8,7 @@ import { useEffect } from "react";
  * - `data-gsap="pop"`       children of the element pop in one after another (diagram nodes)
  * - `data-gsap="parallax"`  drifts with scroll (`data-speed`, default 0.15)
  * - `data-gsap="hero-out"`  the full-screen hero copy lifts away while scrolling past the first screen
- * - `data-gsap="scroll-cue"` the "Défiler" cue fades out on the first scroll
+ * - `data-gsap="hero-credentials"` the hero's credentials badge fades out on the first scroll
  * - `data-gsap-stack`       the bento recedes as the next section slides over it (card stack)
  * - `data-magnetic`         follows the pointer slightly (CTAs)
  * - `[data-tile] > a`       3D tilt towards the pointer
@@ -86,7 +86,7 @@ export function HomeMotion() {
             },
           );
           gsap.fromTo(
-            "[data-gsap='scroll-cue']",
+            "[data-gsap='hero-credentials']",
             { autoAlpha: 1 },
             {
               autoAlpha: 0,

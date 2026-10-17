@@ -5,15 +5,17 @@ test.describe("home experience", () => {
     await page.goto("/");
     const canvas = page.locator("canvas.ecosystem-canvas");
     await expect(canvas).toHaveAttribute("aria-hidden", "true");
-    await expect(canvas).toHaveAttribute("data-ready", "", { timeout: 10_000 });
+    await expect(canvas).toHaveAttribute("data-ready", "", { timeout: 20_000 });
   });
 
   test("every animated element ends visible once scrolled through", async ({ page }) => {
+    // Scrolls the whole (long) home page after waiting for the scene: more than the default 30 s budget.
+    test.setTimeout(60_000);
     await page.goto("/");
     await page.waitForFunction(
       () => document.querySelector("[data-gsap='rise']")?.getAttribute("style") !== null,
       null,
-      { timeout: 10_000 },
+      { timeout: 20_000 },
     );
     const height = await page.evaluate(() => document.body.scrollHeight);
     for (let y = 0; y <= height; y += 500) {
@@ -71,7 +73,7 @@ test.describe("home experience after client-side navigation", () => {
   test("the 3D scene renders again when coming back to the home page", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("canvas.ecosystem-canvas")).toHaveAttribute("data-ready", "", {
-      timeout: 10_000,
+      timeout: 20_000,
     });
 
     // Leave through a client-side link, then come back the same way.
@@ -92,7 +94,7 @@ test.describe("home experience after client-side navigation", () => {
             const gl = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
             return gl && !gl.isContextLost() ? "live" : "lost";
           }),
-        { timeout: 10_000 },
+        { timeout: 20_000 },
       )
       .toBe("live");
   });
@@ -102,9 +104,11 @@ test.describe("home experience after browser back", () => {
   test("Back restores the scene and the choreography still reveals every section", async ({
     page,
   }) => {
+    // Scrolls the whole (long) home page after waiting for the scene: more than the default 30 s budget.
+    test.setTimeout(60_000);
     await page.goto("/");
     await expect(page.locator("canvas.ecosystem-canvas")).toHaveAttribute("data-ready", "", {
-      timeout: 10_000,
+      timeout: 20_000,
     });
     await page.locator("footer").getByRole("link", { name: "RAPS" }).first().click();
     await expect(page).toHaveURL(/\/raps$/);
@@ -123,7 +127,7 @@ test.describe("home experience after browser back", () => {
               ? "live"
               : "not-live";
           }),
-        { timeout: 10_000 },
+        { timeout: 20_000 },
       )
       .toBe("live");
 

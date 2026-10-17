@@ -4,7 +4,6 @@
 export type AnalyticsEvent =
   | "cta_click"
   | "product_tile_click"
-  | "audience_filter"
   | "store_badge_click"
   | "whatsapp_click"
   | "phone_click"

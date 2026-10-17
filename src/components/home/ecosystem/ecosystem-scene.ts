@@ -17,7 +17,6 @@ import {
   PointsMaterial,
   QuadraticBezierCurve3,
   Scene,
-  ShaderMaterial,
   SphereGeometry,
   Sprite,
   SpriteMaterial,
@@ -47,7 +46,6 @@ const MINT = new Color("#d6fbea");
 // The scene sits on the hero's #3CB088 gradient (client, 17 Oct 2026): brand green would melt into it, so
 // structure is drawn in white and pale mint, at restrained opacities.
 const PALETTE = {
-  rim: new Color("#eafff6"), // fresnel rim of the globe
   shell: { color: WHITE, opacity: 0.16 }, // slow wireframe shell
   halo: { color: MINT, opacity: 0.22 }, // soft light behind the globe
   node: WHITE,
@@ -55,7 +53,6 @@ const PALETTE = {
   link: MINT,
   packet: WHITE,
   orbit: 0.12, // orbit rings
-  logoRing: { scale: 1.1, opacity: 0.9 }, // thin white ring separating the centre mark from the bloom
 } as const;
 
 const CAMERA_Z = 8;
@@ -151,54 +148,6 @@ function glowTexture(): CanvasTexture {
   return texture;
 }
 
-/** A thin anti-aliased white circle, drawn once on a canvas. */
-function ringCanvasTexture(): CanvasTexture {
-  const size = 256;
-  const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = size;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("2D canvas unavailable for the logo ring");
-  ctx.strokeStyle = "rgba(255,255,255,1)";
-  ctx.lineWidth = 5;
-  ctx.shadowColor = "rgba(255,255,255,0.6)";
-  ctx.shadowBlur = 8;
-  ctx.beginPath();
-  ctx.arc(size / 2, size / 2, size / 2 - 12, 0, Math.PI * 2);
-  ctx.stroke();
-  const texture = new CanvasTexture(canvas);
-  texture.colorSpace = SRGBColorSpace;
-  return texture;
-}
-
-const fresnelMaterial = () =>
-  new ShaderMaterial({
-    uniforms: { uColor: { value: PALETTE.rim.clone() }, uTime: { value: 0 } },
-    vertexShader: /* glsl */ `
-      varying vec3 vNormal;
-      varying vec3 vView;
-      void main() {
-        vec4 mv = modelViewMatrix * vec4(position, 1.0);
-        vNormal = normalize(normalMatrix * normal);
-        vView = normalize(-mv.xyz);
-        gl_Position = projectionMatrix * mv;
-      }`,
-    fragmentShader: /* glsl */ `
-      uniform vec3 uColor;
-      uniform float uTime;
-      varying vec3 vNormal;
-      varying vec3 vView;
-      void main() {
-        float rim = pow(1.0 - max(dot(vNormal, vView), 0.0), 2.4);
-        float pulse = 0.9 + 0.1 * sin(uTime * 1.6);
-        vec3 color = uColor * (0.04 + rim * 1.4) * pulse;
-        gl_FragColor = vec4(color, 0.05 + rim * 0.85);
-      }`,
-    transparent: true,
-    depthWrite: false,
-    depthTest: false, // the glow is the globe: never hidden by the depth-only occluder inside it
-    blending: AdditiveBlending,
-  });
-
 export class EcosystemScene {
   private readonly renderer: WebGLRenderer;
   private readonly scene = new Scene();
@@ -211,7 +160,6 @@ export class EcosystemScene {
   private readonly nodeIds: readonly string[];
   private readonly disposables: { dispose: () => void }[] = [];
 
-  private readonly coreMaterial: ShaderMaterial;
   private readonly wire: Mesh;
   private readonly nodes: Group[] = [];
   private readonly links: {
@@ -233,7 +181,6 @@ export class EcosystemScene {
   private logo: {
     sprite: Sprite;
     material: SpriteMaterial;
-    ringMaterial: SpriteMaterial;
     loaded: boolean;
     visibility: number;
   } | null = null;
@@ -271,10 +218,8 @@ export class EcosystemScene {
     const glow = glowTexture();
     this.disposables.push(glow);
 
-    // Core: fresnel shell, slow wireframe, soft halo.
-    this.coreMaterial = fresnelMaterial();
-    const coreGeometry = new IcosahedronGeometry(0.62, 4);
-    const core = new Mesh(coreGeometry, this.coreMaterial);
+    // Core: the brand mark (see addCoreLogo) inside a slow wireframe shell and a soft halo. No solid shell
+    // around the mark: on the green hero any rim reads as an outline.
     const wireGeometry = new IcosahedronGeometry(0.9, 1);
     const wireMaterial = new MeshBasicMaterial({
       color: PALETTE.shell.color,
@@ -293,18 +238,12 @@ export class EcosystemScene {
         opacity: PALETTE.halo.opacity,
         blending: AdditiveBlending,
         depthWrite: false,
-        depthTest: false, // part of the globe's glow, like the core
+        depthTest: false, // the globe's glow: never hidden by the depth-only occluder
       }),
     );
     halo.scale.setScalar(4.2);
-    this.world.add(halo, core, this.wire);
-    this.disposables.push(
-      coreGeometry,
-      this.coreMaterial,
-      wireGeometry,
-      wireMaterial,
-      halo.material,
-    );
+    this.world.add(halo, this.wire);
+    this.disposables.push(wireGeometry, wireMaterial, halo.material);
 
     // Orbit rings and nodes.
     const nodeGeometry = new SphereGeometry(0.042, 16, 16);
@@ -451,22 +390,9 @@ export class EcosystemScene {
     const sprite = new Sprite(material);
     sprite.renderOrder = RENDER_ORDER.logo;
     sprite.scale.setScalar(LOGO_SIZE);
-    // Thin white ring just outside the mark (child sprite: it breathes with the logo).
-    const ringTexture = ringCanvasTexture();
-    const ringMaterial = new SpriteMaterial({
-      map: ringTexture,
-      transparent: true,
-      opacity: 0,
-      depthTest: false,
-      depthWrite: false,
-    });
-    const ring = new Sprite(ringMaterial);
-    ring.scale.setScalar(PALETTE.logoRing.scale);
-    ring.renderOrder = RENDER_ORDER.logo;
-    sprite.add(ring);
-    this.logo = { sprite, material, ringMaterial, loaded: false, visibility: 0 };
+    this.logo = { sprite, material, loaded: false, visibility: 0 };
     this.world.add(sprite);
-    this.disposables.push(material, ringMaterial, ringTexture);
+    this.disposables.push(material);
     new TextureLoader().load(
       src,
       (texture) => {
@@ -642,7 +568,6 @@ export class EcosystemScene {
     // Scroll: the camera pulls back as the hero leaves the viewport.
     this.camera.position.z = this.layout.distance + this.scroll * SCROLL_PULLBACK;
 
-    this.coreMaterial.uniforms.uTime.value = t;
     this.wire.rotation.set(t * 0.12, t * 0.18, 0);
 
     if (this.logo) {
@@ -652,7 +577,6 @@ export class EcosystemScene {
           this.logo.visibility + (delta * BADGE_FADE_IN_SPEED || 1),
         );
       this.logo.material.opacity = this.logo.visibility;
-      this.logo.ringMaterial.opacity = this.logo.visibility * PALETTE.logoRing.opacity;
       this.logo.sprite.scale.setScalar(LOGO_SIZE * (1 + LOGO_BREATH * Math.sin(t * 1.6)));
     }
 

@@ -94,5 +94,61 @@
     "alt": "SamirPay",
     "blurDataURL": "data:image/webp;base64,UklGRt4AAABXRUJQVlA4WAoAAAAQAAAAFwAABAAAQUxQSHkAAAAAABucewQALi0AAAAAAAAXBAAAAAAAAAEAD8Kj8TEevn0tYT9jZFhmX0tfQypdSCw9gaYpoRAVi6WEqr6GkJS3n1eLhYyvkJlnJiy7sS4IfoJsioZNUFqMYTKxYWqUPsIzAAANIAUAAwMABAABAQEBACNHAAQAJ3kCAFZQOCA+AAAAEAMAnQEqGAAFAD7tYqlNqaWjojAIATAdiUAACv6bRyAAANtb1mto6JGRDonkYwmKD/ypsh3g7rlfH7jAAAA=",
     "color": "transparent"
+  },
+  "universe-samirpay": {
+    "src": "/media/photos/universe-samirpay-5dbe352a.png",
+    "width": 1181,
+    "height": 1553,
+    "alt": "Terminal SamirPay tenu en main, écran d’accueil de l’application SamirPay",
+    "blurDataURL": "data:image/webp;base64,UklGRoICAABXRUJQVlA4WAoAAAAQAAAAFwAAHwAAQUxQSDgBAAABkGptu2or3//PddxI7q7Rsru7Q3JtXASDRLbMOHdAoro7RHe3Oef/hSnIFUTEBOD/1MapQKROpBH8TRUAk3Yvmj4IK1fA1QwavvfCN/Ln64cf51Qo1j57T9JHRl51kJxi8neaD0azwNdjoDmHpfTGvOdJuNJ2BhYjn3ZACsdqjJ+HV5yo+zYemgharzGWIh/3QRLFDNYG7oFD6nCUoRT5agik0F93CIpU0HmLsRB4FIqsYuBzWi7wPJzkGhxkZNZ4exQU2QbHjVZaAIdsC9YyGsuToZkGs18yMm/8MAiSwYI3jCxGPugq7PthkeXAiyh4M+Yt+h88B4dsNJI0Y2rcVDKmkQwvL/ef2qAoJsafO2eOG9AAkLrAY1AA2uJQ5XkazqkIqo2Bl3oh+GMzvpkGxZ97z/Vw+ItWUDggJAEAABAGAJ0BKhgAIAA+7WSsTimlpCIoDVEwHYlqALsg2XZRK9T2zQ7wzx/YnOcAN/3IkA9L1tA1gz/ogAD+8c5UF8Xn8n9b6f5KFiClT6zeRyTWyp/eNzywehxLC5UUjHnvFMhld7kaSmFFRHQmjgPDpAFLY/YGuSE87bIJRMrO2wHhpy/Flybx6GgbGHwPKz0Cv+PunFBTQs1jTyDbpTRrmQRaoXvJmjL7SxAgYLHgEH7GBt6z6nv8tKQTPAqWakKdFknsfHeZAHXePhby1AgjH9Tv4B/5NWgEDSDbDNVoy396phYVJreTkULiEZTMqjk14AFQg4bV4NfFaiIfcZsSn9wbginiUO5Un2kVBy/2Ld0y8gLV5Cn7VG5PuHMEp3z8vB8gAAA=",
+    "color": "transparent"
+  },
+  "universe-samirmoney": {
+    "src": "/media/photos/universe-samirmoney-d653088d.png",
+    "width": 1181,
+    "height": 1553,
+    "alt": "Smartphone affichant l’écran d’accueil de l’application Samir Money",
+    "blurDataURL": "data:image/webp;base64,UklGRtoBAABXRUJQVlA4WAoAAAAQAAAAFwAAHwAAQUxQSKwAAAABgBvJtqvo3PtQaVDkQGGRDTah4cJqraWFCGW5758V753VfkRMAH6pWc1c+2rH8GyzWq/X69XmegxXZgwWg3OYlcxwyJdc3PIqQQsWM69dAM6VG6nzyCwkBRcMwZXOI3PtvqXYBaO27CntB+av8StG7bktGI6UG5eOpSQAJ5L/iOMvMhz9WwfcNsXgVarBsMNgMXgKIWHS5Nx8zJwiQe2PhsXRALpBNA0u4rsBVlA4IAgBAACwBQCdASoYACAAPu1kqk2ppaQiMBgMATAdiWYAnPw3gWi/lIMrWt1obHS6JL22NPf354t+JaAA/tNgWWw3gO91cj3oPay/9fdT/cpvABbYWd8M5EHVu9CAvqePyRw7xA2L5++Ajd6wocGyzBKpkqBtB9HebL9jaaH/KYoKShAHM4sUE9QAnPtL//qX8xg7US+5J6xomQ58TCkvX3jTyR44tscgmsJ0TnKbcwwfpQ/pkN1kid0HKwmIis1FnagSG0PmUZgtVgcx5yZlv9DTYgkVYAmiaGIUFU5qh5ErrWsemojWq5Pkn/U0chH6KHngWUe46UyRvPhKeEr8H/wHOAD6Y8rrnTX4AAA=",
+    "color": "transparent"
+  },
+  "tile-photo-samir-money": {
+    "src": "/media/photos/tile-photo-samir-money-ad835159.jpg",
+    "width": 1000,
+    "height": 667,
+    "alt": "Jeune homme souriant, assis sur son scooter, son smartphone à la main",
+    "blurDataURL": "data:image/webp;base64,UklGRsYAAABXRUJQVlA4ILoAAADwAwCdASoYABAAPu1iqU2ppaOiMAgBMB2JbACdMoAlugo8/JDv9AHAAOt1MUcqr1n+p+j+or9tVoHar2lNNWcb+tqwDGoGFS83lu4Hhc/GLY28Pf7o59Yd+GLoye94Br9O/0BrbnOjo86Jjj1pGAo2xLdque7uQcGSm9qSV1Y7DoLId4Dw07gO5nEh8eU0mOxNjL0uA4/v9r+EjAoBnqUIoMWs51WBrvvcVV7wPxzWsbP8SwhNcAsgAAA=",
+    "color": "rgb(120 168 200)"
+  },
+  "tile-photo-tpe": {
+    "src": "/media/photos/tile-photo-tpe-d2ce6b46.jpg",
+    "width": 1000,
+    "height": 667,
+    "alt": "Serveuse présentant le terminal SamirPay TPE à des clients attablés dans un restaurant",
+    "blurDataURL": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAACwBACdASoYABAAPu1iqU2ppaOiMAgBMB2JZgCdAdwLhFb6/W+auOl6fgs1TFqAAP7y3bd6RDzyGKNgjZCkC4A9RSUuup5yC0SAjDl+k6ZHXlRlXapVdxIwtaj6jYccXWm3QsQWjLlOzfO2fo2uAeTDTVv7g12kWYwwSJbLaQrC45YA3AVPlgyjKMD7WIfyypBIzV6c7Uw+cvb9GSOXPQ45+kGiq3QfzDuSXfbZ84zj8vdJY2OQ6xkjYPw0AhDsU2KUfXeSlOAAVEAAAAA=",
+    "color": "rgb(8 8 8)"
+  },
+  "tile-photo-business": {
+    "src": "/media/photos/tile-photo-business-5a6f46b4.jpg",
+    "width": 1000,
+    "height": 667,
+    "alt": "Trois jeunes hommes souriants consultant leurs smartphones dans une échoppe, de nuit",
+    "blurDataURL": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4INAAAADQBACdASoYABAAPu1iqU2ppaOiMAgBMB2JbACdAmwHXbNtXlh177hTJ3YlsmJQAAD8Idx7p4MRz4RrH6lGE8jNhI1wFm8Y0J5yTZJZ/AqvSm2Jjy+MdSXL0djNkPV2digLYbrew/C/CWeQnOFlOm11xjz4nMmSSYa2dp4cxg4ThOUB9ZEdf+xnZSnRIAWd84h23TGNwHr4C8FY7Ha3Z9dwQnDZmyfu00A70TequoPv4KKFY06i7fIQTWW1l5Gqo5CYdLf5O6pFx79TV34ijgAA",
+    "color": "rgb(8 8 8)"
+  },
+  "tile-photo-web-admin": {
+    "src": "/media/photos/tile-photo-web-admin-7066825b.jpg",
+    "width": 1000,
+    "height": 667,
+    "alt": "Ordinateur portable affichant le tableau de bord SamirPay Web Admin sur un comptoir de cuisine",
+    "blurDataURL": "data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAADwAwCdASoYABAAPu1iqU2ppaOiMAgBMB2JZwAAUo7faFZ1u6xzj8TwAP2oHVIj9UsNkdsxAhZQEXXqlxQ2dyWdjrzkdGdTmHSlH7PnhJmenVBKKLHh9QrXHITgb+JiO+aEtBCT345gDkRIqeTHWmY1zeLcy+ST/Fa/xG/hZNvvPyF21tGhLn6K+HHvS3Fk9WhEUfp/6/rvc6g7ETLshPe1rduXhCh93ekUL1D00QVgAA==",
+    "color": "rgb(248 248 248)"
+  },
+  "tile-photo-raps": {
+    "src": "/media/photos/tile-photo-raps-e1a599ba.jpg",
+    "width": 1000,
+    "height": 667,
+    "alt": "Enfant souriant tenant un porte-clés RAPS en forme de ballon de football",
+    "blurDataURL": "data:image/webp;base64,UklGRtoAAABXRUJQVlA4IM4AAAAQBQCdASoYABAAPu1iqU2ppaOiMAgBMB2JbACdMoRwAdCU+q9vJbjODynz6sT0iM7oAP7rfe8lNzOeFSYJqaGMdy88n8rkrZiv58csjqn9h91nO7D4ufA198vevxowzxPorReQXVhSit51puUAoNaFz8GG9WPh6jrhT6yzQaqMZCOGXl8i3Y4WW8r5UJ7aT7193Tzlldng/yUPSUS8GnRHf6O3fe7oWTeUk3LW8FeB3CBGsbHlce6mj2Aq1eFFFlB2yif6f8e9AEwP6iAAAA==",
+    "color": "rgb(232 232 248)"
   }
 }

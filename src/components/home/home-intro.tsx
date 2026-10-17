@@ -1,11 +1,12 @@
-import { homeHero } from "@/content/fr/home";
+import Image from "next/image";
+import { heroCredentials, homeHero } from "@/content/fr/home";
 import { trust } from "@/content/fr/trust";
 import { productsSection } from "@/content/fr/products";
 import { EcosystemCanvas } from "@/components/home/ecosystem/ecosystem-canvas";
 import { KineticHeadline } from "@/components/motion/kinetic-headline";
 import { ProductBento } from "@/components/product/product-bento";
 import { ButtonLink } from "@/components/ui/button";
-import { Container, Eyebrow, Lead, Section } from "@/components/ui/section";
+import { Container, Lead, Section } from "@/components/ui/section";
 
 /**
  * Home S1, one dark chapter: a full-screen hero (headline, lead, CTAs and the 3D ecosystem), then the bento
@@ -92,23 +93,40 @@ export function HomeIntro() {
           </div>
         </Container>
 
-        <span
-          aria-hidden="true"
-          data-gsap="scroll-cue"
-          className="hero-enter absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-eyebrow text-smoke [--d:700ms] lg:bottom-8 lg:[@media(max-height:760px)]:hidden"
+        {/* Credentials badge (BCEAO, PCI DSS) at the foot of the hero; hidden on short desktops, where it would
+            crowd the CTAs (the credential pill above the headline still shows the licence there). */}
+        <div
+          data-gsap="hero-credentials"
+          className="hero-enter absolute bottom-6 left-1/2 -translate-x-1/2 [--d:700ms] sm:pb-10 lg:bottom-8 lg:[@media(max-height:760px)]:hidden"
         >
-          {homeHero.scrollCue}
-          <span className="scroll-cue-line" />
-        </span>
+          <Image
+            src={heroCredentials.src}
+            width={heroCredentials.width}
+            height={heroCredentials.height}
+            alt={heroCredentials.alt}
+            unoptimized
+            className="h-10 w-auto lg:h-12"
+          />
+        </div>
       </div>
+    </Section>
+  );
+}
 
+/** Home S1 (continued): a centred title, then the six solutions with their real visuals. */
+export function HomeSolutions() {
+  return (
+    <Section theme="ink" texture spacing="none" aria-labelledby="home-solutions-title">
       <Container
         id="solutions"
         width="media"
         data-gsap-stack
         className="flex flex-col gap-8 pt-12 pb-16 lg:gap-10 lg:pt-16 lg:pb-24"
       >
-        <ProductBento heading={<Eyebrow as="h2">{productsSection.eyebrow}</Eyebrow>} />
+        <h2 id="home-solutions-title" className="text-center text-h2 text-balance">
+          {productsSection.eyebrow}
+        </h2>
+        <ProductBento />
       </Container>
     </Section>
   );

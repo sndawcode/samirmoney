@@ -511,7 +511,7 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 - H1 **[Brief]**: `Tous vos paiements. Un seul écosystème.` — four lines (`Tous vos` / `paiements.` / `Un seul` / `écosystème.`, client decision 17 Oct 2026); "écosystème" gets a 2 px accent underline that draws in once.
 - Lead **[Brief]**: `Samir Money accompagne les particuliers, commerçants, entreprises et institutions avec des solutions de paiement simples, sécurisées et connectées.`
 - Eyebrow **[Brief]**: `Nos solutions`
-- `AudienceFilter` — `Je suis :` Tous · Particulier · Commerçant · Entreprise · Institution · Développeur **[Proposition]**
+- Bento title: `Nos solutions` as a centred H2 above the tiles (client decision, 17 Oct 2026 — replaces the eyebrow + `AudienceFilter` row; the filter is no longer on the home page).
 - `ProductBento` — six tiles, button label **[Brief]** `Découvrir`:
 
 | # | Name [Brief] | One line [Brief] | Link | Visual (Appendix A) | Audiences |
@@ -523,9 +523,12 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 | 05 | RAPS | Payez sans contact grâce à la technologie NFC. | `/raps` | Keychain from **Shoot RAPS / TPE 2026** | particulier, commercant, entreprise, institution |
 | 06 | API SamirPay | Intégrez nos solutions de paiement à vos applications et plateformes. | `/developpeurs` | Code-card composition (generic, no real endpoints) | developpeur, entreprise |
 
-- **Layout (client decisions, 16 Oct 2026): full-screen hero.** The hero fills the viewport (`100svh`) with the headline, lead and CTAs (`Nous contacter` · `Voir nos solutions` → `#solutions`) beside the 3D globe (copy centred on desktop, under the globe on phones) and a discreet "Défiler" cue. Above the headline (≥ 640 px), a static credential pill composed from `trust.ts` (`bceao.label · bceao.reference`, never retyped); the header is transparent while at the top of this hero and returns to frosted glass on scroll. The six solutions are **not** named on the first screen any more (the solutions rail was removed at the client's request — a conscious departure from the brief's "visible immediately" priority): they are one scroll or one click away, in the bento with real visuals and the audience filter directly below, in the same dark chapter. *(Replaces: headline 7 cols + lead 5 cols with the bento top row visible at 1440 × 900.)*
+- **Layout (client decisions, 16 Oct 2026): full-screen hero.** The hero fills the viewport (`100svh`) with the headline, lead and CTAs (`Nous contacter` · `Voir nos solutions` → `#solutions`) beside the 3D globe (copy centred on desktop, under the globe on phones) and, at its foot, the **credentials badge** supplied by the client (`icone/Certification.png`: "Agréé par la BCEAO" + "Certifié PCI DSS"; replaces the former "Défiler" cue, client decision 17 Oct 2026; alt text composed from `trust.ts`; hidden on desktops ≤ 760 px high). Above the headline (≥ 640 px), a static credential pill composed from `trust.ts` (`bceao.label · bceao.reference`, never retyped); the header is transparent while at the top of this hero and returns to frosted glass on scroll. The six solutions are **not** named on the first screen any more (the solutions rail was removed at the client's request — a conscious departure from the brief's "visible immediately" priority): they are one scroll or one click away, in the bento with real visuals and the audience filter directly below, in the same dark chapter. *(Replaces: headline 7 cols + lead 5 cols with the bento top row visible at 1440 × 900.)*
+- **Tile photos (client decision, 17 Oct 2026):** tiles 01–05 open on a full-bleed 3:2 photo supplied by the client (`icone/section3/`: SAMIR-MONEY, TPE-SAMIR, SAMIRPAY-BUSINESS, SAMIRPAY-WEB-ADMIN, RAPS → slots `tile-photo-*`, `Product.photo`); tile 06 keeps the code card. The index sits on the photo; the photo zooms slightly on hover (motion-safe). The product pages keep the device visuals (`Product.media`).
 - Interactions: load-in stagger (tiles from `scale .96`, `blur 6px`); spotlight on hover; visual parallax ±8 px on pointer move; click → product page with a shared-element transition (progressive).
 - Background (client decision, 17 Oct 2026): an **elegant #3CB088 gradient** — deep forest green (`--color-hero-deep` #00261b → samir-900) behind the copy so white text keeps ≥ 4.5:1, luminous #3CB088 blooming behind the globe, fading into ink-950 at the bottom so the bento chapter stays dark. On the green, the primary CTA (and the header CTA while transparent) is white with samir-900 text, and the accent underline turns white. Hairline grid + grain kept; static with reduced motion.
+
+**S1b — Nos univers [paper] (client decision, 17 Oct 2026)** — directly below the hero, before the bento (which becomes its own ink section). Eyebrow `Nos univers` · H2 `Deux univers. Un seul écosystème.` **[Proposition]**. Two columns (stacked on phones): **SamirPay** (`Pour les professionnels`, image `icone/samirpaymain.png`) and **Samir Money** (`Pour les particuliers`, image `icone/samirmoneymain.png`), as two framed cards (SamirPay on ink, Samir Money on mint): a large device image cropped by the card edges (SamirPay anchored bottom-left so the edges mask the hand cut-out) with its services as text labels **floating** around it (no icons, no subtitles or index eyebrows — client, 17 Oct 2026). Card actions: SamirPay `Nous contacter` → `/contact?profil=commercant`; Samir Money store badges (real links; each bobs gently on its own rhythm; the labels float when the card enters the view and settle within 5 s (WCAG 2.2.2, no pause control needed), float again on hover, still with reduced motion). *(Replaces the first orbiting version, client feedback 17 Oct 2026.)* SamirPay: TPE, Business, Web Admin, API, encaissement multicanal, collecte, paiement de masse, lien de paiement. Samir Money: transferts, factures, rechargements, paiement marchand, RAPS, PI-SPI, bons d’achat, gestion financière, cagnottes, and — at the client's request — Crédit, Assurance, Carburant, Change, Marketplace. Content: `src/content/fr/universes.ts`.
 
 **S2 — Nos services [paper]**
 - Eyebrow **[Brief]** `Nos services` · H2 **[Brief]** `Des solutions pour chaque besoin.`
@@ -771,7 +774,7 @@ export const site = {
   apps: {
     samirMoney: {
       ios: "https://apps.apple.com/app/id6740030422",
-      android: null as string | null, // TODO(client): Google Play URL
+      android: "https://play.google.com/store/apps/details?id=sn.samirmoney.samirlink1",
     },
     samirPayBusiness: {
       ios: "https://apps.apple.com/app/id6743798245",
@@ -1424,7 +1427,7 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 ## Appendix C — Crawl findings (facts, conflicts, risks)
 
 1. **Contact data conflicts.** samirmoney.com footer displays "+221 33 889 72 72" but its `tel:` link dials +221 33 824 24 33; the samirmoney.com contact page shows +221 33 824 24 33; samirpay.com shows +221 33 824 24 33 and +221 77 300 25 23. E-mails: contact@samirmoney.com (samirmoney.com) vs contact@samirservices.com (samirpay.com). Footer address has a typo ("AImmeuble").
-2. **Store links.** Both legacy "App Store" / "Google Play" buttons point to `#`. Verified: Samir Money iOS `id6740030422`; SamirPay Business iOS `id6743798245` and Android `sn.samirmoney.samirpaybusiness` (publisher SAMIR MONEY SA, updated 14 Oct 2026; its Play description exists only in English — worth adding the French one from the App Store). Samir Money Android: not found.
+2. **Store links.** Both legacy "App Store" / "Google Play" buttons point to `#`. Verified: Samir Money iOS `id6740030422`; SamirPay Business iOS `id6743798245` and Android `sn.samirmoney.samirpaybusiness` (publisher SAMIR MONEY SA, updated 14 Oct 2026; its Play description exists only in English — worth adding the French one from the App Store). Samir Money Android: `sn.samirmoney.samirlink1` (listing "Samir Money", publisher SAMIR MONEY SA — found 17 Oct 2026).
 3. **Social links** on both sites are empty placeholders (facebook.com/, linkedin.com, instagram.com/, twitter.com/, github.com/).
 4. **Pricing claim** "1 % on the initial deposit, then all transactions free" appears on several samirmoney.com pages → do not migrate without compliance sign-off.
 5. **Testimonials** on both sites are template placeholders (avatars hot-linked from a theme demo domain, "Founder at Brain.co") → dropped.
@@ -1450,7 +1453,7 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 | 3 | Contact e-mail | Contact, footer | contact@samirmoney.com in preview only |
 | 4 | WhatsApp number | Contact, mobile menu, S6 | WhatsApp hidden |
 | 5 | Opening hours | Contact | Hidden |
-| 6 | Samir Money Google Play URL | Store badges | Badge hidden |
+| 6 | ~~Samir Money Google Play URL~~ — resolved 17 Oct 2026: `sn.samirmoney.samirlink1` ("Samir Money", SAMIR MONEY SA) | Store badges | Badge shown |
 | 7 | Web Admin login URL | `#web-admin` CTA | CTA hidden |
 | 8 | API docs URL, sandbox access process | `/developpeurs` | Docs CTA hidden; contact CTA only |
 | 9 | WooCommerce plugin link | `/developpeurs` | Card without link |
@@ -1458,7 +1461,7 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 | 11 | Accepted payment methods per product; **written permission for the payment badges now orbiting the home globe** (Visa, Mastercard, Wave, Orange Money, Wizall Money, Mixx by Yas, KPay, PI-SPI/BCEAO — files supplied 16 Oct 2026 in `icone/`, see `src/content/fr/payment-methods.ts`) | Home S1, TPE, Business, e-commerce, Services | Badges shown on the home globe at the client's request (illustration only, never a list of accepted methods); no logos elsewhere |
 | 12 | RAPS details: purchase/where, loss/theft, recharge limits, compatible terminals | `/raps` FAQ | FAQ hidden |
 | 13 | TPE technical sheet; OEM naming | `#tpe` SpecList | SpecList hidden |
-| 14 | PCI DSS scope and date; permission to show any badge | S4 | Typographic seal only |
+| 14 | PCI DSS scope and date; **written permission to display the PCI DSS Compliant mark** (PCI SSC) used in the hero credentials badge supplied 17 Oct 2026, and validation of its wording "Certifié PCI DSS" without the scope qualifier (§1.3, §15.3) | Home S1 badge, S4 | Badge shown at the client's request; typographic seals in S4 |
 | 15 | Approval of the BCEAO seal rendering and verification link | S4 | As specified |
 | 16 | Fees / pricing — publish or not | Anywhere | Not published |
 | 17 | Transaction ceilings and refund delays (FAQ 4, 6) | `#faq` | Hidden |
@@ -1478,3 +1481,5 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 | 31 | Approver for [Proposition] copy | All | Client marketing lead |
 | 32 | French App Store badge artwork ("Télécharger dans l’App Store") — the localized file could not be downloaded | Store badges | Official English badge with a French accessible name |
 | 33 | Confirm the legacy screens may be shown with operator logos and phone numbers masked (`scripts/prepare-legacy.mjs`) | Tile 01, tile 04, `#web-admin` | Masked versions shown |
+| 34 | `icone/samirmoneymain.png` shows a balance (94 426) and `icone/samirpaymain.png` shows operator logos (Orange Money, Wave) on screen: confirm demo data and authorised marks (§1.4, §1.7); one-line descriptions and pages for Crédit, Assurance, Carburant, Change, Marketplace | Home S1b | Shown as supplied, labels link to `/particuliers` |
+| 35 | Model releases (*droit à l’image*) for the five home tile photos supplied 17 Oct 2026 (`icone/section3/`), incl. **parental consent for the child in RAPS.jpg** (§1.7) | Home S1 bento | Shown in previews (`release: "client-supplied"`); `pnpm images` refuses them with `STRICT_CONTENT=1` |

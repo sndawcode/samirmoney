@@ -22,6 +22,9 @@ const BUDGET = {
   thumb: { width: 480, kb: 20 },
 };
 const RELEASES = ["ok", "n/a", "minor-consent"];
+// Photos of people the client supplied for the site, release not yet confirmed (Appendix D #35):
+// exported for previews, refused in production CI (STRICT_CONTENT=1).
+if (process.env.STRICT_CONTENT !== "1") RELEASES.push("client-supplied");
 
 const selection = JSON.parse(await fs.readFile(SELECTION, "utf8"));
 await fs.rm(OUT, { recursive: true, force: true }); // full regeneration: no stale files

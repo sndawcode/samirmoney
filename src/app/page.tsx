@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
-import { HomeIntro } from "@/components/home/home-intro";
+import { HomeIntro, HomeSolutions } from "@/components/home/home-intro";
+import { HomeUniverses } from "@/components/home/home-universes";
 import { HomeApi, HomePartners, HomeServices, HomeTrust } from "@/components/home/home-sections";
 import { HomeMotion } from "@/components/home/home-motion";
 import { ContactBand } from "@/components/ui/contact-band";
@@ -11,6 +12,8 @@ export default function HomePage() {
   return (
     <>
       <HomeIntro />
+      <HomeUniverses />
+      <HomeSolutions />
       <HomeServices />
       <HomeApi />
       <HomeTrust />

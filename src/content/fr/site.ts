@@ -19,7 +19,9 @@ export const site = {
   apps: {
     samirMoney: {
       ios: "https://apps.apple.com/app/id6740030422",
-      android: null as string | null, // TODO(client): Google Play URL
+      // Google Play listing "Samir Money" by SAMIR MONEY SA (verified 17 Oct 2026; package keeps the old "Samir Link" name).
+      android: "https://play.google.com/store/apps/details?id=sn.samirmoney.samirlink1" as
+        string | null,
     },
     samirPayBusiness: {
       ios: "https://apps.apple.com/app/id6743798245",

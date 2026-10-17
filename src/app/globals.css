@@ -203,21 +203,6 @@
   animation: tile-in var(--dur-reveal) var(--ease-out-expo) backwards;
 }
 
-/* Audience filter dims non-matching tiles (never hides them). */
-[data-audience]:not([data-audience="tous"]) [data-tile] {
-  opacity: 0.35;
-}
-[data-audience="particulier"] [data-tile][data-audiences~="particulier"],
-[data-audience="commercant"] [data-tile][data-audiences~="commercant"],
-[data-audience="entreprise"] [data-tile][data-audiences~="entreprise"],
-[data-audience="institution"] [data-tile][data-audiences~="institution"],
-[data-audience="developpeur"] [data-tile][data-audiences~="developpeur"] {
-  opacity: 1;
-}
-[data-tile]:focus-within {
-  opacity: 1;
-}
-
 /* Cursor spotlight and visual parallax: fine pointers and full motion only. */
 @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .tile-spotlight::before {
@@ -413,32 +398,6 @@
   animation-delay: var(--d, 0ms);
 }
 
-/* "Défiler" cue: a short line that sweeps down, a few times, then rests. */
-@keyframes cue-sweep {
-  0% {
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-  50% {
-    transform: scaleY(1);
-    transform-origin: top;
-  }
-  51% {
-    transform-origin: bottom;
-  }
-  100% {
-    transform: scaleY(0);
-    transform-origin: bottom;
-  }
-}
-.scroll-cue-line {
-  display: block;
-  width: 1px;
-  height: 28px;
-  background: linear-gradient(to bottom, transparent, var(--color-accent));
-  animation: cue-sweep 1.8s var(--ease-in-out-quart) 1.2s 4 both;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
@@ -449,4 +408,162 @@
 [data-site-header][data-transparent] .header-cta {
   background-color: #ffffff;
   color: var(--color-samir-900);
+}
+
+/* ── Home "Nos univers": two framed product cards, large device images cropped by the card edges with
+   their services floating around them (client, 17 Oct 2026) ── */
+.universe-card {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.6) inset,
+    0 30px 60px -40px rgb(5 8 7 / 0.35);
+  transition:
+    transform var(--dur-ui) var(--ease-out-expo),
+    box-shadow var(--dur-ui) var(--ease-out-expo);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .universe-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.6) inset,
+      0 40px 80px -40px rgb(5 8 7 / 0.45);
+  }
+}
+/* SamirPay: deep ink, fine grid, a green light rising from below. */
+[data-tone="ink"] .universe-card-bg {
+  background:
+    radial-gradient(70% 55% at 50% 100%, rgb(60 176 136 / 0.35), transparent 70%),
+    radial-gradient(60% 40% at 85% 0%, rgb(255 255 255 / 0.06), transparent 70%),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px) 0 0 / 32px 32px,
+    var(--color-ink-950);
+}
+/* Samir Money: soft mint with a white bloom. */
+[data-tone="mint"] .universe-card-bg {
+  background:
+    radial-gradient(70% 55% at 50% 100%, rgb(60 176 136 / 0.28), transparent 70%),
+    radial-gradient(70% 50% at 20% 0%, rgb(255 255 255 / 0.9), transparent 70%),
+    linear-gradient(160deg, #f4fbf8 0%, #e3f5ec 55%, #cdeddf 100%);
+}
+.universe-stage {
+  container-type: inline-size;
+}
+.universe-glow {
+  background: radial-gradient(55% 55% at 45% 60%, rgb(60 176 136 / 0.28), transparent 70%);
+}
+/* Large device images, cropped by the card edges. */
+.universe-device {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(0 30px 40px rgb(5 8 7 / 0.3));
+}
+/* SamirPay: anchored bottom-left and pushed past the edges, so the card masks the hand's straight cut. */
+[data-layout="samirpay"] .universe-device {
+  left: -22%;
+  bottom: -14%;
+  width: 82%;
+}
+/* Samir Money: centred, bleeding off the bottom edge. */
+[data-layout="samir-money"] .universe-device {
+  left: 50%;
+  bottom: -20%;
+  width: 74%;
+  transform: translateX(-50%);
+}
+.float-item {
+  position: absolute;
+  z-index: 1;
+  translate: 0 -50%;
+}
+.float-item[data-side="c"] {
+  translate: -50% -50%;
+}
+.float-chip {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  border: 1px solid rgb(5 8 7 / 0.07);
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.95);
+  padding: 0.4rem 1rem;
+  color: var(--color-ink-950);
+  font-size: clamp(0.75rem, 0.65rem + 0.35vw, 0.875rem);
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow:
+    0 1px 0 rgb(255 255 255) inset,
+    0 14px 30px -14px rgb(5 8 7 / 0.4);
+  transition:
+    border-color var(--dur-ui),
+    transform var(--dur-ui) var(--ease-out-expo);
+}
+.float-chip:hover {
+  transform: scale(1.05);
+  border-color: var(--color-samir-700);
+}
+[data-tone="ink"] .float-chip {
+  border-color: rgb(255 255 255 / 0.14);
+  background: rgb(18 24 22 / 0.88);
+  color: #ffffff;
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.08) inset,
+    0 14px 30px -14px rgb(0 0 0 / 0.7);
+}
+[data-tone="ink"] .float-chip:hover {
+  border-color: var(--color-accent);
+}
+/* Each label floats on its own rhythm when the card enters the view, then settles: the whole motion lasts
+   under 5 s, so no pause control is needed (WCAG 2.2.2). Hovering the card makes the labels float again. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-universe][data-inview] .float-chip {
+    /* Longest label (index 13): 0.65 s delay + 2 × 2.05 s = 4.75 s. */
+    animation: float-bob calc(1.4s + var(--i) * 0.05s) ease-in-out calc(var(--i) * 0.05s) 2;
+  }
+  @media (hover: hover) {
+    [data-universe]:hover .float-chip {
+      animation: float-bob-hover calc(2.4s + var(--i) * 0.11s) ease-in-out infinite;
+      animation-delay: calc(var(--i) * -0.3s);
+    }
+  }
+}
+@keyframes float-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -9px;
+  }
+}
+/* Same motion under another name, so hovering restarts it after the entrance has settled. */
+@keyframes float-bob-hover {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -9px;
+  }
+}
+/* Narrow cards (phones): compact labels that may wrap on two lines, SamirPay labels all
+   aligned to the right edge, and a slimmer Samir Money phone so the side columns stay clear of it. */
+@container (max-width: 479px) {
+  .float-chip {
+    min-height: 1.85rem;
+    max-width: 30cqi;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.6875rem;
+    white-space: normal;
+  }
+  [data-layout="samirpay"] .float-item[data-side="l"] {
+    left: auto !important;
+    right: 4%;
+  }
+  [data-layout="samirpay"] .float-chip {
+    max-width: 44cqi;
+  }
+  [data-layout="samir-money"] .universe-device {
+    width: 58%;
+    bottom: -14%;
+  }
 }
