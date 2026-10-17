@@ -5,8 +5,8 @@ export const homeHero = {
   primary: { label: "Nous contacter", href: "/contact" } satisfies Cta,
   secondary: { label: "Voir nos solutions", href: "#solutions" } satisfies Cta,
   scrollCue: "Défiler", // [Proposition]
-  // [Brief] — rendered on two lines; `highlight` gets the accent underline.
-  titleLines: ["Tous vos paiements.", "Un seul écosystème."],
+  // [Brief] — the H1, rendered on four lines (client, 17 Oct 2026); `highlight` gets the accent underline.
+  titleLines: ["Tous vos", "paiements.", "Un seul", "écosystème."],
   highlight: "écosystème",
   lead: "Samir Money accompagne les particuliers, commerçants, entreprises et institutions avec des solutions de paiement simples, sécurisées et connectées.", // [Brief]
 } as const;

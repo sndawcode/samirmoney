@@ -92,7 +92,7 @@ export function HomeIntro() {
         <span
           aria-hidden="true"
           data-gsap="scroll-cue"
-          className="hero-enter absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-eyebrow text-smoke [--d:700ms] lg:bottom-8"
+          className="hero-enter absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-eyebrow text-smoke [--d:700ms] lg:bottom-8 lg:[@media(max-height:760px)]:hidden"
         >
           {homeHero.scrollCue}
           <span className="scroll-cue-line" />
