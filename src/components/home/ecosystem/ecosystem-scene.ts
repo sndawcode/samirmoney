@@ -41,19 +41,32 @@ const QUALITY = {
   low: { dpr: 1, dust: 350, packetsPerLink: 2, segments: 32, antialias: false },
 } as const;
 
-const ACCENT = new Color("#3cb088");
-const ACCENT_LIGHT = new Color("#9be3c6");
 const WHITE = new Color("#ffffff");
+const MINT = new Color("#d6fbea");
+
+// The scene sits on the hero's #3CB088 gradient (client, 17 Oct 2026): brand green would melt into it, so
+// structure is drawn in white and pale mint, at restrained opacities.
+const PALETTE = {
+  rim: new Color("#eafff6"), // fresnel rim of the globe
+  shell: { color: WHITE, opacity: 0.16 }, // slow wireframe shell
+  halo: { color: MINT, opacity: 0.22 }, // soft light behind the globe
+  node: WHITE,
+  nodeGlow: { color: MINT, opacity: 0.4 },
+  link: MINT,
+  packet: WHITE,
+  orbit: 0.12, // orbit rings
+  logoRing: { scale: 1.1, opacity: 0.9 }, // thin white ring separating the centre mark from the bloom
+} as const;
 
 const CAMERA_Z = 8;
 const ROOT_SPIN = 0.025; // rad/s — slow, fluid rotation of the whole system
 // Intro: the system scales up from 86 % over 1.8 s once the scene starts (skipped with reduced motion).
 const INTRO = { from: 0.86, seconds: 1.8 };
 // Reflection ring under the globe: anchors it in space.
-const REFLECTION = { y: -1.45, scale: 3.4, opacity: 0.22 };
+const REFLECTION = { y: -1.45, scale: 3.4, opacity: 0.14 };
 const SCROLL_PULLBACK = 3.5;
 const POINTER_TILT = 0.28;
-const LINK_OPACITY = { idle: 0.32, focused: 0.95, dimmed: 0.1 };
+const LINK_OPACITY = { idle: 0.4, focused: 0.95, dimmed: 0.12 };
 
 type Orbit = {
   radius: number;
@@ -138,9 +151,28 @@ function glowTexture(): CanvasTexture {
   return texture;
 }
 
+/** A thin anti-aliased white circle, drawn once on a canvas. */
+function ringCanvasTexture(): CanvasTexture {
+  const size = 256;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("2D canvas unavailable for the logo ring");
+  ctx.strokeStyle = "rgba(255,255,255,1)";
+  ctx.lineWidth = 5;
+  ctx.shadowColor = "rgba(255,255,255,0.6)";
+  ctx.shadowBlur = 8;
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2 - 12, 0, Math.PI * 2);
+  ctx.stroke();
+  const texture = new CanvasTexture(canvas);
+  texture.colorSpace = SRGBColorSpace;
+  return texture;
+}
+
 const fresnelMaterial = () =>
   new ShaderMaterial({
-    uniforms: { uColor: { value: ACCENT.clone() }, uTime: { value: 0 } },
+    uniforms: { uColor: { value: PALETTE.rim.clone() }, uTime: { value: 0 } },
     vertexShader: /* glsl */ `
       varying vec3 vNormal;
       varying vec3 vView;
@@ -158,8 +190,8 @@ const fresnelMaterial = () =>
       void main() {
         float rim = pow(1.0 - max(dot(vNormal, vView), 0.0), 2.4);
         float pulse = 0.9 + 0.1 * sin(uTime * 1.6);
-        vec3 color = uColor * (0.18 + rim * 1.7) * pulse;
-        gl_FragColor = vec4(color, 0.2 + rim * 0.8);
+        vec3 color = uColor * (0.04 + rim * 1.4) * pulse;
+        gl_FragColor = vec4(color, 0.05 + rim * 0.85);
       }`,
     transparent: true,
     depthWrite: false,
@@ -201,6 +233,7 @@ export class EcosystemScene {
   private logo: {
     sprite: Sprite;
     material: SpriteMaterial;
+    ringMaterial: SpriteMaterial;
     loaded: boolean;
     visibility: number;
   } | null = null;
@@ -244,10 +277,10 @@ export class EcosystemScene {
     const core = new Mesh(coreGeometry, this.coreMaterial);
     const wireGeometry = new IcosahedronGeometry(0.9, 1);
     const wireMaterial = new MeshBasicMaterial({
-      color: ACCENT,
+      color: PALETTE.shell.color,
       wireframe: true,
       transparent: true,
-      opacity: 0.09,
+      opacity: PALETTE.shell.opacity,
       blending: AdditiveBlending,
       depthWrite: false,
     });
@@ -255,9 +288,9 @@ export class EcosystemScene {
     const halo = new Sprite(
       new SpriteMaterial({
         map: glow,
-        color: ACCENT,
+        color: PALETTE.halo.color,
         transparent: true,
-        opacity: 0.55,
+        opacity: PALETTE.halo.opacity,
         blending: AdditiveBlending,
         depthWrite: false,
         depthTest: false, // part of the globe's glow, like the core
@@ -275,7 +308,7 @@ export class EcosystemScene {
 
     // Orbit rings and nodes.
     const nodeGeometry = new SphereGeometry(0.042, 16, 16);
-    const nodeMaterial = new MeshBasicMaterial({ color: ACCENT_LIGHT });
+    const nodeMaterial = new MeshBasicMaterial({ color: PALETTE.node });
     this.disposables.push(nodeGeometry, nodeMaterial);
     ORBITS.slice(0, nodeIds.length).forEach((orbit) => {
       const ring = this.orbitRing(orbit);
@@ -286,9 +319,9 @@ export class EcosystemScene {
       const nodeGlow = new Sprite(
         new SpriteMaterial({
           map: glow,
-          color: ACCENT,
+          color: PALETTE.nodeGlow.color,
           transparent: true,
-          opacity: 0.45,
+          opacity: PALETTE.nodeGlow.opacity,
           blending: AdditiveBlending,
           depthWrite: false,
         }),
@@ -306,7 +339,7 @@ export class EcosystemScene {
         new BufferAttribute(new Float32Array((this.settings.segments + 1) * 3), 3),
       );
       const material = new LineBasicMaterial({
-        color: ACCENT,
+        color: PALETTE.link,
         transparent: true,
         opacity: LINK_OPACITY.idle,
         blending: AdditiveBlending,
@@ -334,7 +367,7 @@ export class EcosystemScene {
     );
     const packetMaterial = new PointsMaterial({
       map: glow,
-      color: ACCENT_LIGHT,
+      color: PALETTE.packet,
       size: 0.3,
       transparent: true,
       depthWrite: false,
@@ -389,7 +422,7 @@ export class EcosystemScene {
       new PlaneGeometry(1, 1),
       new MeshBasicMaterial({
         map: glow,
-        color: ACCENT,
+        color: WHITE,
         transparent: true,
         opacity: REFLECTION.opacity,
         blending: AdditiveBlending,
@@ -418,9 +451,22 @@ export class EcosystemScene {
     const sprite = new Sprite(material);
     sprite.renderOrder = RENDER_ORDER.logo;
     sprite.scale.setScalar(LOGO_SIZE);
-    this.logo = { sprite, material, loaded: false, visibility: 0 };
+    // Thin white ring just outside the mark (child sprite: it breathes with the logo).
+    const ringTexture = ringCanvasTexture();
+    const ringMaterial = new SpriteMaterial({
+      map: ringTexture,
+      transparent: true,
+      opacity: 0,
+      depthTest: false,
+      depthWrite: false,
+    });
+    const ring = new Sprite(ringMaterial);
+    ring.scale.setScalar(PALETTE.logoRing.scale);
+    ring.renderOrder = RENDER_ORDER.logo;
+    sprite.add(ring);
+    this.logo = { sprite, material, ringMaterial, loaded: false, visibility: 0 };
     this.world.add(sprite);
-    this.disposables.push(material);
+    this.disposables.push(material, ringMaterial, ringTexture);
     new TextureLoader().load(
       src,
       (texture) => {
@@ -495,7 +541,7 @@ export class EcosystemScene {
     const material = new LineBasicMaterial({
       color: WHITE,
       transparent: true,
-      opacity: 0.06,
+      opacity: PALETTE.orbit,
       depthWrite: false,
     });
     this.disposables.push(geometry, material);
@@ -606,6 +652,7 @@ export class EcosystemScene {
           this.logo.visibility + (delta * BADGE_FADE_IN_SPEED || 1),
         );
       this.logo.material.opacity = this.logo.visibility;
+      this.logo.ringMaterial.opacity = this.logo.visibility * PALETTE.logoRing.opacity;
       this.logo.sprite.scale.setScalar(LOGO_SIZE * (1 + LOGO_BREATH * Math.sin(t * 1.6)));
     }
 
