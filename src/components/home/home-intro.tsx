@@ -97,7 +97,7 @@ export function HomeIntro() {
             crowd the CTAs (the credential pill above the headline still shows the licence there). */}
         <div
           data-gsap="hero-credentials"
-          className="hero-enter absolute bottom-6 left-1/2 -translate-x-1/2 [--d:700ms] lg:bottom-8 lg:[@media(max-height:760px)]:hidden"
+          className="hero-enter absolute bottom-6 left-1/2 -translate-x-1/2 [--d:700ms] sm:pb-10 lg:bottom-8 lg:[@media(max-height:760px)]:hidden"
         >
           <Image
             src={heroCredentials.src}
