@@ -82,5 +82,19 @@
     "kind": "thumb",
     "alt": "SamirPay",
     "release": "n/a"
+  },
+  {
+    "slot": "universe-samirpay",
+    "file": "icone/samirpaymain.png",
+    "kind": "card",
+    "alt": "Terminal SamirPay tenu en main, écran d’accueil de l’application SamirPay",
+    "release": "n/a"
+  },
+  {
+    "slot": "universe-samirmoney",
+    "file": "icone/samirmoneymain.png",
+    "kind": "card",
+    "alt": "Smartphone affichant l’écran d’accueil de l’application Samir Money",
+    "release": "n/a"
   }
 ]

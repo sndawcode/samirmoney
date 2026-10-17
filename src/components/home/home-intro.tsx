@@ -6,7 +6,7 @@ import { EcosystemCanvas } from "@/components/home/ecosystem/ecosystem-canvas";
 import { KineticHeadline } from "@/components/motion/kinetic-headline";
 import { ProductBento } from "@/components/product/product-bento";
 import { ButtonLink } from "@/components/ui/button";
-import { Container, Eyebrow, Lead, Section } from "@/components/ui/section";
+import { Container, Lead, Section } from "@/components/ui/section";
 
 /**
  * Home S1, one dark chapter: a full-screen hero (headline, lead, CTAs and the 3D ecosystem), then the bento
@@ -109,14 +109,27 @@ export function HomeIntro() {
           />
         </div>
       </div>
+    </Section>
+  );
+}
 
+/** Home S1 (continued): the six solutions with their real visuals and the audience filter. */
+export function HomeSolutions() {
+  return (
+    <Section theme="ink" texture spacing="none" aria-labelledby="home-solutions-title">
       <Container
         id="solutions"
         width="media"
         data-gsap-stack
         className="flex flex-col gap-8 pt-12 pb-16 lg:gap-10 lg:pt-16 lg:pb-24"
       >
-        <ProductBento heading={<Eyebrow as="h2">{productsSection.eyebrow}</Eyebrow>} />
+        <ProductBento
+          heading={
+            <h2 id="home-solutions-title" className="text-eyebrow text-smoke">
+              {productsSection.eyebrow}
+            </h2>
+          }
+        />
       </Container>
     </Section>
   );

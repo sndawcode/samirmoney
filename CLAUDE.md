@@ -527,6 +527,8 @@ Notation: **[Brief]** verbatim from the client brief — do not edit · **[Legac
 - Interactions: load-in stagger (tiles from `scale .96`, `blur 6px`); spotlight on hover; visual parallax ±8 px on pointer move; click → product page with a shared-element transition (progressive).
 - Background (client decision, 17 Oct 2026): an **elegant #3CB088 gradient** — deep forest green (`--color-hero-deep` #00261b → samir-900) behind the copy so white text keeps ≥ 4.5:1, luminous #3CB088 blooming behind the globe, fading into ink-950 at the bottom so the bento chapter stays dark. On the green, the primary CTA (and the header CTA while transparent) is white with samir-900 text, and the accent underline turns white. Hairline grid + grain kept; static with reduced motion.
 
+**S1b — Nos univers [paper] (client decision, 17 Oct 2026)** — directly below the hero, before the bento (which becomes its own ink section). Eyebrow `Nos univers` · H2 `Deux univers. Un seul écosystème.` **[Proposition]**. Two columns (stacked on phones): **SamirPay** (`Pour les professionnels`, image `icone/samirpaymain.png`) and **Samir Money** (`Pour les particuliers`, image `icone/samirmoneymain.png`), each device floating with its services orbiting on two tilted CSS-3D rings (real links; pause on hover/focus and a section pause button for WCAG 2.2.2; paused off-screen; reduced motion → tidy rows of labels). SamirPay: TPE, Business, Web Admin, API, encaissement multicanal, collecte, paiement de masse, lien de paiement. Samir Money: transferts, factures, rechargements, paiement marchand, RAPS, PI-SPI, bons d’achat, gestion financière, cagnottes, and — at the client's request — Crédit, Assurance, Carburant, Change, Marketplace. Content: `src/content/fr/universes.ts`.
+
 **S2 — Nos services [paper]**
 - Eyebrow **[Brief]** `Nos services` · H2 **[Brief]** `Des solutions pour chaque besoin.`
 
@@ -1478,3 +1480,4 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 | 31 | Approver for [Proposition] copy | All | Client marketing lead |
 | 32 | French App Store badge artwork ("Télécharger dans l’App Store") — the localized file could not be downloaded | Store badges | Official English badge with a French accessible name |
 | 33 | Confirm the legacy screens may be shown with operator logos and phone numbers masked (`scripts/prepare-legacy.mjs`) | Tile 01, tile 04, `#web-admin` | Masked versions shown |
+| 34 | `icone/samirmoneymain.png` shows a balance (94 426) and `icone/samirpaymain.png` shows operator logos (Orange Money, Wave) on screen: confirm demo data and authorised marks (§1.4, §1.7); one-line descriptions and pages for Crédit, Assurance, Carburant, Change, Marketplace | Home S1b | Shown as supplied, labels link to `/particuliers` |
