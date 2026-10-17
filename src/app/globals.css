@@ -413,32 +413,6 @@
   animation-delay: var(--d, 0ms);
 }
 
-/* "Défiler" cue: a short line that sweeps down, a few times, then rests. */
-@keyframes cue-sweep {
-  0% {
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-  50% {
-    transform: scaleY(1);
-    transform-origin: top;
-  }
-  51% {
-    transform-origin: bottom;
-  }
-  100% {
-    transform: scaleY(0);
-    transform-origin: bottom;
-  }
-}
-.scroll-cue-line {
-  display: block;
-  width: 1px;
-  height: 28px;
-  background: linear-gradient(to bottom, transparent, var(--color-accent));
-  animation: cue-sweep 1.8s var(--ease-in-out-quart) 1.2s 4 both;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;

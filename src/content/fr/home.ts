@@ -1,10 +1,10 @@
+import { trust } from "@/content/fr/trust";
 import type { Cta } from "@/content/types";
 
 export const homeHero = {
   // Hero calls to action: "Nous contacter" [Brief]; "Voir nos solutions" [Proposition] scrolls to the bento.
   primary: { label: "Nous contacter", href: "/contact" } satisfies Cta,
   secondary: { label: "Voir nos solutions", href: "#solutions" } satisfies Cta,
-  scrollCue: "Défiler", // [Proposition]
   // [Brief] — the H1, rendered on four lines (client, 17 Oct 2026); `highlight` gets the accent underline.
   titleLines: ["Tous vos", "paiements.", "Un seul", "écosystème."],
   highlight: "écosystème",
@@ -70,4 +70,14 @@ export const contactBand = {
 // Home 3D scene: the Samir Money mark at the centre of the globe (client file icone/samir.png → `pnpm icons`).
 export const ecosystemScene = {
   coreLogo: "/media/icons/samir-core.webp",
+} as const;
+
+// Bottom of the home hero: the credentials badge supplied by the client (icone/Certification.png → `pnpm icons`).
+// TODO(client): written permission to display the PCI DSS Compliant mark (PCI SSC) and confirmation that
+// "Certifié PCI DSS" without the scope qualifier is acceptable here (§1.3, §1.4, §15.3 — Appendix D #14).
+export const heroCredentials = {
+  src: "/media/icons/certifications.webp",
+  width: 422,
+  height: 88,
+  alt: `${trust.bceao.label} · ${trust.pciDss.label}`,
 } as const;

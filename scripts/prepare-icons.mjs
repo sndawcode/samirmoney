@@ -35,6 +35,15 @@ console.log(
   `ok   ${CORE.slug.padEnd(16)} ${core.width}×${core.height}  ${Math.round(core.size / 1024)} KB`,
 );
 
+// Hero credentials badge (BCEAO + PCI DSS) supplied by the client: native size, lossless, so its text stays crisp.
+const BADGE = { file: "Certification.png", slug: "certifications" };
+const badge = await sharp(path.join(SRC, BADGE.file))
+  .webp({ lossless: true })
+  .toFile(path.join(OUT, `${BADGE.slug}.webp`));
+console.log(
+  `ok   ${BADGE.slug.padEnd(16)} ${badge.width}×${badge.height}  ${Math.round(badge.size / 1024)} KB`,
+);
+
 for (const [file, slug] of ICONS) {
   const out = path.join(OUT, `${slug}.webp`);
   const info = await sharp(path.join(SRC, file))
