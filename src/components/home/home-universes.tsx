@@ -1,35 +1,9 @@
-import {
-  ArrowLeftRight,
-  BadgePercent,
-  Braces,
-  CreditCard,
-  Fuel,
-  Gift,
-  HandCoins,
-  KeyRound,
-  Layers,
-  LayoutDashboard,
-  Link2,
-  PiggyBank,
-  QrCode,
-  Receipt,
-  RefreshCw,
-  ShieldCheck,
-  ShoppingBag,
-  Smartphone,
-  Store,
-  Users,
-  Wallet,
-  Zap,
-  type LucideIcon,
-} from "lucide-react";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import {
   universes,
   universesSection,
   type FloatingService,
-  type ServiceIcon,
   type Universe,
 } from "@/content/fr/universes";
 import { eventClasses } from "@/lib/analytics";
@@ -39,31 +13,6 @@ import { FloatPauseButton, UniversesMotion } from "@/components/home/universes-c
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Eyebrow, Heading, Section } from "@/components/ui/section";
 import { Photo } from "@/components/ui/photo";
-
-const ICONS: Record<ServiceIcon, LucideIcon> = {
-  ArrowLeftRight,
-  BadgePercent,
-  Braces,
-  CreditCard,
-  Fuel,
-  Gift,
-  HandCoins,
-  KeyRound,
-  Layers,
-  LayoutDashboard,
-  Link2,
-  PiggyBank,
-  QrCode,
-  Receipt,
-  RefreshCw,
-  ShieldCheck,
-  ShoppingBag,
-  Smartphone,
-  Store,
-  Users,
-  Wallet,
-  Zap,
-};
 
 // Where each service label floats, in % of the stage. `side` anchors the label so it never runs past the
 // card edge: "l" = its left edge at x, "r" = its right edge at x, "c" = centred on x.
@@ -160,7 +109,6 @@ function UniverseCard({ universe }: { universe: Universe }) {
             {universe.index} — {universe.name}
           </p>
           <h3 className="text-h3">{universe.name}</h3>
-          <p className="text-graphite ink:text-smoke">{frTypo(universe.subtitle)}</p>
           <ButtonLink
             href={universe.cta.href}
             variant="link"
@@ -214,7 +162,6 @@ function FloatingLabel({
   universe: string;
 }) {
   if (!spot) throw new Error(`No floating spot for service ${index} of ${universe}`);
-  const Icon = ICONS[service.icon];
   const position: CSSProperties =
     spot.side === "r"
       ? { right: `${100 - spot.x}%`, top: `${spot.y}%` }
@@ -235,7 +182,6 @@ function FloatingLabel({
           }),
         )}
       >
-        <Icon aria-hidden="true" className="float-chip-icon" strokeWidth={1.75} />
         {/* Non-breaking hyphens: "PI-SPI" never splits when a label wraps. */}
         <span>{frTypo(service.label).replace(/-/g, "‑")}</span>
       </Link>

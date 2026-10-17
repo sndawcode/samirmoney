@@ -496,11 +496,10 @@
   display: inline-flex;
   min-height: 2.5rem;
   align-items: center;
-  gap: 0.5rem;
   border: 1px solid rgb(5 8 7 / 0.07);
   border-radius: 9999px;
   background: rgb(255 255 255 / 0.95);
-  padding: 0.4rem 0.95rem 0.4rem 0.45rem;
+  padding: 0.4rem 1rem;
   color: var(--color-ink-950);
   font-size: clamp(0.75rem, 0.65rem + 0.35vw, 0.875rem);
   font-weight: 600;
@@ -517,16 +516,6 @@
   transform: scale(1.05);
   border-color: var(--color-samir-700);
 }
-.float-chip-icon {
-  box-sizing: content-box;
-  width: 0.9rem;
-  height: 0.9rem;
-  flex-shrink: 0;
-  border-radius: 9999px;
-  padding: 0.35rem;
-  background: var(--color-samir-50);
-  color: var(--color-samir-700);
-}
 [data-tone="ink"] .float-chip {
   border-color: rgb(255 255 255 / 0.14);
   background: rgb(18 24 22 / 0.88);
@@ -537,10 +526,6 @@
 }
 [data-tone="ink"] .float-chip:hover {
   border-color: var(--color-accent);
-}
-[data-tone="ink"] .float-chip-icon {
-  background: rgb(60 176 136 / 0.18);
-  color: var(--color-accent);
 }
 /* Each label floats on its own rhythm (staggered duration and delay). */
 @media (prefers-reduced-motion: no-preference) {
@@ -564,11 +549,10 @@
     translate: 0 -9px;
   }
 }
-/* Narrow cards (phones): compact labels without icons that may wrap on two lines, SamirPay labels all
+/* Narrow cards (phones): compact labels that may wrap on two lines, SamirPay labels all
    aligned to the right edge, and a slimmer Samir Money phone so the side columns stay clear of it. */
 @container (max-width: 479px) {
   .float-chip {
-    gap: 0;
     min-height: 1.85rem;
     max-width: 30cqi;
     padding: 0.25rem 0.65rem;
@@ -585,8 +569,5 @@
   [data-layout="samir-money"] .universe-device {
     width: 58%;
     bottom: -14%;
-  }
-  .float-chip-icon {
-    display: none;
   }
 }
