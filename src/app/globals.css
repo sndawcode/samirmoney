@@ -527,20 +527,31 @@
 [data-tone="ink"] .float-chip:hover {
   border-color: var(--color-accent);
 }
-/* Each label floats on its own rhythm (staggered duration and delay). */
+/* Each label floats on its own rhythm when the card enters the view, then settles: the whole motion lasts
+   under 5 s, so no pause control is needed (WCAG 2.2.2). Hovering the card makes the labels float again. */
 @media (prefers-reduced-motion: no-preference) {
-  .float-chip {
-    animation: float-bob calc(5s + var(--i) * 0.37s) ease-in-out infinite;
-    animation-delay: calc(var(--i) * -0.9s);
+  [data-universe][data-inview] .float-chip {
+    /* Longest label (index 13): 0.65 s delay + 2 × 2.05 s = 4.75 s. */
+    animation: float-bob calc(1.4s + var(--i) * 0.05s) ease-in-out calc(var(--i) * 0.05s) 2;
   }
-  .universe-stage:hover .float-chip,
-  .universe-stage:focus-within .float-chip,
-  [data-universe][data-paused] .float-chip,
-  [data-universes][data-offscreen] .float-chip {
-    animation-play-state: paused;
+  @media (hover: hover) {
+    [data-universe]:hover .float-chip {
+      animation: float-bob-hover calc(2.4s + var(--i) * 0.11s) ease-in-out infinite;
+      animation-delay: calc(var(--i) * -0.3s);
+    }
   }
 }
 @keyframes float-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -9px;
+  }
+}
+/* Same motion under another name, so hovering restarts it after the entrance has settled. */
+@keyframes float-bob-hover {
   0%,
   100% {
     translate: 0 0;

@@ -12,6 +12,8 @@ export type Universe = {
   name: string;
   media: MediaSlot;
   cta: { label: string; href: string };
+  /** Main action in the card's top-right corner: a contact button, or the app's store badges. */
+  action: { kind: "contact"; label: string; href: string } | { kind: "download" };
   /** Services floating around the image, in reading order. */
   services: readonly FloatingService[];
 };
@@ -20,8 +22,6 @@ export const universesSection = {
   eyebrow: "Nos univers",
   title: "Deux univers. Un seul écosystème.",
   lead: "Professionnels ou particuliers : chaque univers réunit ses services autour d’une seule application.",
-  pause: "Mettre en pause l’animation",
-  play: "Relancer l’animation",
   servicesOf: (name: string) => `Services ${name}`,
 } as const;
 
@@ -34,6 +34,7 @@ export const universes: readonly Universe[] = [
     name: "SamirPay",
     media: "universe-samirpay",
     cta: { label: "Découvrir SamirPay", href: "/professionnels" },
+    action: { kind: "contact", label: "Nous contacter", href: "/contact?profil=commercant" }, // [Brief] label
     services: [
       { label: "SamirPay TPE", href: "/professionnels#tpe" },
       { label: "SamirPay Business", href: "/professionnels#business" },
@@ -54,6 +55,7 @@ export const universes: readonly Universe[] = [
     name: "Samir Money",
     media: "universe-samirmoney",
     cta: { label: "Découvrir Samir Money", href: "/particuliers" },
+    action: { kind: "download" }, // App Store / Google Play badges (hidden while a URL is unknown)
     services: [
       { label: "Transferts", href: PARTICULIERS },
       { label: "Factures", href: PARTICULIERS },

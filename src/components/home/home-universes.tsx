@@ -9,7 +9,8 @@ import {
 import { eventClasses } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import { frTypo } from "@/lib/fr-typography";
-import { FloatPauseButton, UniversesMotion } from "@/components/home/universes-controls";
+import { UniversesMotion } from "@/components/home/universes-controls";
+import { StoreBadges } from "@/components/ui/store-badges";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Eyebrow, Heading, Section } from "@/components/ui/section";
 import { Photo } from "@/components/ui/photo";
@@ -103,7 +104,7 @@ function UniverseCard({ universe }: { universe: Universe }) {
       )}
     >
       <div aria-hidden="true" className="universe-card-bg absolute inset-0 -z-10" />
-      <header className="relative z-10 flex items-start justify-between gap-4 p-6 sm:p-8">
+      <header className="relative z-10 flex flex-col items-start gap-4 p-6 sm:flex-row sm:justify-between sm:p-8">
         <div className="flex flex-col gap-3">
           <h3 className="text-h3">{universe.name}</h3>
           <ButtonLink
@@ -116,7 +117,18 @@ function UniverseCard({ universe }: { universe: Universe }) {
             {universe.cta.label}
           </ButtonLink>
         </div>
-        <FloatPauseButton pauseLabel={universesSection.pause} playLabel={universesSection.play} />
+        {universe.action.kind === "contact" ? (
+          <ButtonLink
+            href={universe.action.href}
+            size="sm"
+            location={`home-universes-${universe.id}-contact`}
+            className="shrink-0"
+          >
+            {universe.action.label}
+          </ButtonLink>
+        ) : (
+          <StoreBadges app="samirMoney" className="shrink-0 sm:justify-end" />
+        )}
       </header>
       <div
         data-universe-stage

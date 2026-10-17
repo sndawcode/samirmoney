@@ -26,15 +26,21 @@ test.describe("home — Nos univers", () => {
     }
   });
 
-  test("the floating labels can be paused and resumed (WCAG 2.2.2)", async ({ page }) => {
+  test("each card offers its main action and the floating settles on its own (WCAG 2.2.2)", async ({
+    page,
+  }) => {
     await page.goto("/");
-    // Each card has its own pause button.
-    const card = page.locator("[data-universe]").first();
-    await card.scrollIntoViewIfNeeded();
-    await card.getByRole("button", { name: "Mettre en pause l’animation" }).click();
-    await expect(card).toHaveAttribute("data-paused", "");
-    await expect(card.locator(".float-chip").first()).toHaveCSS("animation-play-state", /paused/);
-    await card.getByRole("button", { name: "Relancer l’animation" }).click();
-    await expect(card).not.toHaveAttribute("data-paused", "");
+    const [pay, money] = await page.locator("[data-universe]").all();
+    await pay.scrollIntoViewIfNeeded();
+    await expect(pay.getByRole("link", { name: "Nous contacter" })).toHaveAttribute(
+      "href",
+      "/contact?profil=commercant",
+    );
+    await expect(pay.getByRole("button")).toHaveCount(0);
+    await money.scrollIntoViewIfNeeded();
+    await expect(money.getByRole("link", { name: /App Store/ })).toBeVisible();
+    // Finite entrance: two iterations, never "infinite" without user interaction.
+    await page.mouse.move(0, 0);
+    await expect(money.locator(".float-chip").first()).toHaveCSS("animation-iteration-count", "2");
   });
 });
