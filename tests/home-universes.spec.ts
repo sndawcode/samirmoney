@@ -39,6 +39,10 @@ test.describe("home — Nos univers", () => {
     await expect(pay.getByRole("button")).toHaveCount(0);
     await money.scrollIntoViewIfNeeded();
     await expect(money.getByRole("link", { name: /App Store/ })).toBeVisible();
+    await expect(money.getByRole("link", { name: /Google Play/ })).toHaveAttribute(
+      "href",
+      "https://play.google.com/store/apps/details?id=sn.samirmoney.samirlink1",
+    );
     // Finite entrance: two iterations, never "infinite" without user interaction.
     await page.mouse.move(0, 0);
     await expect(money.locator(".float-chip").first()).toHaveCSS("animation-iteration-count", "2");

@@ -773,7 +773,7 @@ export const site = {
   apps: {
     samirMoney: {
       ios: "https://apps.apple.com/app/id6740030422",
-      android: null as string | null, // TODO(client): Google Play URL
+      android: "https://play.google.com/store/apps/details?id=sn.samirmoney.samirlink1",
     },
     samirPayBusiness: {
       ios: "https://apps.apple.com/app/id6743798245",
@@ -1426,7 +1426,7 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 ## Appendix C — Crawl findings (facts, conflicts, risks)
 
 1. **Contact data conflicts.** samirmoney.com footer displays "+221 33 889 72 72" but its `tel:` link dials +221 33 824 24 33; the samirmoney.com contact page shows +221 33 824 24 33; samirpay.com shows +221 33 824 24 33 and +221 77 300 25 23. E-mails: contact@samirmoney.com (samirmoney.com) vs contact@samirservices.com (samirpay.com). Footer address has a typo ("AImmeuble").
-2. **Store links.** Both legacy "App Store" / "Google Play" buttons point to `#`. Verified: Samir Money iOS `id6740030422`; SamirPay Business iOS `id6743798245` and Android `sn.samirmoney.samirpaybusiness` (publisher SAMIR MONEY SA, updated 14 Oct 2026; its Play description exists only in English — worth adding the French one from the App Store). Samir Money Android: not found.
+2. **Store links.** Both legacy "App Store" / "Google Play" buttons point to `#`. Verified: Samir Money iOS `id6740030422`; SamirPay Business iOS `id6743798245` and Android `sn.samirmoney.samirpaybusiness` (publisher SAMIR MONEY SA, updated 14 Oct 2026; its Play description exists only in English — worth adding the French one from the App Store). Samir Money Android: `sn.samirmoney.samirlink1` (listing "Samir Money", publisher SAMIR MONEY SA — found 17 Oct 2026).
 3. **Social links** on both sites are empty placeholders (facebook.com/, linkedin.com, instagram.com/, twitter.com/, github.com/).
 4. **Pricing claim** "1 % on the initial deposit, then all transactions free" appears on several samirmoney.com pages → do not migrate without compliance sign-off.
 5. **Testimonials** on both sites are template placeholders (avatars hot-linked from a theme demo domain, "Founder at Brain.co") → dropped.
@@ -1452,7 +1452,7 @@ RÉSULTAT ATTENDU : un site premium, clair et orienté conversion, qui transform
 | 3 | Contact e-mail | Contact, footer | contact@samirmoney.com in preview only |
 | 4 | WhatsApp number | Contact, mobile menu, S6 | WhatsApp hidden |
 | 5 | Opening hours | Contact | Hidden |
-| 6 | Samir Money Google Play URL | Store badges | Badge hidden |
+| 6 | ~~Samir Money Google Play URL~~ — resolved 17 Oct 2026: `sn.samirmoney.samirlink1` ("Samir Money", SAMIR MONEY SA) | Store badges | Badge shown |
 | 7 | Web Admin login URL | `#web-admin` CTA | CTA hidden |
 | 8 | API docs URL, sandbox access process | `/developpeurs` | Docs CTA hidden; contact CTA only |
 | 9 | WooCommerce plugin link | `/developpeurs` | Card without link |

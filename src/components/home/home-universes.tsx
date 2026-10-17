@@ -53,8 +53,8 @@ const SPOTS: Record<Universe["id"], readonly Spot[]> = {
 /**
  * Home, right below the hero (client decision, 17 Oct 2026): SamirPay and Samir Money as two framed product
  * cards, each with a large device image cropped by the card edges and its services floating around it.
- * Labels are real links; the floating pauses on hover, on focus, with each card's pause button (WCAG 2.2.2)
- * and while off-screen, and stops with reduced motion.
+ * Labels are real links; the floating starts when a card scrolls into view, settles by itself in under 5 s
+ * (WCAG 2.2.2), replays on hover and stops with reduced motion.
  */
 export function HomeUniverses() {
   return (
